@@ -1,9 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://6nfe5gg36rk"]
+[gd_scene load_steps=2 format=3 uid="uid://6nfe5gg36rk"]
 
 [ext_resource type="Script" uid="uid://b33xyf6j1qsbj" path="res://Markus/scripts/Apple.cs" id="1_iddsw"]
-[ext_resource type="PackedScene" uid="uid://dh8fsbbbg0nff" path="res://Szenen/player_test.tscn" id="1_s1r7e"]
 
 [node name="worldRoot" type="Node2D"]
 script = ExtResource("1_iddsw")
 
-[node name="PlayerTest" parent="." instance=ExtResource("1_s1r7e")]
+[node name="Node2D" type="Node2D" parent="."]
