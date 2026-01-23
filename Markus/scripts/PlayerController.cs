@@ -1,10 +1,5 @@
 using Godot;
 using System;
-
-
-
-
-
 public partial class PlayerController:CharacterBody2D
 {
 	// Called when the node enters the scene tree for the first time.
@@ -102,7 +97,14 @@ public partial class PlayerController:CharacterBody2D
 		MoveAndSlide();
 	}
 
-
-
-	
+	public void interaction()
+	{
+		GD.Print("Interacting with object");
+	}
+	public void damageTaken()
+	{
+		GD.Print("Player took damage");
+	}
 }
+
+

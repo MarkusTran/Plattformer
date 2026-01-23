@@ -1,14 +1,11 @@
-[gd_scene load_steps=42 format=4 uid="uid://dh8fsbbbg0nff"]
+[gd_scene load_steps=41 format=4 uid="uid://dh8fsbbbg0nff"]
 
-[ext_resource type="Script" uid="uid://mxvu3e62a0du" path="res://Markus/scripts/PlayerController.cs" id="1_wfw8f"]
-[ext_resource type="PackedScene" uid="uid://dnoagc6hnylsl" path="res://Markus/Prefabs/orb.tscn" id="2_fbo5a"]
+[ext_resource type="Script" uid="uid://dbcmbvf3aoklj" path="res://Markus/scripts/player.gd" id="1_oaiek"]
 [ext_resource type="Texture2D" uid="uid://cnsdyllass1mj" path="res://asset/platformer_metroidvania asset pack v1.01/herochar sprites(new)/herochar_idle_anim_strip_4.png" id="3_3ylre"]
 [ext_resource type="Texture2D" uid="uid://s7yjdoqdcdg7" path="res://asset/platformer_metroidvania asset pack v1.01/herochar sprites(new)/herochar_run_anim_strip_6.png" id="4_asq6x"]
 [ext_resource type="AudioStream" uid="uid://cybsxnn8e2s05" path="res://asset/Sounds/laser_shot.wav" id="5_5s7qq"]
 [ext_resource type="Texture2D" uid="uid://d10sgdxdlmns7" path="res://asset/platformer_metroidvania asset pack v1.01/tiles and background_foreground (new)/tileset.png" id="6_2uosa"]
 [ext_resource type="Texture2D" uid="uid://bxg4mfdlml0g4" path="res://asset/platformer_metroidvania asset pack v1.01/miscellaneous sprites/stone.png" id="7_2meo2"]
-[ext_resource type="PackedScene" uid="uid://bwgpbevavlrgr" path="res://Markus/Prefabs/apple.tscn" id="8_i21pa"]
-[ext_resource type="PackedScene" uid="uid://vu8r8g54jpu1" path="res://Markus/Prefabs/coin.tscn" id="9_ejplx"]
 [ext_resource type="Texture2D" uid="uid://b3670unfrejoq" path="res://asset/platformer_metroidvania asset pack v1.01/miscellaneous sprites/coin_anim_strip_6.png" id="10_n1yl6"]
 [ext_resource type="Texture2D" uid="uid://crwvr8sim57vf" path="res://asset/platformer_metroidvania asset pack v1.01/miscellaneous sprites/coin_pickup_anim_strip_6.png" id="11_53cwn"]
 
@@ -98,6 +95,13 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w8cch"]
 radius = 5.0
 height = 16.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2im5r"]
+radius = 12.0416
+
+[sub_resource type="LabelSettings" id="LabelSettings_dl7hw"]
+line_spacing = 3.56
+font_size = 22
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_g6ab5"]
 texture = ExtResource("6_2uosa")
@@ -330,8 +334,7 @@ animations = [{
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="."]
 position = Vector2(482, 531)
-script = ExtResource("1_wfw8f")
-_laserPrefab = ExtResource("2_fbo5a")
+script = ExtResource("1_oaiek")
 
 [node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
 zoom = Vector2(5, 5)
@@ -356,10 +359,40 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+visible = false
 shape = SubResource("CapsuleShape2D_w8cch")
 
 [node name="ShootSound" type="AudioStreamPlayer2D" parent="CharacterBody2D"]
 stream = ExtResource("5_5s7qq")
+
+[node name="Interaction Components" type="Node2D" parent="CharacterBody2D"]
+z_index = 1
+
+[node name="interactionArea" type="Area2D" parent="CharacterBody2D/Interaction Components"]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D/Interaction Components/interactionArea"]
+shape = SubResource("CircleShape2D_2im5r")
+
+[node name="Label" type="Label" parent="CharacterBody2D/Interaction Components"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -47.0
+offset_right = 358.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.24, 0.24)
+text = "test"
+label_settings = SubResource("LabelSettings_dl7hw")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(6, 14)
@@ -384,21 +417,6 @@ shape = SubResource("RectangleShape2D_maf6m")
 [node name="Sprite2D" type="Sprite2D" parent="Block"]
 texture = ExtResource("7_2meo2")
 
-[node name="Apple" parent="." instance=ExtResource("8_i21pa")]
-position = Vector2(499, 532)
-
-[node name="Apple2" parent="." instance=ExtResource("8_i21pa")]
-position = Vector2(511, 532)
-
-[node name="Apple3" parent="." instance=ExtResource("8_i21pa")]
-position = Vector2(526, 532)
-
-[node name="Coin" parent="." instance=ExtResource("9_ejplx")]
-position = Vector2(428, 522)
-
-[node name="Coin2" parent="." instance=ExtResource("9_ejplx")]
-position = Vector2(399, 523)
-
 [node name="CharacterBody2D2" type="CharacterBody2D" parent="."]
 
 [node name="Collider" type="Area2D" parent="CharacterBody2D2"]
@@ -419,3 +437,6 @@ shape = SubResource("CircleShape2D_qjt5x")
 [node name="CoinAnim" type="AnimatedSprite2D" parent="CharacterBody2D2"]
 sprite_frames = SubResource("SpriteFrames_huibr")
 autoplay = "default"
+
+[connection signal="area_entered" from="CharacterBody2D/Interaction Components/interactionArea" to="CharacterBody2D" method="_on_interaction_area_area_entered"]
+[connection signal="area_exited" from="CharacterBody2D/Interaction Components/interactionArea" to="CharacterBody2D" method="_on_interaction_area_area_exited"]
