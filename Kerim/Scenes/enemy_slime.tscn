@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://cxplj6dvqcrsg"]
+
+[ext_resource type="Script" uid="uid://skt5bnjmysu2" path="res://Kerim/Scripts/enemy_slime.gd" id="1_el2qc"]
+[ext_resource type="Texture2D" uid="uid://cnx37vbd6rmi4" path="res://asset/Slime/slime_idle1.png" id="2_ji20b"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_el2qc"]
+radius = 9.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_suqqb"]
+atlas = ExtResource("2_ji20b")
+region = Rect2(0, 288, 80, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e4542"]
+atlas = ExtResource("2_ji20b")
+region = Rect2(80, 288, 80, 72)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_131yu"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_suqqb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e4542")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_el2qc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_el2qc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(6, -12)
+sprite_frames = SubResource("SpriteFrames_131yu")
+
+[node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D"]
+target_position = Vector2(-125, 0)
+
+[node name="Timer" type="Timer" parent="AnimatedSprite2D"]
+wait_time = 10.0
+one_shot = true
+
+[connection signal="timeout" from="AnimatedSprite2D/Timer" to="." method="_on_timer_timeout"]
