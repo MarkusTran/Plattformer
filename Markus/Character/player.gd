@@ -7,13 +7,8 @@ const JUMP_ACTION       := "ui_accept"
 const SHOOT_ACTION      := "shoot"
 const INTERACT := "interact"
 
-
-@export var start_x: float = 482.0
-@export var start_y: float = 531.0
 @export var speed: float = 120.0
-@export var jump_velocity: float = -350.0
 @export var double_jump_velocity: float = -350
-@export var laser_prefab: PackedScene
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine
 
 var down_acceleration: float = 1.0
@@ -22,7 +17,6 @@ var has_double_jump: bool = false
 @onready var sprite2d : Sprite2D = $Sprite2D
 @onready var all_interactions = []
 @onready var interactLabel =$"Interaction Components/Label"
-
 @onready var animation_tree : AnimationTree = $AnimationTree
 
 var direction = Input.get_vector("move_left","move_right","move_up","move_down")
@@ -31,7 +25,6 @@ var direction = Input.get_vector("move_left","move_right","move_up","move_down")
 
 func _ready() -> void:
 	update_interaction()
-	position = Vector2(start_x, start_y)
 	animation_tree.active = true
 
 func _physics_process(delta: float) -> void:

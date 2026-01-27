@@ -14,7 +14,6 @@ func _ready() -> void:
 			states.append(child)
 			child.character = character
 			#Set the states up with what they need to function
-			
 		else:
 			push_warning("Child " + child.name + "Is not a State for CharacterStateMAchine")
 			
