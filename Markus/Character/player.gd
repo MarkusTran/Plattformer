@@ -6,13 +6,9 @@ const MOVE_LEFT_ACTION  := "move_left"
 const JUMP_ACTION       := "ui_accept"
 const SHOOT_ACTION      := "shoot"
 const INTERACT := "interact"
-
-@export var speed: float = 120.0
-@export var double_jump_velocity: float = -350
+@export var speed: float = 240.0
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine
-
 var down_acceleration: float = 1.0
-var has_double_jump: bool = false
 
 @onready var sprite2d : Sprite2D = $Sprite2D
 @onready var all_interactions = []
@@ -31,21 +27,10 @@ func _physics_process(delta: float) -> void:
 	#Input handeling
 	if Input.is_action_just_pressed(INTERACT):
 		execute_interaction()
-	
-	# Jump
-	if Input.is_action_just_pressed(JUMP_ACTION):
-		if is_on_floor():
-			pass
-		elif not has_double_jump:
-			velocity.y = double_jump_velocity
-			#double jump in air
-	
 	#Gravity
 	if not is_on_floor():
 		velocity += get_gravity() * delta * down_acceleration
-	else:
-		has_double_jump = false
-	
+
 	if direction.x != 0 && state_machine.check_if_can_move():
 			velocity.x = direction.x * speed
 	else:
@@ -53,13 +38,11 @@ func _physics_process(delta: float) -> void:
 		
 	direction = Input.get_vector("move_left","move_right","move_up", "move_down")
 	
-	
-
 	update_facing_direction()
-	update_animation()
+	update_animation_paramteres()
 	move_and_slide()
 
-func update_animation():
+func update_animation_paramteres():
 	animation_tree.set("parameters/Move/blend_position",direction.x)
 
 func damage_taken() -> void:

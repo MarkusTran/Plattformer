@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bolwst7ixtwd3"]
+[gd_scene load_steps=34 format=3 uid="uid://bolwst7ixtwd3"]
 
 [ext_resource type="Script" uid="uid://dbcmbvf3aoklj" path="res://Markus/Character/player.gd" id="1_mbpc6"]
 [ext_resource type="Texture2D" uid="uid://c4wv467t3oall" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="5_nyct3"]
@@ -39,32 +39,11 @@ blend_point_2/node = SubResource("AnimationNodeAnimation_loff1")
 blend_point_2/pos = -1.0
 blend_mode = 1
 
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_vfsap"]
-animation = &"double_jump"
-
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_l0e6x"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_vfsap")
-blend_point_0/pos = 0.0
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_j17g1"]
-animation = &"jump_end"
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_j17g1"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_j17g1")
-blend_point_0/pos = 0.0
-
-[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l0e6x"]
-animation = &"jump_start"
 
 [sub_resource type="AnimationNodeBlendSpace1D" id="AnimationNodeBlendSpace1D_vfsap"]
-blend_point_0/node = SubResource("AnimationNodeAnimation_l0e6x")
-blend_point_0/pos = 0.0
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_avqj3"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_y0et5"]
-
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qvohc"]
 
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_48f46"]
 advance_mode = 2
@@ -75,18 +54,24 @@ advance_mode = 2
 switch_mode = 2
 advance_mode = 2
 
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_avqj3"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_y0et5"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_qvohc"]
+
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_c0a6w"]
 states/Move/node = SubResource("AnimationNodeBlendSpace1D_mif1t")
 states/Move/position = Vector2(420, 100)
 states/Start/position = Vector2(197, 100)
 states/double_jump/node = SubResource("AnimationNodeBlendSpace1D_l0e6x")
-states/double_jump/position = Vector2(653, -49)
+states/double_jump/position = Vector2(648, -49)
 states/jump_end/node = SubResource("AnimationNodeBlendSpace1D_j17g1")
-states/jump_end/position = Vector2(653, 100)
+states/jump_end/position = Vector2(648, 100)
 states/jump_start/node = SubResource("AnimationNodeBlendSpace1D_vfsap")
 states/jump_start/position = Vector2(420, -49)
-transitions = ["jump_start", "jump_end", SubResource("AnimationNodeStateMachineTransition_avqj3"), "jump_start", "double_jump", SubResource("AnimationNodeStateMachineTransition_y0et5"), "double_jump", "jump_end", SubResource("AnimationNodeStateMachineTransition_qvohc"), "Start", "Move", SubResource("AnimationNodeStateMachineTransition_48f46"), "Move", "jump_start", SubResource("AnimationNodeStateMachineTransition_j17g1"), "jump_end", "Move", SubResource("AnimationNodeStateMachineTransition_ep2xd")]
-graph_offset = Vector2(-266, -111)
+transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_48f46"), "Move", "jump_start", SubResource("AnimationNodeStateMachineTransition_j17g1"), "jump_end", "Move", SubResource("AnimationNodeStateMachineTransition_ep2xd"), "jump_start", "jump_end", SubResource("AnimationNodeStateMachineTransition_avqj3"), "jump_start", "double_jump", SubResource("AnimationNodeStateMachineTransition_y0et5"), "double_jump", "jump_end", SubResource("AnimationNodeStateMachineTransition_qvohc")]
+graph_offset = Vector2(-219, -178)
 
 [sub_resource type="Animation" id="Animation_s54lb"]
 length = 0.001
@@ -347,7 +332,7 @@ _data = {
 script = ExtResource("1_mbpc6")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2.5, 2.5)
+zoom = Vector2(3, 3)
 
 [node name="UI" type="CanvasLayer" parent="Camera2D"]
 visible = false
@@ -401,10 +386,10 @@ vertical_alignment = 1
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_c0a6w")
 anim_player = NodePath("../AnimationPlayer")
-parameters/Move/blend_position = -0.00156492
+parameters/Move/blend_position = -0.822639
 parameters/double_jump/blend_position = 0.0
-parameters/jump_end/blend_position = 0.038343111672077636
-parameters/jump_start/blend_position = -0.011997938
+parameters/jump_end/blend_position = -0.101721466
+parameters/jump_start/blend_position = 0.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -412,27 +397,23 @@ libraries = {
 }
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-centered = false
-offset = Vector2(-32, -40)
 
-[node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state", "animation_tree", "character")]
+[node name="CharacterStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state", "character")]
 script = ExtResource("7_loff1")
 current_state = NodePath("Ground")
-animation_tree = NodePath("../AnimationTree")
 character = NodePath("..")
 
 [node name="Ground" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("air_state")]
 script = ExtResource("8_bjbsp")
 air_state = NodePath("../Air")
 
-[node name="Air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("landing_state")]
+[node name="Air" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state")]
 script = ExtResource("9_vfsap")
-landing_state = NodePath("../Landing")
-
-[node name="Landing" type="Node" parent="CharacterStateMachine" node_paths=PackedStringArray("ground_state")]
-script = ExtResource("10_j17g1")
-landing_animation_name = "jump_end"
 ground_state = NodePath("../Ground")
+
+[node name="Landing" type="Node" parent="CharacterStateMachine"]
+script = ExtResource("10_j17g1")
+can_move = false
 
 [node name="StateDebugLabel" type="Label" parent="." node_paths=PackedStringArray("state_machine")]
 offset_left = -50.0
@@ -445,4 +426,3 @@ state_machine = NodePath("../CharacterStateMachine")
 
 [connection signal="area_entered" from="Interaction Components/interactionArea" to="." method="_on_interaction_area_area_entered"]
 [connection signal="area_exited" from="Interaction Components/interactionArea" to="." method="_on_interaction_area_area_exited"]
-[connection signal="animation_finished" from="AnimationTree" to="CharacterStateMachine/Landing" method="_on_animation_tree_animation_finished"]
