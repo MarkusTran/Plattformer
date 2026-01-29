@@ -117,13 +117,13 @@ region = Rect2(880, 288, 80, 72)
 atlas = ExtResource("2_suqqb")
 region = Rect2(960, 288, 80, 72)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_suqqb"]
-atlas = ExtResource("2_ji20b")
-region = Rect2(0, 288, 80, 72)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_e4542"]
 atlas = ExtResource("2_ji20b")
 region = Rect2(80, 288, 80, 72)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_suqqb"]
+atlas = ExtResource("2_ji20b")
+region = Rect2(0, 288, 80, 72)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_131yu"]
 animations = [{
@@ -220,10 +220,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_suqqb")
+"texture": SubResource("AtlasTexture_e4542")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_e4542")
+"texture": SubResource("AtlasTexture_suqqb")
 }],
 "loop": true,
 "name": &"default",
@@ -236,18 +236,6 @@ script = ExtResource("1_el2qc")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -7)
 shape = SubResource("CircleShape2D_el2qc")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(6, -12)
-sprite_frames = SubResource("SpriteFrames_131yu")
-animation = &"attack"
-
-[node name="RayCast2D" type="RayCast2D" parent="AnimatedSprite2D"]
-target_position = Vector2(-125, 0)
-
-[node name="Timer" type="Timer" parent="AnimatedSprite2D"]
-wait_time = 10.0
-one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
@@ -263,4 +251,19 @@ script = ExtResource("3_ji20b")
 target = NodePath("../..")
 metadata/_edit_use_anchors_ = true
 
-[connection signal="timeout" from="AnimatedSprite2D/Timer" to="." method="_on_timer_timeout"]
+[node name="FlipRoot" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="FlipRoot"]
+position = Vector2(6, -12)
+sprite_frames = SubResource("SpriteFrames_131yu")
+frame = 1
+frame_progress = 0.15974824
+
+[node name="RayCast2D" type="RayCast2D" parent="FlipRoot/AnimatedSprite2D"]
+target_position = Vector2(-125, 0)
+
+[node name="Timer" type="Timer" parent="FlipRoot/AnimatedSprite2D"]
+wait_time = 10.0
+one_shot = true
+
+[connection signal="timeout" from="FlipRoot/AnimatedSprite2D/Timer" to="." method="_on_timer_timeout"]
