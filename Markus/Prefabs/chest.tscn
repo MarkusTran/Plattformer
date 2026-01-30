@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://cnbrebdm25yew"]
+
+[ext_resource type="Script" uid="uid://dejcppmpdvvr2" path="res://Markus/scripts/chest.gd" id="1_5hxsa"]
+[ext_resource type="Texture2D" uid="uid://85i5t4cdfqdk" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Assets/Tiles.png" id="1_fg4vh"]
+[ext_resource type="PackedScene" uid="uid://hxiccpuvwdu4" path="res://Markus/Prefabs/interaction_area.tscn" id="2_vuy64"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fg4vh"]
+atlas = ExtResource("1_fg4vh")
+region = Rect2(289, 274, 31, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vuy64"]
+atlas = ExtResource("1_fg4vh")
+region = Rect2(320, 274, 31, 30)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2jbn4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fg4vh")
+}],
+"loop": true,
+"name": &"default",
+"speed": 1.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vuy64")
+}],
+"loop": true,
+"name": &"open",
+"speed": 1.0
+}]
+
+[node name="chest" type="Node2D"]
+script = ExtResource("1_5hxsa")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_2jbn4")
+
+[node name="interactable_Area" parent="." node_paths=PackedStringArray("animatiedSprite2d") instance=ExtResource("2_vuy64")]
+scale = Vector2(1.63003, 1.63003)
+interact_label = "chest"
+interact_type = "chest"
+animatiedSprite2d = NodePath("../AnimatedSprite2D")

@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://b6rkc3durdljp" path="res://Markus/scripts/interact_area.gd" id="1_uhj6c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_uymxv"]
-radius = 12.0415945
+radius = 12.0416
 
 [node name="interactable_Area" type="Area2D"]
 collision_layer = 2

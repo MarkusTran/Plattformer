@@ -14,6 +14,7 @@ var down_acceleration: float = 1.0
 @onready var all_interactions = []
 @onready var interactLabel =$"Interaction Components/Label"
 @onready var animation_tree : AnimationTree = $AnimationTree
+@onready var HUD : Label = $"Camera2D/UI/Control/Coin"
 
 var direction = Input.get_vector("move_left","move_right","move_up","move_down")
 
@@ -54,6 +55,7 @@ func damage_taken() -> void:
 func _on_interaction_area_area_entered(area: Area2D) -> void:
 	all_interactions.insert(0,area)
 	update_interaction()
+	
 
 func _on_interaction_area_area_exited(area: Area2D) -> void:
 	all_interactions.erase(area)
@@ -72,8 +74,15 @@ func update_interaction():
 		interactLabel.text = ""
 		
 func execute_interaction():
-	if all_interactions:
-		
-		var cur_interaction = all_interactions[0]
-		match cur_interaction.interact_type:
-			"print_text" : print(cur_interaction.interact_value)
+	if all_interactions.is_empty():
+		return
+
+	var cur_interaction = all_interactions[0]
+
+	match cur_interaction.interact_type:
+		"print_text":
+			print(cur_interaction.interact_value)
+		"chest":
+			var chest = cur_interaction.get_parent()
+			if chest.has_method("interact"):
+				chest.interact(self)
