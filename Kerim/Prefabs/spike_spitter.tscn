@@ -1,0 +1,164 @@
+[gd_scene load_steps=24 format=3 uid="uid://do1id5wextsgo"]
+
+[ext_resource type="Script" uid="uid://ce1bx5l3k6ohi" path="res://Kerim/Scripts/SpikeSpitter.gd" id="1_012as"]
+[ext_resource type="Texture2D" uid="uid://blcpmtvuhd5k6" path="res://asset/traps/Arrow.png" id="1_v5vil"]
+[ext_resource type="Texture2D" uid="uid://ddln0hjucs6t3" path="res://asset/traps/Arrow Trap - Level 1.png" id="2_m7t0u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m7t0u"]
+size = Vector2(30, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_012as"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(0, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4hebs"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(96, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gv5qe"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(192, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5ie4y"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(288, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yvu6s"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(384, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y87ue"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(480, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_usf42"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(576, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jocwr"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(672, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xh450"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(768, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xeay8"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(864, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7mmi"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(960, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_khm2f"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(1056, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ps2ph"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(1152, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7amwo"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(1248, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0uej1"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(1344, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8nd5p"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(1440, 0, 96, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qamty"]
+atlas = ExtResource("2_m7t0u")
+region = Rect2(1536, 0, 96, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ubekh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_012as")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4hebs")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gv5qe")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5ie4y")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yvu6s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y87ue")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_usf42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jocwr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xh450")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xeay8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y7mmi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_khm2f")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ps2ph")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7amwo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0uej1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8nd5p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qamty")
+}],
+"loop": false,
+"name": &"default",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_012as"]
+size = Vector2(20, 43)
+
+[node name="SpikeSpitter" type="Node2D"]
+script = ExtResource("1_012as")
+
+[node name="Arrow" type="Area2D" parent="." groups=["Deadly"]]
+
+[node name="Sprite" type="Sprite2D" parent="Arrow"]
+texture = ExtResource("1_v5vil")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Arrow"]
+shape = SubResource("RectangleShape2D_m7t0u")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+position = Vector2(150, 0)
+sprite_frames = SubResource("SpriteFrames_ubekh")
+
+[node name="Marker2D" type="Marker2D" parent="AnimatedSprite2D"]
+position = Vector2(-22, 6)
+
+[node name="SpikeEnd" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpikeEnd"]
+position = Vector2(-100, -0.5)
+shape = SubResource("RectangleShape2D_012as")
+
+[connection signal="area_entered" from="SpikeEnd" to="." method="_on_spike_end_area_entered"]
