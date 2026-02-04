@@ -7,6 +7,8 @@ const JUMP_VELOCITY = -500.0
 @export var max_health: int = 100
 @export var attack_damage: int = 30
 @export var attack_range: float = 40.0
+@export var invincible_time := 0.4
+var invincible := false
 
 var current_health: int
 var is_attacking: bool = false
@@ -66,14 +68,21 @@ func attack() -> void:
 		is_attacking = false
 
 func take_damage(amount: int) -> void:
+	if invincible:
+		return
+
+	invincible = true
 	current_health -= amount
 	print("Player nimmt ", amount, " Schaden! Health: ", current_health)
-	
+
 	# Flash-Effekt
 	modulate = Color.RED
 	await get_tree().create_timer(0.1).timeout
 	modulate = Color.WHITE
-	
+
+	await get_tree().create_timer(invincible_time).timeout
+	invincible = false
+
 	if current_health <= 0:
 		die()
 

@@ -1557,4 +1557,5 @@ CHASE_SPEED = 80
 JUMP_COOLDOWN = 0.5
 
 [node name="SpikeSpitter" parent="." instance=ExtResource("5_bq520")]
-position = Vector2(695, 191)
+position = Vector2(689, 185)
+fire_frame = 10
