@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://cxplj6dvqcrsg"]
+[gd_scene load_steps=38 format=3 uid="uid://cxplj6dvqcrsg"]
 
 [ext_resource type="Script" uid="uid://skt5bnjmysu2" path="res://Kerim/Scripts/enemy_slime.gd" id="1_el2qc"]
 [ext_resource type="Texture2D" uid="uid://cuywmawk80dli" path="res://asset/Slime/slime_swallow.png" id="2_e4542"]
@@ -230,7 +230,11 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_e4542"]
+radius = 9.0
+
 [node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 16
 script = ExtResource("1_el2qc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -265,5 +269,13 @@ target_position = Vector2(-125, 0)
 [node name="Timer" type="Timer" parent="FlipRoot/AnimatedSprite2D"]
 wait_time = 10.0
 one_shot = true
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 32
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_e4542")
 
 [connection signal="timeout" from="FlipRoot/AnimatedSprite2D/Timer" to="." method="_on_timer_timeout"]
