@@ -7,6 +7,9 @@ const JUMP_ACTION       := "ui_accept"
 const SHOOT_ACTION      := "shoot"
 const INTERACT := "interact"
 @export var speed: float = 240.0
+@export var coins: int = 0;
+@export var gems: int = 0;
+
 @onready var state_machine : CharacterStateMachine = $CharacterStateMachine
 var down_acceleration: float = 1.0
 
@@ -14,7 +17,7 @@ var down_acceleration: float = 1.0
 @onready var all_interactions = []
 @onready var interactLabel =$"Interaction Components/Label"
 @onready var animation_tree : AnimationTree = $AnimationTree
-@onready var HUD : Label = $"Camera2D/UI/Control/Coin"
+@onready var coinLabel : Label = $"Camera2D/UI/Control/Coin"
 
 var direction = Input.get_vector("move_left","move_right","move_up","move_down")
 
@@ -23,6 +26,10 @@ var direction = Input.get_vector("move_left","move_right","move_up","move_down")
 func _ready() -> void:
 	update_interaction()
 	animation_tree.active = true
+	coinLabel.text = ("Coin: %s" %coins)
+
+func _update_Hud():
+	coinLabel.text = ("Coin: %s" %coins)
 
 func _physics_process(delta: float) -> void:
 	#Input handeling
@@ -86,3 +93,11 @@ func execute_interaction():
 			var chest = cur_interaction.get_parent()
 			if chest.has_method("interact"):
 				chest.interact(self)
+				
+func add_coins(amount : int):
+	coins += amount
+	_update_Hud()
+
+func add_gems(amount : int):
+	gems += amount
+	_update_Hud()

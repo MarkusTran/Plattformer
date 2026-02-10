@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://die0fysuwp36i"]
+[gd_scene load_steps=36 format=4 uid="uid://die0fysuwp36i"]
 
 [ext_resource type="Texture2D" uid="uid://85i5t4cdfqdk" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Assets/Tiles.png" id="1_mpsuq"]
 [ext_resource type="PackedScene" uid="uid://bolwst7ixtwd3" path="res://Markus/Character/Player.tscn" id="2_7bco8"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://b4xmasnu0rhwy" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Assets/Hive.png" id="5_57a2b"]
 [ext_resource type="Texture2D" uid="uid://rsfyueqw606s" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Assets/Props-Rocks.png" id="6_r0ku2"]
 [ext_resource type="PackedScene" uid="uid://cnbrebdm25yew" path="res://Markus/Prefabs/chest.tscn" id="7_57a2b"]
+[ext_resource type="PackedScene" uid="uid://2yh0pm4e2i5q" path="res://UI/pause_menu.tscn" id="8_r0ku2"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_l2xcl"]
 tile_data = PackedInt32Array(0, 131073, 0, 65536, 131073, 1, 131072, 131073, 2, 196608, 131073, 3, 1, 65537, 0, 65537, 65537, 1, 131073, 65537, 2, 196609, 65537, 3)
@@ -1776,11 +1777,18 @@ pattern_17 = SubResource("TileMapPattern_3725k")
 pattern_18 = SubResource("TileMapPattern_qckef")
 pattern_19 = SubResource("TileMapPattern_lgxeh")
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_57a2b"]
+
 [node name="Level2" type="Node2D"]
 process_mode = 1
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+process_mode = 3
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("8_r0ku2")]
+
 [node name="Player" parent="." instance=ExtResource("2_7bco8")]
-position = Vector2(3660, -598)
+position = Vector2(1901, -621)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(40, 64)
@@ -1792,3 +1800,10 @@ position = Vector2(2022, -609)
 
 [node name="chest" parent="." instance=ExtResource("7_57a2b")]
 position = Vector2(670, 35)
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(2484, -327)
+scale = Vector2(5.94629, 8.93793)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_57a2b")

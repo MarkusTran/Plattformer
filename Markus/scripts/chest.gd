@@ -21,5 +21,5 @@ func open_chest():
 	# sprite.texture = preload("res://chest_open.png")
 
 func give_loot(player):
-	#player.add_coins(coins)
-	pass
+	player.add_coins(coins)
+	
