@@ -22,6 +22,10 @@ var kb_time := 0.0
 
 @onready var hurtbox: Area2D = $Hurtbox
 
+var last_hit_time_by_enemy := {}  # Dictionary
+@export var enemy_hit_cooldown := 0.35
+
+
 func _ready() -> void:
 	current_health = max_health
 	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
@@ -57,12 +61,28 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	# Slime/Enemy Hitbox trifft Player Hurtbox
 	if not area.is_in_group("enemy_hitbox"):
+		return
+
+	var enemy := area.get_parent() as CharacterBody2D
+	if enemy == null:
+		return
+
+	var dangerous: bool = (
+	not enemy.is_on_floor()
+	or abs(enemy.velocity.x) > 30
+	or enemy.velocity.y > 40
+	)
+
+
+	if not dangerous:
 		return
 
 	take_damage(touch_damage)
 	apply_knockback(area.global_position)
+
+	apply_knockback(area.global_position)
+
 
 func apply_knockback(from_pos: Vector2) -> void:
 	kb_time = knockback_lock

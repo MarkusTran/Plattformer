@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://ihuodpriesg6" path="res://asset/selfMadeAsset/WhatsApp_Image_2026-01-27_at_12.06.31-removebg-preview.png" id="2_qpgc2"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qpgc2"]
-radius = 21.0
+radius = 16.0
 height = 49.08
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v3vpr"]
-radius = 20.0
+radius = 16.0
 height = 50.0
 
 [node name="Player" type="CharacterBody2D"]

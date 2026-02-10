@@ -12,9 +12,18 @@ extends CharacterBody2D
 @export var stand_off: float = 26.0           # wie nah er "vor" dem Player landen will
 @export var max_hop_speed: float = 160.0      # clamp, damit er nicht "schießt"
 
+@export var hitbox_offset_x: float = 14.0  # tweak im Inspector
+
 @export var max_health: int = 60
 
 @onready var hitbox: Area2D = $Hitbox
+
+var last_facing_left := false
+
+@onready var flip_root: Node2D = $FlipRoot
+@onready var anim: AnimatedSprite2D = $FlipRoot/AnimatedSprite2D
+
+
 
 var gravity: float = float(ProjectSettings.get_setting("physics/2d/default_gravity"))
 var jump_timer := 0.0
@@ -28,6 +37,8 @@ func _ready() -> void:
 
 	if not player:
 		find_player()
+	
+	anim.play("default")
 
 func find_player() -> void:
 	var players = get_tree().get_nodes_in_group(player_group)
@@ -58,7 +69,23 @@ func _physics_process(delta: float) -> void:
 		do_hop_towards_player()
 		jump_timer = jump_cooldown
 
+	update_anim_and_flip()
 	move_and_slide()
+
+func update_anim_and_flip() -> void:
+	if velocity.x > 5:
+		flip_root.scale.x = 1
+	elif velocity.x < -5:
+		flip_root.scale.x = -1
+
+	if not is_dead and (anim.animation != "default" or not anim.is_playing()):
+		anim.play("default")
+
+
+
+
+
+
 
 func do_hop_towards_player() -> void:
 	var dx = player.global_position.x - global_position.x
@@ -92,5 +119,11 @@ func take_damage(amount: int) -> void:
 		die()
 
 func die() -> void:
+	if is_dead:
+		return
 	is_dead = true
+
+	velocity = Vector2.ZERO
+	anim.play("death")
+	await anim.animation_finished
 	queue_free()
