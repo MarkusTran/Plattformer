@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cepwi1e0uv1vo"]
+
+[ext_resource type="Script" uid="uid://xjdyqxotvc7v" path="res://Kerim/Scripts/healthbar.gd" id="1_hgrtt"]
+
+[node name="CanvasLayer" type="CanvasLayer"]
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+offset_right = 4.0
+offset_bottom = 27.0
+script = ExtResource("1_hgrtt")
+metadata/_edit_use_anchors_ = true
