@@ -18,7 +18,6 @@ extends Node2D
 
 
 
-
 var despawn_queued := false
 
 var flying := false
