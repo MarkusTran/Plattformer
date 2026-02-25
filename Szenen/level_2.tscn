@@ -1786,6 +1786,7 @@ process_mode = 1
 process_mode = 3
 
 [node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("8_r0ku2")]
+metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("2_7bco8")]
 position = Vector2(1901, -621)
