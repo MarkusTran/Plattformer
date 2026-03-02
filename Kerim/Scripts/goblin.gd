@@ -1,113 +1,166 @@
 extends CharacterBody2D
-
 class_name GoblinEnemy
 
-const speed = 30
-var is_goblin_chase: bool = true
+const SPEED := 30.0
+const GRAVITY := 900.0
 
-var health = 80
-var health_max = 80
-var health_min = 0
+@export var damage_to_deal: int = 20
+@export var attack_cooldown: float = 1.0
+@export var attack_distance: float = 45.0
 
-var dead: bool = false
-var taking_damage: bool = false
-var damage_to_deal = 20
-var is_dealing_damage: bool = false
+var health := 80
+var dead := false
+var taking_damage := false
 
-var dir : Vector2
-const gravitiy = 900
-var knockback_force = 200
-var is_roaming: bool = true
+var dir: Vector2 = Vector2.LEFT
+var player_in_range := false
+var is_attacking := false
+var can_attack := true
 
-var player_in_area = false
+@export var player: CharacterBody2D
 
-# Player wird nicht mehr im Inspektor zugewiesen, sondern über Global geholt
-@export var player: CharacterBody2D # Das @export erlaubt dir, den Player im Editor in den Slot zu ziehen
+@onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var anim_player: AnimationPlayer = $AnimationPlayer
+@onready var attack_hitbox: Area2D = $AttackHitbox
+@onready var hit_shape: CollisionShape2D = $AttackHitbox/CollisionShape2D
+@onready var attack_range: Area2D = $AttackRange
+
+var already_hit := {}
 
 func _ready() -> void:
-	# Hier holen wir uns den Player, der sich in seiner eigenen _ready() Funktion in Global registriert hat
 	player = Global.playerBody
 
-func _process(delta: float):
-	if !is_on_floor():
-		velocity.y += gravitiy * delta
+	# Hitbox standardmäßig AUS (sicher: monitoring + shape)
+	attack_hitbox.monitoring = false
+	attack_hitbox.monitorable = false
+	hit_shape.disabled = true
+
+	attack_range.body_entered.connect(_on_attack_range_body_entered)
+	attack_range.body_exited.connect(_on_attack_range_body_exited)
+	attack_hitbox.area_entered.connect(_on_attack_hitbox_area_entered)
+
+	anim_player.animation_finished.connect(_on_animation_finished)
+
+func _physics_process(delta: float) -> void:
+	if dead:
 		velocity.x = 0
-	
-	# Global.goblinDamageAmount... Zeilen WURDEN GELÖSCHT. Brauchst du mit deinem System nicht!
-	
-	move(delta)
-	handle_animation()
+		apply_gravity(delta)
+		move_and_slide()
+		return
+
+	apply_gravity(delta)
+
+	if player == null:
+		move_and_slide()
+		return
+
+	# Wenn wir gerade angreifen oder Schaden nehmen: nicht laufen/chasen
+	if taking_damage or is_attacking:
+		velocity.x = 0
+		move_and_slide()
+		return
+
+	# Basic Chase
+	var dx := player.global_position.x - global_position.x
+	dir.x = signf(dx) if dx != 0 else dir.x
+
+	update_facing()
+
+	if player_in_range and can_attack:
+		start_attack()
+	else:
+		velocity.x = dir.x * SPEED
+		anim_sprite.play("walk")
+
 	move_and_slide()
 
-func move(delta):
-	# Wichtig: Prüfen ob der player existiert, um Abstürze zu vermeiden
-	if !dead and player != null:
-		if !is_goblin_chase:
-			velocity += dir * speed * delta
-		elif is_goblin_chase and !taking_damage:
-			var dir_to_player = position.direction_to(player.position) * speed
-			velocity.x = dir_to_player.x
-			if velocity.x != 0:
-				dir.x = abs(velocity.x) / velocity.x
-		elif taking_damage:
-			var knockback_dir = position.direction_to(player.position) * knockback_force
-			velocity.x = -knockback_dir.x # Minus hinzugefügt, damit er vom Player WEG fliegt
-		is_roaming = true
-	elif dead:
-		velocity.x = 0
+func apply_gravity(delta: float) -> void:
+	if not is_on_floor():
+		velocity.y += GRAVITY * delta
 
-func handle_animation():
-	var anim_sprite = $AnimatedSprite2D
-	if !dead and !taking_damage and !is_dealing_damage:
-		anim_sprite.play("walk")
-		if dir.x == -1:
-			anim_sprite.flip_h = true
-		elif dir.x == 1:
-			anim_sprite.flip_h = false
-	elif !dead and taking_damage and !is_dealing_damage:
-		anim_sprite.play("hurt")
-		await get_tree().create_timer(0.6).timeout
-		taking_damage = false
-	elif dead and is_roaming:
-		is_roaming = false
+func update_facing() -> void:
+	if dir.x < 0:
+		anim_sprite.flip_h = true
+		attack_hitbox.scale.x = -abs(attack_hitbox.scale.x)
+	elif dir.x > 0:
+		anim_sprite.flip_h = false
+		attack_hitbox.scale.x = abs(attack_hitbox.scale.x)
+
+func start_attack() -> void:
+	if attack_distance > 0.0 and player != null:
+		if global_position.distance_to(player.global_position) > attack_distance:
+			return
+
+	is_attacking = true
+	can_attack = false
+	already_hit.clear()
+
+	velocity.x = 0
+
+	# Deine Sprite-Attack-Animation heißt "attack"
+	anim_sprite.play("attack")
+
+	# AnimationPlayer läuft parallel nur fürs Hitbox-Timing
+	anim_player.play("attack")
+
+	get_tree().create_timer(attack_cooldown).timeout.connect(func():
+		can_attack = true
+	)
+
+# Wird vom AnimationPlayer per Call-Method-Keyframe aufgerufen
+func enable_attack_hitbox() -> void:
+	attack_hitbox.monitorable = true
+	attack_hitbox.monitoring = true
+	hit_shape.disabled = false
+
+# Wird vom AnimationPlayer per Call-Method-Keyframe aufgerufen
+func disable_attack_hitbox() -> void:
+	attack_hitbox.monitoring = false
+	attack_hitbox.monitorable = false
+	hit_shape.disabled = true
+
+func _on_attack_hitbox_area_entered(area: Area2D) -> void:
+	if dead or not is_attacking:
+		return
+	if player == null:
+		return
+	if area != player.hurtbox:
+		return
+
+	if already_hit.has(player.get_instance_id()):
+		return
+
+	already_hit[player.get_instance_id()] = true
+	player.take_damage(damage_to_deal)
+
+func _on_animation_finished(anim_name: StringName) -> void:
+	if anim_name == &"attack":
+		disable_attack_hitbox()
+		is_attacking = false
+
+func _on_attack_range_body_entered(body: Node) -> void:
+	if body == player:
+		player_in_range = true
+
+func _on_attack_range_body_exited(body: Node) -> void:
+	if body == player:
+		player_in_range = false
+
+func take_damage(dmg: int) -> void:
+	if dead:
+		return
+
+	health -= dmg
+	taking_damage = true
+	anim_sprite.play("hurt")
+
+	if health <= 0:
+		health = 0
+		dead = true
 		anim_sprite.play("death")
 		await get_tree().create_timer(1.0).timeout
-		handle_death()
-	elif !dead and is_dealing_damage:
-		anim_sprite.play("deal_damage")
+		queue_free()
+		return
 
-func handle_death():
-	self.queue_free()
-
-func _on_direction_timer_timeout() -> void:
-	$DirectionTimer.wait_time = choose([1.5, 2.0, 2.5])
-	if !is_goblin_chase:
-		dir = choose([Vector2.RIGHT, Vector2.LEFT])
-		velocity.x = 0
-
-func choose(array):
-	array.shuffle()
-	return array.front()
-
-# Diese Funktion wird DIREKT von deinem "player_kerim.gd" Skript in der Zeile "body.take_damage(attack_damage)" aufgerufen!
-# Die alte _on_goblin_hitbox_area_entered Funktion wurde gelöscht, da sie Konflikte verursacht hat.
-func take_damage(damage):
-	health -= damage
-	taking_damage = true
-	if health <= health_min:
-		health = health_min
-		dead = true
-	print(str(self), " current health is: ", health)
-
-
-func _on_goblin_deal_damage_area_area_entered(area: Area2D) -> void:
-	# Wir prüfen direkt, ob die getroffene Area die Hurtbox des Players ist
-	if player != null and area == player.hurtbox:
-		is_dealing_damage = true
-		
-		# Wir rufen direkt die take_damage Funktion beim Player auf
-		player.take_damage(damage_to_deal)
-		
-		# Kleiner Cooldown für die Animation
-		await get_tree().create_timer(1.0).timeout
-		is_dealing_damage = false
+	await get_tree().create_timer(0.4).timeout
+	taking_damage = false

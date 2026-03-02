@@ -147,7 +147,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_86kxi")
 }],
 "loop": true,
-"name": &"deal_damage",
+"name": &"attack",
 "speed": 7.0
 }, {
 "frames": [{
@@ -235,24 +235,71 @@ animations = [{
 radius = 11.0
 height = 38.0
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_en0hv"]
-radius = 12.0
-height = 42.0
+[sub_resource type="Animation" id="Animation_2rnhs"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_2rnhs"]
-radius = 22.0
-height = 44.0
+[sub_resource type="Animation" id="Animation_en0hv"]
+resource_name = "attack"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.35, 0.45),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"enable_attack_hitbox"
+}, {
+"args": [],
+"method": &"disable_attack_hitbox"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:animation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [&"attack"]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_2rnhs"]
+_data = {
+&"RESET": SubResource("Animation_2rnhs"),
+&"attack": SubResource("Animation_en0hv")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_en0hv"]
+size = Vector2(20, 37)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2rnhs"]
+radius = 40.012497
 
 [node name="Goblin" type="CharacterBody2D" unique_id=1241335017]
 script = ExtResource("1_en0hv")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1035401899]
 sprite_frames = SubResource("SpriteFrames_pfdpr")
-animation = &"deal_damage"
-frame = 4
-frame_progress = 0.20858659
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D" unique_id=2513199]
+animation = &"attack"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2006540111]
 position = Vector2(0, 8)
@@ -261,20 +308,21 @@ shape = SubResource("CapsuleShape2D_vp6d5")
 [node name="DirectionTimer" type="Timer" parent="." unique_id=1294698168]
 autostart = true
 
-[node name="GoblinHitbox" type="Area2D" parent="." unique_id=1096820127]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=2513199]
+root_node = NodePath("../AnimatedSprite2D")
+libraries/ = SubResource("AnimationLibrary_2rnhs")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GoblinHitbox" unique_id=2019473945]
-position = Vector2(0, 6)
-shape = SubResource("CapsuleShape2D_en0hv")
+[node name="AttackHitbox" type="Area2D" parent="." unique_id=1126591982]
+monitoring = false
 
-[node name="GoblinDealDamageArea" type="Area2D" parent="." unique_id=2040980833 groups=["enemy_hitbox"]]
-collision_layer = 35
-collision_mask = 9
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=1439864127]
+position = Vector2(21, 8.5)
+shape = SubResource("RectangleShape2D_en0hv")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GoblinDealDamageArea" unique_id=1061904193]
-position = Vector2(0, 6)
-shape = SubResource("CapsuleShape2D_2rnhs")
+[node name="AttackRange" type="Area2D" parent="." unique_id=1971381716]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=773157390]
+position = Vector2(0, 8)
+shape = SubResource("CircleShape2D_2rnhs")
 
 [connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]
-[connection signal="area_entered" from="GoblinHitbox" to="." method="_on_goblin_hitbox_area_entered"]
-[connection signal="area_entered" from="GoblinDealDamageArea" to="." method="_on_goblin_deal_damage_area_area_entered"]

@@ -96,23 +96,45 @@ func reset_arrow() -> void:
 # Haupt-Loop: schießen -> warten -> schießen ...
 # ---------------------------
 func _shoot_loop() -> void:
-	while is_inside_tree():
+	while true:
+		if !is_inside_tree():
+			return
+
+		var tree := get_tree()
+		if tree == null:
+			return
+
 		# 1) Animation starten und auf Fire-Frame warten
 		waiting_for_fire_frame = true
 		spitter.play(shoot_anim)
 
 		# warten bis der Pfeil wirklich gespawnt wurde
-		while waiting_for_fire_frame and is_inside_tree():
-			await get_tree().process_frame
+		while waiting_for_fire_frame:
+			if !is_inside_tree():
+				return
+			tree = get_tree()
+			if tree == null:
+				return
+			await tree.process_frame
 
 		# 2) Pfeil fliegt für arrow_fly_time
-		await get_tree().create_timer(arrow_fly_time).timeout
+		if !is_inside_tree():
+			return
+		tree = get_tree()
+		if tree == null:
+			return
+		await tree.create_timer(arrow_fly_time).timeout
+		if !is_inside_tree():
+			return
 		request_despawn()
 
-
 		# 3) Cooldown/Pause
-		await get_tree().create_timer(cooldown).timeout
-
+		if !is_inside_tree():
+			return
+		tree = get_tree()
+		if tree == null:
+			return
+		await tree.create_timer(cooldown).timeout
 
 func _on_spitter_frame_changed() -> void:
 	if not waiting_for_fire_frame:
