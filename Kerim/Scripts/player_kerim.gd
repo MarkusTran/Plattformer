@@ -27,6 +27,7 @@ var last_hit_time_by_enemy := {}  # Dictionary
 
 
 func _ready() -> void:
+	Global.playerBody = self
 	current_health = max_health
 	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
 
@@ -61,6 +62,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
+	print("Etwas hat die Hurtbox berührt: ", area.name) # FÜGE DIESE ZEILE EIN
 	if not area.is_in_group("enemy_hitbox"):
 		return
 
@@ -69,9 +71,9 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		return
 
 	var dangerous: bool = (
-	not enemy.is_on_floor()
-	or abs(enemy.velocity.x) > 30
-	or enemy.velocity.y > 40
+		not enemy.is_on_floor()
+		or abs(enemy.velocity.x) >= 30
+		or enemy.velocity.y > 40
 	)
 
 
@@ -79,8 +81,6 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		return
 
 	take_damage(touch_damage)
-	apply_knockback(area.global_position)
-
 	apply_knockback(area.global_position)
 
 
