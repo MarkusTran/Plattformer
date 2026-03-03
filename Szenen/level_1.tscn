@@ -938,7 +938,7 @@ animations = [{
 position = Vector2(-588, -1278)
 scale = Vector2(2.5, 2.5)
 
-[node name="Player" parent="." unique_id=167997573 groups=["player"] instance=ExtResource("2_epa2t")]
+[node name="Player" parent="." unique_id=167997573 instance=ExtResource("2_epa2t")]
 z_index = 1
 position = Vector2(-111, 156)
 

@@ -21,8 +21,10 @@ var can_attack := true
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
+
 @onready var attack_hitbox: Area2D = $AttackHitbox
-@onready var hit_shape: CollisionShape2D = $AttackHitbox/CollisionShape2D
+@onready var hit_shape1: CollisionShape2D = $AttackHitbox/CollisionShape2D
+@onready var hit_shape2: CollisionShape2D = $AttackHitbox/CollisionShape2D2
 @onready var attack_range: Area2D = $AttackRange
 
 var already_hit := {}
@@ -30,16 +32,16 @@ var already_hit := {}
 func _ready() -> void:
 	player = Global.playerBody
 
-	# Hitbox standardmäßig AUS (sicher: monitoring + shape)
+	if player == null:
+		player = get_tree().get_first_node_in_group("player") as CharacterBody2D
+
+	# Hitbox standardmäßig AUS
 	attack_hitbox.monitoring = false
 	attack_hitbox.monitorable = false
-	hit_shape.disabled = true
+	hit_shape1.disabled = true
+	hit_shape2.disabled = true
 
-	attack_range.body_entered.connect(_on_attack_range_body_entered)
-	attack_range.body_exited.connect(_on_attack_range_body_exited)
-	attack_hitbox.area_entered.connect(_on_attack_hitbox_area_entered)
 
-	anim_player.animation_finished.connect(_on_animation_finished)
 
 func _physics_process(delta: float) -> void:
 	if dead:
@@ -54,18 +56,25 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
-	# Wenn wir gerade angreifen oder Schaden nehmen: nicht laufen/chasen
+	# Während Attack/Hurt nix überschreiben
 	if taking_damage or is_attacking:
 		velocity.x = 0
 		move_and_slide()
 		return
 
-	# Basic Chase
+	# Chase Richtung
 	var dx := player.global_position.x - global_position.x
 	dir.x = signf(dx) if dx != 0 else dir.x
-
 	update_facing()
 
+	print("STATE:",
+		" in_range=", player_in_range,
+		" can_attack=", can_attack,
+		" taking=", taking_damage,
+		" attacking=", is_attacking
+	)
+
+	# Attack starten
 	if player_in_range and can_attack:
 		start_attack()
 	else:
@@ -87,6 +96,15 @@ func update_facing() -> void:
 		attack_hitbox.scale.x = abs(attack_hitbox.scale.x)
 
 func start_attack() -> void:
+	# optionaler Distanz-Check zusätzlich zur Range
+	print("START_ATTACK CALLED")
+	
+	var dist := global_position.distance_to(player.global_position)
+	print("DIST=", dist, " attack_distance=", attack_distance)
+	if dist > attack_distance:
+		print("TOO FAR -> RETURN")
+		return
+	
 	if attack_distance > 0.0 and player != null:
 		if global_position.distance_to(player.global_position) > attack_distance:
 			return
@@ -97,29 +115,34 @@ func start_attack() -> void:
 
 	velocity.x = 0
 
-	# Deine Sprite-Attack-Animation heißt "attack"
+	# Sprite-Attack Animation
 	anim_sprite.play("attack")
 
-	# AnimationPlayer läuft parallel nur fürs Hitbox-Timing
+	# AnimationPlayer nur fürs Hitbox-Timing (Call-Keys)
 	anim_player.play("attack")
 
 	get_tree().create_timer(attack_cooldown).timeout.connect(func():
 		can_attack = true
 	)
 
-# Wird vom AnimationPlayer per Call-Method-Keyframe aufgerufen
+# Diese 2 Funktionen werden vom AnimationPlayer per Call-Method-Keyframe aufgerufen
 func enable_attack_hitbox() -> void:
+	print("ENABLE HITBOX")
 	attack_hitbox.monitorable = true
 	attack_hitbox.monitoring = true
-	hit_shape.disabled = false
+	hit_shape1.disabled = false
+	hit_shape2.disabled = false
 
-# Wird vom AnimationPlayer per Call-Method-Keyframe aufgerufen
 func disable_attack_hitbox() -> void:
+	print("DISABLE HITBOX")
 	attack_hitbox.monitoring = false
 	attack_hitbox.monitorable = false
-	hit_shape.disabled = true
+	hit_shape1.disabled = true
+	hit_shape2.disabled = true
+
 
 func _on_attack_hitbox_area_entered(area: Area2D) -> void:
+	print("HITBOX ENTER:", area.name)
 	if dead or not is_attacking:
 		return
 	if player == null:
@@ -127,10 +150,12 @@ func _on_attack_hitbox_area_entered(area: Area2D) -> void:
 	if area != player.hurtbox:
 		return
 
-	if already_hit.has(player.get_instance_id()):
+	# nur 1x pro Swing
+	var pid := player.get_instance_id()
+	if already_hit.has(pid):
 		return
 
-	already_hit[player.get_instance_id()] = true
+	already_hit[pid] = true
 	player.take_damage(damage_to_deal)
 
 func _on_animation_finished(anim_name: StringName) -> void:
@@ -139,10 +164,14 @@ func _on_animation_finished(anim_name: StringName) -> void:
 		is_attacking = false
 
 func _on_attack_range_body_entered(body: Node) -> void:
-	if body == player:
+	print("RANGE ENTER:", body.name)
+	if body.is_in_group("player"):
+		player = body as CharacterBody2D
 		player_in_range = true
+		print("PLAYER IN RANGE TRUE")
 
 func _on_attack_range_body_exited(body: Node) -> void:
+	print("RANGE EXIT:", body.name)
 	if body == player:
 		player_in_range = false
 
