@@ -11,6 +11,9 @@ height = 49.08
 radius = 16.0
 height = 50.0
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qpgc2"]
+size = Vector2(20, 45)
+
 [node name="Player" type="CharacterBody2D" unique_id=1026605407 groups=["player", "player_hurtbox"]]
 collision_layer = 2
 script = ExtResource("1_qpgc2")
@@ -39,3 +42,12 @@ collision_mask = 35
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=751352323]
 position = Vector2(0, -24)
 shape = SubResource("CapsuleShape2D_v3vpr")
+
+[node name="AttackHitbox" type="Area2D" parent="." unique_id=2055172757]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=234569257]
+position = Vector2(18, -22.5)
+shape = SubResource("RectangleShape2D_qpgc2")
+
+[connection signal="body_entered" from="AttackHitbox" to="." method="_on_attack_hitbox_body_entered"]

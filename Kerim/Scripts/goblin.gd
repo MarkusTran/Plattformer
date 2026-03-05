@@ -17,6 +17,8 @@ var player_in_range := false
 var is_attacking := false
 var can_attack := true
 
+var hit_lock := false
+
 @export var player: CharacterBody2D
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
@@ -26,6 +28,9 @@ var can_attack := true
 @onready var hit_shape1: CollisionShape2D = $AttackHitbox/CollisionShape2D
 @onready var hit_shape2: CollisionShape2D = $AttackHitbox/CollisionShape2D2
 @onready var attack_range: Area2D = $AttackRange
+
+@export var hurt_invuln_time: float = 0.35
+var invulnerable := false
 
 var already_hit := {}
 
@@ -56,8 +61,14 @@ func _physics_process(delta: float) -> void:
 		move_and_slide()
 		return
 
-	# Während Attack/Hurt nix überschreiben
-	if taking_damage or is_attacking:
+	# Hurt hat Priorität (Animation darf nicht überschrieben werden)
+	if taking_damage:
+		velocity.x = 0
+		move_and_slide()
+		return
+
+	# Attack läuft gerade
+	if is_attacking:
 		velocity.x = 0
 		move_and_slide()
 		return
@@ -96,18 +107,20 @@ func update_facing() -> void:
 		attack_hitbox.scale.x = abs(attack_hitbox.scale.x)
 
 func start_attack() -> void:
-	# optionaler Distanz-Check zusätzlich zur Range
+	if dead or taking_damage:
+		return
+
 	print("START_ATTACK CALLED")
-	
+
+	if player == null:
+		return
+
 	var dist := global_position.distance_to(player.global_position)
 	print("DIST=", dist, " attack_distance=", attack_distance)
+
 	if dist > attack_distance:
 		print("TOO FAR -> RETURN")
 		return
-	
-	if attack_distance > 0.0 and player != null:
-		if global_position.distance_to(player.global_position) > attack_distance:
-			return
 
 	is_attacking = true
 	can_attack = false
@@ -118,27 +131,24 @@ func start_attack() -> void:
 	# Sprite-Attack Animation
 	anim_sprite.play("attack")
 
-	# AnimationPlayer nur fürs Hitbox-Timing (Call-Keys)
+	# AnimationPlayer nur fürs Hitbox-Timing
 	anim_player.play("attack")
 
 	get_tree().create_timer(attack_cooldown).timeout.connect(func():
 		can_attack = true
 	)
 
-# Diese 2 Funktionen werden vom AnimationPlayer per Call-Method-Keyframe aufgerufen
 func enable_attack_hitbox() -> void:
-	print("ENABLE HITBOX")
-	attack_hitbox.monitorable = true
-	attack_hitbox.monitoring = true
-	hit_shape1.disabled = false
-	hit_shape2.disabled = false
+	call_deferred("_set_attack_hitbox_enabled", true)
 
 func disable_attack_hitbox() -> void:
-	print("DISABLE HITBOX")
-	attack_hitbox.monitoring = false
-	attack_hitbox.monitorable = false
-	hit_shape1.disabled = true
-	hit_shape2.disabled = true
+	call_deferred("_set_attack_hitbox_enabled", false)
+
+func _set_attack_hitbox_enabled(enabled: bool) -> void:
+	attack_hitbox.set_deferred("monitoring", enabled)
+	attack_hitbox.set_deferred("monitorable", enabled)
+	hit_shape1.set_deferred("disabled", not enabled)
+	hit_shape2.set_deferred("disabled", not enabled)
 
 
 func _on_attack_hitbox_area_entered(area: Area2D) -> void:
@@ -176,20 +186,34 @@ func _on_attack_range_body_exited(body: Node) -> void:
 		player_in_range = false
 
 func take_damage(dmg: int) -> void:
-	if dead:
+	if dead or hit_lock:
 		return
 
+	hit_lock = true
 	health -= dmg
-	taking_damage = true
-	anim_sprite.play("hurt")
 
 	if health <= 0:
-		health = 0
+		# HART: sofort alles stoppen, damit death nicht 2x startet
 		dead = true
+		taking_damage = true
+		is_attacking = false
+		can_attack = false
+		player_in_range = false
+		disable_attack_hitbox()
+
 		anim_sprite.play("death")
-		await get_tree().create_timer(1.0).timeout
+		await anim_sprite.animation_finished
 		queue_free()
 		return
 
-	await get_tree().create_timer(0.4).timeout
+	# sonst normal hurt
+	taking_damage = true
+	is_attacking = false
+	disable_attack_hitbox()
+
+	anim_sprite.play("hurt")
+	await anim_sprite.animation_finished
 	taking_damage = false
+
+	await get_tree().create_timer(hurt_invuln_time).timeout
+	hit_lock = false
