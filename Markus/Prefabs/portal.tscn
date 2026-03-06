@@ -1,6 +1,8 @@
-[gd_scene load_steps=39 format=3 uid="uid://0urdtviua2jj"]
+[gd_scene format=3 uid="uid://0urdtviua2jj"]
 
-[ext_resource type="Texture2D" uid="uid://dh5d50f1qoj6i" path="res://asset/piaAssets/spites/Portal-Sheet.png" id="1_axk8p"]
+[ext_resource type="Texture2D" uid="uid://b86y4p818xi5i" path="res://asset/Pia/Assets/Portal2-Sheet.png" id="1_axk8p"]
+[ext_resource type="Script" uid="uid://b8qvmi563lob4" path="res://Markus/scripts/portal.gd" id="1_w3b6x"]
+[ext_resource type="PackedScene" uid="uid://hxiccpuvwdu4" path="res://Markus/Prefabs/interaction_area.tscn" id="3_cfkym"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_l8anl"]
 atlas = ExtResource("1_axk8p")
@@ -54,98 +56,6 @@ region = Rect2(1056, 0, 96, 96)
 atlas = ExtResource("1_axk8p")
 region = Rect2(1152, 0, 96, 96)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_gac4q"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(1248, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tsgie"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(1344, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kp72k"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(1440, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_d88cj"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(1536, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sij2a"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(1632, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gp2su"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(1728, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_r1b7v"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(1824, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jxcap"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(1920, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a2ldk"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(2016, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pqvhw"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(2112, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6skmm"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(2208, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f75ik"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(2304, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4jron"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(2400, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ius75"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(2496, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vjt6y"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(2592, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_84bb3"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(2688, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h45nr"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(2784, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_b2kp0"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(2880, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_l4x2d"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(2976, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mqlrs"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(3072, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_11vu3"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(3168, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jl5dm"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(3264, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_siorb"]
-atlas = ExtResource("1_axk8p")
-region = Rect2(3360, 0, 96, 96)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_7th3c"]
 animations = [{
 "frames": [{
@@ -187,83 +97,22 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_twt61")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gac4q")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tsgie")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_kp72k")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_d88cj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_sij2a")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gp2su")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_r1b7v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jxcap")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a2ldk")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pqvhw")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6skmm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f75ik")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_4jron")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ius75")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vjt6y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_84bb3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h45nr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_b2kp0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_l4x2d")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mqlrs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_11vu3")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jl5dm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_siorb")
 }],
 "loop": true,
-"name": &"default",
-"speed": 36.0
+"name": &"new_animation",
+"speed": 32.0
 }]
 
-[node name="Node2D" type="Node2D"]
+[node name="portal" type="Node2D" unique_id=169531480]
+script = ExtResource("1_w3b6x")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1244105837]
 sprite_frames = SubResource("SpriteFrames_7th3c")
-frame_progress = 0.262825
+animation = &"new_animation"
+frame_progress = 0.9984244
+
+[node name="interactable_Area" parent="." unique_id=1486016986 instance=ExtResource("3_cfkym")]
+position = Vector2(0, 8.000001)
+scale = Vector2(5.780157, 5.780157)
+interact_label = "Next Stage"
+interact_type = "portal"

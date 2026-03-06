@@ -17,8 +17,6 @@ func interact(player):
 func open_chest():
 	sprite.play("open")
 	sprite.stop()
-	# oder:
-	# sprite.texture = preload("res://chest_open.png")
 
 func give_loot(player):
 	player.add_coins(coins)

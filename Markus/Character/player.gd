@@ -80,10 +80,10 @@ func update_interaction():
 	else:
 		interactLabel.text = ""
 		
+		
 func execute_interaction():
 	if all_interactions.is_empty():
 		return
-
 	var cur_interaction = all_interactions[0]
 
 	match cur_interaction.interact_type:
@@ -93,6 +93,10 @@ func execute_interaction():
 			var chest = cur_interaction.get_parent()
 			if chest.has_method("interact"):
 				chest.interact(self)
+		"portal":
+			var portal = cur_interaction.get_parent()
+			if portal.has_method("interact"):
+				portal.interact(self)
 				
 func add_coins(amount : int):
 	coins += amount

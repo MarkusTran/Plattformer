@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cnbrebdm25yew"]
+[gd_scene format=3 uid="uid://cnbrebdm25yew"]
 
 [ext_resource type="Script" uid="uid://dejcppmpdvvr2" path="res://Markus/scripts/chest.gd" id="1_5hxsa"]
 [ext_resource type="Texture2D" uid="uid://85i5t4cdfqdk" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Assets/Tiles.png" id="1_fg4vh"]
@@ -31,13 +31,13 @@ animations = [{
 "speed": 1.0
 }]
 
-[node name="chest" type="Node2D"]
+[node name="chest" type="Node2D" unique_id=2036005073]
 script = ExtResource("1_5hxsa")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1401086452]
 sprite_frames = SubResource("SpriteFrames_2jbn4")
 
-[node name="interactable_Area" parent="." node_paths=PackedStringArray("animatiedSprite2d") instance=ExtResource("2_vuy64")]
+[node name="interactable_Area" parent="." unique_id=1671576449 node_paths=PackedStringArray("animatiedSprite2d") instance=ExtResource("2_vuy64")]
 scale = Vector2(1.63003, 1.63003)
 interact_label = "chest"
 interact_type = "chest"
