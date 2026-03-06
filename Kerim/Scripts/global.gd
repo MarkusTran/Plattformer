@@ -1,3 +1,3 @@
 extends Node
 
-var playerBody: CharacterBody2D
+var playerBody: CharacterBody2D = null
