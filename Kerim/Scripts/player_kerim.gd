@@ -18,6 +18,7 @@ var current_health: int
 var invincible := false
 var is_attacking := false
 var already_hit := {}  # instance_id -> true
+var is_dead := false
 
 var kb_time := 0.0
 
@@ -29,17 +30,20 @@ var last_hit_time_by_enemy := {}  # Dictionary
 @onready var attack_hitbox: Area2D = $AttackHitbox
 @onready var attack_shape: CollisionShape2D = $AttackHitbox/CollisionShape2D
 
-
 func _ready() -> void:
 	Global.playerBody = self
 	current_health = max_health
+
 	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
-	
+
 	attack_hitbox.monitoring = false
 	attack_hitbox.monitorable = false
 	attack_shape.disabled = true
 
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		return
+
 	# Knockback lock: kurz keine Inputs
 	if kb_time > 0.0:
 		kb_time -= delta
@@ -70,7 +74,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func start_attack() -> void:
-	if is_attacking:
+	if is_attacking or is_dead:
 		return
 
 	is_attacking = true
@@ -81,7 +85,9 @@ func start_attack() -> void:
 	attack_shape.disabled = false
 
 	await get_tree().create_timer(0.15).timeout
-	end_attack()
+
+	if is_inside_tree():
+		end_attack()
 
 func end_attack() -> void:
 	is_attacking = false
@@ -107,7 +113,11 @@ func _on_attack_hitbox_body_entered(body: Node) -> void:
 	body.take_damage(attack_damage)
 
 func _on_hurtbox_area_entered(area: Area2D) -> void:
-	print("Etwas hat die Hurtbox berührt: ", area.name) # FÜGE DIESE ZEILE EIN
+	print("Etwas hat die Hurtbox berührt: ", area.name)
+
+	if is_dead:
+		return
+
 	if not area.is_in_group("enemy_hitbox"):
 		return
 
@@ -121,62 +131,76 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 		or enemy.velocity.y > 40
 	)
 
-
 	if not dangerous:
 		return
 
-	take_damage(touch_damage)
-	apply_knockback(area.global_position)
+	take_damage(touch_damage, _get_knockback_dir_from_position(area.global_position))
 
+func _get_knockback_dir_from_position(from_pos: Vector2) -> Vector2:
+	var dir_x: float = sign(global_position.x - from_pos.x)
+	if dir_x == 0:
+		dir_x = 1
+	return Vector2(dir_x, -0.7).normalized()
 
 func apply_knockback(from_pos: Vector2) -> void:
 	kb_time = knockback_lock
-	var dir = sign(global_position.x - from_pos.x)
-	if dir == 0:
-		dir = 1
+	var dir: float = sign(global_position.x - from_pos.x)
+	if dir == 0.0:
+		dir = 1.0
 	velocity.x = dir * knockback_x
 	velocity.y = -abs(knockback_y)
 
-#func attack() -> void:
-	#is_attacking = true
-#
-	#var space_state = get_world_2d().direct_space_state
-	#var query = PhysicsShapeQueryParameters2D.new()
-#
-	#var shape = CircleShape2D.new()
-	#shape.radius = attack_range
-	#query.shape = shape
-	#query.transform = global_transform
-	#query.collide_with_areas = false
-	#query.collide_with_bodies = true
-#
-	#var results = space_state.intersect_shape(query)
-	#for result in results:
-		#var body = result.collider
-		#if body != self and body.has_method("take_damage"):
-			#body.take_damage(attack_damage)
-#
-	#await get_tree().create_timer(0.5).timeout
-	#is_attacking = false
+func apply_knockback_dir(dir: Vector2) -> void:
+	kb_time = knockback_lock
 
-func take_damage(amount: int) -> void:
+	var final_dir := dir
+	if final_dir == Vector2.ZERO:
+		final_dir = Vector2(1, -0.7)
+
+	final_dir = final_dir.normalized()
+
+	velocity.x = final_dir.x * knockback_x
+	velocity.y = final_dir.y * knockback_y
+
+	if velocity.y > 0:
+		velocity.y = -abs(knockback_y)
+
+func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 	if invincible:
+		return
+	if is_dead:
 		return
 
 	invincible = true
 	current_health -= amount
 	print("Player nimmt ", amount, " Schaden! Health: ", current_health)
 
-	modulate = Color.RED
-	await get_tree().create_timer(0.1).timeout
-	modulate = Color.WHITE
-
-	await get_tree().create_timer(invincible_time).timeout
-	invincible = false
+	if knockback_dir != Vector2.ZERO:
+		apply_knockback_dir(knockback_dir)
 
 	if current_health <= 0:
 		die()
+		return
+
+	modulate = Color.RED
+	await get_tree().create_timer(0.1).timeout
+
+	if not is_inside_tree() or is_dead:
+		return
+
+	modulate = Color.WHITE
+
+	await get_tree().create_timer(invincible_time).timeout
+
+	if not is_inside_tree() or is_dead:
+		return
+
+	invincible = false
 
 func die() -> void:
+	if is_dead:
+		return
+
+	is_dead = true
 	print("Player ist gestorben!")
 	get_tree().reload_current_scene()
