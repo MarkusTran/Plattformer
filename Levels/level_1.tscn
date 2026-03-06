@@ -6,7 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://cxplj6dvqcrsg" path="res://Kerim/Scenes/enemy_slime.tscn" id="4_nxv2u"]
 [ext_resource type="PackedScene" uid="uid://do1id5wextsgo" path="res://Kerim/Prefabs/spike_spitter.tscn" id="5_bq520"]
 [ext_resource type="Texture2D" uid="uid://dsv03y5qbtpk7" path="res://asset/Pia/Assets/Tiles.png" id="6_j87m1"]
-[ext_resource type="PackedScene" uid="uid://0urdtviua2jj" path="res://Markus/Prefabs/portal.tscn" id="7_0urlm"]
+[ext_resource type="Texture2D" uid="uid://b86y4p818xi5i" path="res://asset/Pia/Assets/Portal2-Sheet.png" id="7_bqrvq"]
+[ext_resource type="Script" uid="uid://d3i4qc4x8uot2" path="res://Szenen/portal.gd" id="8_ixj4a"]
+[ext_resource type="PackedScene" uid="uid://7bia2518okp2" path="res://Kerim/Prefabs/goblin.tscn" id="9_tp8u8"]
+[ext_resource type="PackedScene" uid="uid://dqt3ftvjw8dmx" path="res://Kerim/Prefabs/spike_trap.tscn" id="10_6mqsy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_nxv2u"]
 texture = ExtResource("3_3axe6")
@@ -837,7 +840,7 @@ sources/0 = SubResource("TileSetAtlasSource_bqrvq")
 position = Vector2(-588, -1278)
 scale = Vector2(2.5, 2.5)
 
-[node name="Player" parent="." unique_id=167997573 groups=["player"] instance=ExtResource("2_epa2t")]
+[node name="Player" parent="." unique_id=167997573 instance=ExtResource("2_epa2t")]
 z_index = 1
 position = Vector2(-111, 156)
 
@@ -872,5 +875,16 @@ tile_set = SubResource("TileSet_ixj4a")
 position = Vector2(5284, 36)
 fire_frame = 10
 
-[node name="portal" parent="." unique_id=169531480 instance=ExtResource("7_0urlm")]
-position = Vector2(5797, 9)
+[node name="Portal" type="AnimatedSprite2D" parent="." unique_id=1877293612]
+position = Vector2(5814, 11)
+sprite_frames = SubResource("SpriteFrames_p58tb")
+frame = 9
+frame_progress = 0.51008755
+script = ExtResource("8_ixj4a")
+
+[node name="Goblin" parent="." unique_id=1241335017 node_paths=PackedStringArray("player") instance=ExtResource("9_tp8u8")]
+position = Vector2(572, 127)
+player = NodePath("../Player")
+
+[node name="SpikeTrap" parent="." unique_id=628759233 instance=ExtResource("10_6mqsy")]
+position = Vector2(186, 147)
