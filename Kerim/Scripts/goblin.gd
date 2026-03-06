@@ -107,7 +107,7 @@ func update_facing() -> void:
 		attack_hitbox.scale.x = abs(attack_hitbox.scale.x)
 
 func start_attack() -> void:
-	if dead or taking_damage:
+	if dead or taking_damage or is_attacking:
 		return
 
 	print("START_ATTACK CALLED")
@@ -139,6 +139,8 @@ func start_attack() -> void:
 	)
 
 func enable_attack_hitbox() -> void:
+	if dead or taking_damage or not is_attacking:
+		return
 	call_deferred("_set_attack_hitbox_enabled", true)
 
 func disable_attack_hitbox() -> void:
@@ -192,28 +194,27 @@ func take_damage(dmg: int) -> void:
 	hit_lock = true
 	health -= dmg
 
+	# Attack sofort komplett abbrechen
+	is_attacking = false
+	can_attack = false
+	player_in_range = false
+	anim_player.stop()
+	disable_attack_hitbox()
+
 	if health <= 0:
-		# HART: sofort alles stoppen, damit death nicht 2x startet
 		dead = true
 		taking_damage = true
-		is_attacking = false
-		can_attack = false
-		player_in_range = false
-		disable_attack_hitbox()
 
 		anim_sprite.play("death")
 		await anim_sprite.animation_finished
 		queue_free()
 		return
 
-	# sonst normal hurt
 	taking_damage = true
-	is_attacking = false
-	disable_attack_hitbox()
-
 	anim_sprite.play("hurt")
 	await anim_sprite.animation_finished
 	taking_damage = false
 
 	await get_tree().create_timer(hurt_invuln_time).timeout
 	hit_lock = false
+	can_attack = true
