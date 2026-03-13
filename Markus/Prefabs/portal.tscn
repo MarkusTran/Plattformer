@@ -109,7 +109,8 @@ script = ExtResource("1_w3b6x")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1244105837]
 sprite_frames = SubResource("SpriteFrames_7th3c")
 animation = &"new_animation"
-frame_progress = 0.9984244
+autoplay = "new_animation"
+frame_progress = 0.27325276
 
 [node name="interactable_Area" parent="." unique_id=1486016986 instance=ExtResource("3_cfkym")]
 position = Vector2(0, 8.000001)

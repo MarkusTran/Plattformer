@@ -1,7 +1,6 @@
 [gd_scene format=4 uid="uid://die0fysuwp36i"]
 
 [ext_resource type="PackedScene" uid="uid://2yh0pm4e2i5q" path="res://UI/pause_menu.tscn" id="1_pml6m"]
-[ext_resource type="PackedScene" uid="uid://bolwst7ixtwd3" path="res://Markus/Character/Player.tscn" id="2_vltsr"]
 [ext_resource type="Texture2D" uid="uid://dukmuwdggwfoy" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Assets/Tree-Assets.png" id="3_rp5ft"]
 [ext_resource type="Texture2D" uid="uid://85i5t4cdfqdk" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Assets/Tiles.png" id="4_qeqk5"]
 [ext_resource type="Texture2D" uid="uid://nnk8h80e8lt5" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Assets/Buildings.png" id="5_1soli"]
@@ -1786,9 +1785,6 @@ process_mode = 3
 
 [node name="PauseMenu" parent="CanvasLayer" unique_id=1688104644 instance=ExtResource("1_pml6m")]
 metadata/_edit_use_anchors_ = true
-
-[node name="Player" parent="." unique_id=1937070159 instance=ExtResource("2_vltsr")]
-position = Vector2(3410, -542)
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=905527326]
 position = Vector2(40, 64)

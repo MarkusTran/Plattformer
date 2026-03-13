@@ -1,28 +1,25 @@
 extends State
-
 class_name AirState
 
-@export var landing_state : State
+@export var ground_state: State
 @export var double_jump_velocity: float = -360.0
-@export var double_jump_animation : String = "double_jump"
 
-var has_double_jump = false
+var has_double_jumped := false
 
-func state_process(delta):
-		if(character.is_on_floor()):
-			next_state = landing_state
-			
-func state_input(event : InputEvent):
-	if(event.is_action_pressed("jump") && !has_double_jump):
-		double_jump()
-		
-			
-func on_exit():
-	if(next_state == landing_state):
-		playback.travel("jump_end")
-		has_double_jump = false
+func on_enter() -> void:
+	character.sprite2d.play("hitAxe")
 
-func double_jump():
-	character.velocity.y = double_jump_velocity
-	has_double_jump = true
-	playback.travel(double_jump_animation)
+func state_process(delta: float) -> void:
+	# Sprite wechseln je nach ob steigend oder fallend
+	if character.velocity.y > 0:
+		character.sprite2d.play("hitFist")
+
+	if character.is_on_floor():
+		next_state = ground_state
+		has_double_jumped = false
+
+func state_input(event: InputEvent) -> void:
+	if event.is_action_pressed("jump") and not has_double_jumped:
+		character.velocity.y = double_jump_velocity
+		has_double_jumped = true
+		character.sprite2d.play("hitAxe")

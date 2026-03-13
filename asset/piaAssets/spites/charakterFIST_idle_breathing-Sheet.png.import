@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://osg31vlg3t0p"
-path="res://.godot/imported/charakterAXE_idle_breathing-Sheet.png-542c92522d7cff19996197b43f5f3c06.ctex"
+uid="uid://cg6442d4sfpl"
+path="res://.godot/imported/charakterFIST_idle_breathing-Sheet.png-18852170df8bc1f73e54a2b277598e14.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/piaAssets/spites/charakterAXE_idle_breathing-Sheet.png"
-dest_files=["res://.godot/imported/charakterAXE_idle_breathing-Sheet.png-542c92522d7cff19996197b43f5f3c06.ctex"]
+source_file="res://asset/piaAssets/spites/charakterFIST_idle_breathing-Sheet.png"
+dest_files=["res://.godot/imported/charakterFIST_idle_breathing-Sheet.png-18852170df8bc1f73e54a2b277598e14.ctex"]
 
 [params]
 

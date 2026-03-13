@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ct7n1t66qohmj"
-path="res://.godot/imported/charakterFISTrunning-Sheet.png-eacead47b4830087401464e0b65b6cc8.ctex"
+uid="uid://dua1ilorjp85n"
+path="res://.godot/imported/charakterAXE_double_jump2-Sheet.png-86b6320d7a9f66c9d5cd6a6b57e44ca9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://asset/piaAssets/spites/charakterFISTrunning-Sheet.png"
-dest_files=["res://.godot/imported/charakterFISTrunning-Sheet.png-eacead47b4830087401464e0b65b6cc8.ctex"]
+source_file="res://asset/piaAssets/spites/charakterAXE_double_jump2-Sheet.png"
+dest_files=["res://.godot/imported/charakterAXE_double_jump2-Sheet.png-86b6320d7a9f66c9d5cd6a6b57e44ca9.ctex"]
 
 [params]
 

@@ -1829,7 +1829,7 @@ process_mode = 3
 metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." unique_id=1945754732 instance=ExtResource("7_2m0m4")]
-position = Vector2(4308, -149)
+position = Vector2(8061, -874)
 
 [node name="portal" parent="." unique_id=169531480 instance=ExtResource("8_fa81k")]
 position = Vector2(8580, -790)
