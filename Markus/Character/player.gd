@@ -39,11 +39,26 @@ var direction := Vector2.ZERO
 @onready var interactLabel: Label = $"Interaction Comp/Label"
 @onready var all_interactions: Array = []
 
+#Attack
+@onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var attack_hitbox: Area2D = $AttackHitbox
+@onready var attack_shape: CollisionShape2D = $AttackHitbox/CollisionShape2D
+
+@export var attack_damage: int = 30
+var already_hit := {}
+
 
 func _ready() -> void:
-	Global.playerBody = self  # ← das ist alles was der Goblin braucht
+	Global.playerBody = self
 	current_health = max_health
 	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
+	
+	# body_entered statt area_entered!
+	attack_hitbox.body_entered.connect(_on_attack_hitbox_body_entered)
+	
+	attack_hitbox.monitoring = false
+	attack_hitbox.monitorable = false
+	attack_shape.disabled = true
 	update_interaction()
 	coinLabel.text = "Coin: %s" % coins
 
@@ -185,3 +200,30 @@ func die() -> void:
 	is_dead = true
 	state_machine.switch_states(dead_state)  # ← statt reload_current_scene
 	
+# Attack
+
+
+func enable_attack_hitbox() -> void:
+	already_hit.clear()
+	attack_hitbox.monitoring = true
+	attack_hitbox.monitorable = true
+	attack_shape.disabled = false
+	print("HITBOX AN - monitoring: ", attack_hitbox.monitoring)
+
+func end_attack() -> void:
+	attack_hitbox.monitoring = false
+	attack_hitbox.monitorable = false
+	attack_shape.disabled = true
+
+func _on_attack_hitbox_body_entered(body: Node) -> void:
+	print("BODY ENTERED: ", body.name)  # ← wird das überhaupt aufgerufen?
+	if body == self:
+		return
+	if not body.has_method("take_damage"):
+		print("hat keine take_damage methode")
+		return
+	var id := body.get_instance_id()
+	if already_hit.has(id):
+		return
+	already_hit[id] = true
+	body.take_damage(attack_damage)

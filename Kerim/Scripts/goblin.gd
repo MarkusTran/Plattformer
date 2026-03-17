@@ -81,12 +81,12 @@ func _physics_process(delta: float) -> void:
 	dir.x = signf(dx) if dx != 0 else dir.x
 	update_facing()
 
-	print("STATE:",
-		" in_range=", player_in_range,
-		" can_attack=", can_attack,
-		" taking=", taking_damage,
-		" attacking=", is_attacking
-	)
+	#print("STATE:",
+		#" in_range=", player_in_range,
+		#" can_attack=", can_attack,
+		#" taking=", taking_damage,
+		#" attacking=", is_attacking
+	#)
 
 	# Attack starten
 	if player_in_range and can_attack:
@@ -113,16 +113,16 @@ func start_attack() -> void:
 	if dead or taking_damage or is_attacking:
 		return
 
-	print("START_ATTACK CALLED")
+	#print("START_ATTACK CALLED")
 
 	if player == null:
 		return
 
 	var dist := global_position.distance_to(player.global_position)
-	print("DIST=", dist, " attack_distance=", attack_distance)
+	#print("DIST=", dist, " attack_distance=", attack_distance)
 
 	if dist > attack_distance:
-		print("TOO FAR -> RETURN")
+		#print("TOO FAR -> RETURN")
 		return
 
 	is_attacking = true
@@ -179,14 +179,14 @@ func _on_animation_finished(anim_name: StringName) -> void:
 		is_attacking = false
 
 func _on_attack_range_body_entered(body: Node) -> void:
-	print("RANGE ENTER:", body.name)
+	#print("RANGE ENTER:", body.name)
 	if body.is_in_group("player"):
 		player = body as CharacterBody2D
 		player_in_range = true
-		print("PLAYER IN RANGE TRUE")
+		#print("PLAYER IN RANGE TRUE")
 
 func _on_attack_range_body_exited(body: Node) -> void:
-	print("RANGE EXIT:", body.name)
+	#print("RANGE EXIT:", body.name)
 	if body == player:
 		player_in_range = false
 
