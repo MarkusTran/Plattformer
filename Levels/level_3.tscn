@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b4xmasnu0rhwy" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Assets/Hive.png" id="4_2m0m4"]
 [ext_resource type="Texture2D" uid="uid://rsfyueqw606s" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Assets/Props-Rocks.png" id="5_830r1"]
 [ext_resource type="PackedScene" uid="uid://2yh0pm4e2i5q" path="res://UI/pause_menu.tscn" id="6_3tv4g"]
-[ext_resource type="PackedScene" uid="uid://bolwst7ixtwd3" path="res://Markus/Character/Viking.tscn" id="7_2m0m4"]
+[ext_resource type="PackedScene" uid="uid://cdk3xek1f4r34" path="res://Markus/Character/MainWarrior.tscn" id="8_ck3gp"]
 [ext_resource type="PackedScene" uid="uid://0urdtviua2jj" path="res://Markus/Prefabs/portal.tscn" id="8_fa81k"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_l2xcl"]
@@ -1828,9 +1828,9 @@ process_mode = 3
 [node name="PauseMenu" parent="CanvasLayer" unique_id=1711495181 instance=ExtResource("6_3tv4g")]
 metadata/_edit_use_anchors_ = true
 
-[node name="Player" parent="." unique_id=1945754732 instance=ExtResource("7_2m0m4")]
-position = Vector2(8061, -874)
-
 [node name="portal" parent="." unique_id=169531480 instance=ExtResource("8_fa81k")]
 position = Vector2(8580, -790)
 connected_scene = "level_4"
+
+[node name="MarkusPlayer" parent="." unique_id=765685625 instance=ExtResource("8_ck3gp")]
+position = Vector2(8443, -766)

@@ -105,6 +105,7 @@ animations = [{
 
 [node name="portal" type="Node2D" unique_id=169531480]
 script = ExtResource("1_w3b6x")
+connected_scene = "level_2"
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1244105837]
 sprite_frames = SubResource("SpriteFrames_7th3c")

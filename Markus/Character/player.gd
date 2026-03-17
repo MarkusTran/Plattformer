@@ -52,7 +52,11 @@ var already_hit := {}
 func _ready() -> void:
 	Global.playerBody = self
 	current_health = max_health
-	hurtbox.area_entered.connect(_on_hurtbox_area_entered)
+	
+	if hurtbox != null:
+		hurtbox.area_entered.connect(_on_hurtbox_area_entered)
+	else:
+		push_error("Hurtbox Node nicht gefunden!")
 	
 	# body_entered statt area_entered!
 	attack_hitbox.body_entered.connect(_on_attack_hitbox_body_entered)
@@ -61,7 +65,7 @@ func _ready() -> void:
 	attack_hitbox.monitorable = false
 	attack_shape.disabled = true
 	update_interaction()
-	coinLabel.text = "Coin: %s" % coins
+	_update_Hud()
 
 func _update_Hud() -> void:
 	coinLabel.text = "Coin: %s" % coins

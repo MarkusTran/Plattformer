@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://b4xmasnu0rhwy" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Assets/Hive.png" id="4_jj4ty"]
 [ext_resource type="Texture2D" uid="uid://rsfyueqw606s" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Assets/Props-Rocks.png" id="5_77dl6"]
 [ext_resource type="PackedScene" uid="uid://2yh0pm4e2i5q" path="res://UI/pause_menu.tscn" id="6_w4xgh"]
-[ext_resource type="PackedScene" uid="uid://bolwst7ixtwd3" path="res://Markus/Character/Viking.tscn" id="7_jj4ty"]
+[ext_resource type="PackedScene" uid="uid://cdk3xek1f4r34" path="res://Markus/Character/MainWarrior.tscn" id="8_fqog2"]
 [ext_resource type="PackedScene" uid="uid://cnbrebdm25yew" path="res://Markus/Prefabs/chest.tscn" id="8_jj4ty"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_l2xcl"]
@@ -1794,8 +1794,8 @@ process_mode = 3
 [node name="PauseMenu" parent="CanvasLayer" unique_id=19706754 instance=ExtResource("6_w4xgh")]
 metadata/_edit_use_anchors_ = true
 
-[node name="Player" parent="." unique_id=1849763417 instance=ExtResource("7_jj4ty")]
-position = Vector2(-843, -780)
-
 [node name="chest" parent="." unique_id=1171592132 instance=ExtResource("8_jj4ty")]
 position = Vector2(1949, -959)
+
+[node name="MarkusPlayer" parent="." unique_id=765685625 instance=ExtResource("8_fqog2")]
+position = Vector2(-868, -791)

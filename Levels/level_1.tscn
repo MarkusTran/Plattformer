@@ -5,10 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://cxplj6dvqcrsg" path="res://Kerim/Scenes/enemy_slime.tscn" id="4_nxv2u"]
 [ext_resource type="PackedScene" uid="uid://do1id5wextsgo" path="res://Kerim/Prefabs/spike_spitter.tscn" id="5_bq520"]
 [ext_resource type="Texture2D" uid="uid://dsv03y5qbtpk7" path="res://asset/Pia/Assets/Tiles.png" id="6_j87m1"]
-[ext_resource type="Texture2D" uid="uid://b86y4p818xi5i" path="res://asset/Pia/Assets/Portal2-Sheet.png" id="7_bqrvq"]
-[ext_resource type="Script" uid="uid://b8qvmi563lob4" path="res://Markus/scripts/portal.gd" id="8_ixj4a"]
 [ext_resource type="PackedScene" uid="uid://7bia2518okp2" path="res://Kerim/Prefabs/goblin.tscn" id="9_tp8u8"]
 [ext_resource type="PackedScene" uid="uid://dqt3ftvjw8dmx" path="res://Kerim/Prefabs/spike_trap.tscn" id="10_6mqsy"]
+[ext_resource type="PackedScene" uid="uid://0urdtviua2jj" path="res://Markus/Prefabs/portal.tscn" id="10_62b6n"]
 [ext_resource type="PackedScene" uid="uid://cdk3xek1f4r34" path="res://Markus/Character/MainWarrior.tscn" id="10_f4pg2"]
 [ext_resource type="PackedScene" uid="uid://cnbrebdm25yew" path="res://Markus/Prefabs/chest.tscn" id="11_62b6n"]
 
@@ -835,105 +834,6 @@ texture = ExtResource("6_j87m1")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_bqrvq")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ixj4a"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(0, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tp8u8"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(96, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6mqsy"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(192, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_62da7"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(288, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_l1d2j"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(384, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f7wo7"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(480, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2nfvj"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(576, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_od1ws"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(672, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qpsar"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(768, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_bjuxq"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(864, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cuav8"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(960, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ia1um"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(1056, 0, 96, 96)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1ylf2"]
-atlas = ExtResource("7_bqrvq")
-region = Rect2(1152, 0, 96, 96)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_p58tb"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ixj4a")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tp8u8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6mqsy")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_62da7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_l1d2j")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f7wo7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2nfvj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_od1ws")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_qpsar")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_bjuxq")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_cuav8")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ia1um")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_1ylf2")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
 [node name="LevelRoot" type="Node2D" unique_id=317799245]
 
 [node name="Layerholder" parent="." unique_id=413743139 instance=ExtResource("1_bq520")]
@@ -974,13 +874,6 @@ tile_set = SubResource("TileSet_ixj4a")
 position = Vector2(5284, 36)
 fire_frame = 10
 
-[node name="Portal" type="AnimatedSprite2D" parent="." unique_id=1877293612]
-position = Vector2(5814, 11)
-sprite_frames = SubResource("SpriteFrames_p58tb")
-frame = 9
-frame_progress = 0.51008755
-script = ExtResource("8_ixj4a")
-
 [node name="Goblin" parent="." unique_id=1241335017 node_paths=PackedStringArray("player") instance=ExtResource("9_tp8u8")]
 position = Vector2(572, 127)
 player = NodePath("../MarkusPlayer")
@@ -989,16 +882,17 @@ player = NodePath("../MarkusPlayer")
 position = Vector2(186, 147)
 
 [node name="MarkusPlayer" parent="." unique_id=765685625 instance=ExtResource("10_f4pg2")]
-position = Vector2(-209, 126)
+position = Vector2(5650, 11)
+coins = 100
 
 [node name="chest3" parent="." unique_id=1166264538 instance=ExtResource("11_62b6n")]
 position = Vector2(607, 137)
 
-[node name="chest4" parent="." unique_id=1698303816 instance=ExtResource("11_62b6n")]
-position = Vector2(1656, -50)
-
-[node name="chest5" parent="." unique_id=1772381510 instance=ExtResource("11_62b6n")]
-position = Vector2(1689, -75)
-
 [node name="chest6" parent="." unique_id=1861198152 instance=ExtResource("11_62b6n")]
 position = Vector2(1719, -48)
+
+[node name="portal" parent="." unique_id=169531480 instance=ExtResource("10_62b6n")]
+position = Vector2(5828, 14)
+
+[node name="chest" parent="." unique_id=2036005073 instance=ExtResource("11_62b6n")]
+position = Vector2(5724, 43)
