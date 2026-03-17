@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*uid://hp4dmonlyt5n"
+GlobalMarkus="*uid://33dpwr03ncy2"
 
 [display]
 

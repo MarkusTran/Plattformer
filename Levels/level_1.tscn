@@ -882,7 +882,7 @@ player = NodePath("../MarkusPlayer")
 position = Vector2(186, 147)
 
 [node name="MarkusPlayer" parent="." unique_id=765685625 instance=ExtResource("10_f4pg2")]
-position = Vector2(5650, 11)
+position = Vector2(5652, 28)
 coins = 100
 
 [node name="chest3" parent="." unique_id=1166264538 instance=ExtResource("11_62b6n")]

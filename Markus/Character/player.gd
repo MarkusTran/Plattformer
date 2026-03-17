@@ -11,7 +11,6 @@ const INTERACT          := "interact"
 
 @export var speed: float = 240.0
 @export var coins: int = 0
-@export var gems: int = 0
 @export var health : float = 100.0
 
 # Export Variablen oben hinzufügen:
@@ -51,7 +50,9 @@ var already_hit := {}
 
 func _ready() -> void:
 	Global.playerBody = self
-	current_health = max_health
+	coins = Global.coins
+	max_health = Global.max_health
+	current_health = Global.current_health if Global.current_health > 0 else max_health
 	
 	if hurtbox != null:
 		hurtbox.area_entered.connect(_on_hurtbox_area_entered)
@@ -72,6 +73,8 @@ func _update_Hud() -> void:
 	HealthLabel.text = "%s / %s" % [current_health, max_health]
 
 func _physics_process(delta: float) -> void:
+	
+	
 	if is_dead:
 		return
 	if kb_time > 0.0:
@@ -135,15 +138,15 @@ func execute_interaction() -> void:
 		"portal":
 			var portal = cur_interaction.get_parent()
 			if portal.has_method("interact"):
+				
+				Global.current_health = current_health
+				Global.coins = coins
+				
 				portal.interact(self)
 
 # --- Economy ---
 func add_coins(amount: int) -> void:
 	coins += amount
-	_update_Hud()
-
-func add_gems(amount: int) -> void:
-	gems += amount
 	_update_Hud()
 	
 # Diese Funktionen 1:1 von Kerim übernehmen:
