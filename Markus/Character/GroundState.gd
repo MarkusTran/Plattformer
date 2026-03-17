@@ -16,9 +16,9 @@ func state_process(delta: float) -> void:
 
 	var dir = Input.get_axis("move_left", "move_right")
 	if dir != 0:
-		character.sprite2d.play("runAxe")
+		character.sprite2d.play("run")
 	else:
-		character.sprite2d.play("idleAxe")
+		character.sprite2d.play("idle")
 
 func state_input(event: InputEvent) -> void:
 	if event.is_action_pressed("jump"):

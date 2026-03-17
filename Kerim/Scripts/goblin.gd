@@ -35,11 +35,6 @@ var invulnerable := false
 var already_hit := {}
 
 func _ready() -> void:
-	player = Global.playerBody
-
-	if player == null:
-		player = get_tree().get_first_node_in_group("player") as CharacterBody2D
-
 	# Hitbox standardmäßig AUS
 	attack_hitbox.monitoring = false
 	attack_hitbox.monitorable = false
@@ -49,6 +44,14 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	
+	if player == null:
+		var players = get_tree().get_nodes_in_group("player")
+		if player.size()>0:
+			player = players[0] as CharacterBody2D
+		move_and_slide()
+		return
+	
 	if dead:
 		velocity.x = 0
 		apply_gravity(delta)

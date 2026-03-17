@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://cxplj6dvqcrsg"]
+[gd_scene format=3 uid="uid://cxplj6dvqcrsg"]
 
 [ext_resource type="Script" uid="uid://skt5bnjmysu2" path="res://Kerim/Scripts/enemy_slime.gd" id="1_el2qc"]
 [ext_resource type="Texture2D" uid="uid://cuywmawk80dli" path="res://asset/Slime/slime_swallow.png" id="2_e4542"]
@@ -233,20 +233,21 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_e4542"]
 radius = 7.0
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" unique_id=111251520]
 collision_layer = 16
+collision_mask = 5
 script = ExtResource("1_el2qc")
 detection_range = 350.0
 hop_speed = 5.0
 max_hop_speed = 100.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2116383902]
 position = Vector2(0, -7)
 shape = SubResource("CircleShape2D_el2qc")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1503903144]
 
-[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer" node_paths=PackedStringArray("target")]
+[node name="ProgressBar" type="ProgressBar" parent="CanvasLayer" unique_id=942553458 node_paths=PackedStringArray("target")]
 anchors_preset = -1
 anchor_right = 0.083975695
 offset_left = -11.84
@@ -258,24 +259,24 @@ script = ExtResource("3_ji20b")
 target = NodePath("../..")
 metadata/_edit_use_anchors_ = true
 
-[node name="FlipRoot" type="Node2D" parent="."]
+[node name="FlipRoot" type="Node2D" parent="." unique_id=1657638218]
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="FlipRoot"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="FlipRoot" unique_id=1885927844]
 position = Vector2(6, -12)
 sprite_frames = SubResource("SpriteFrames_131yu")
 
-[node name="RayCast2D" type="RayCast2D" parent="FlipRoot/AnimatedSprite2D"]
+[node name="RayCast2D" type="RayCast2D" parent="FlipRoot/AnimatedSprite2D" unique_id=298538771]
 target_position = Vector2(-125, 0)
 
-[node name="Timer" type="Timer" parent="FlipRoot/AnimatedSprite2D"]
+[node name="Timer" type="Timer" parent="FlipRoot/AnimatedSprite2D" unique_id=1441279856]
 wait_time = 10.0
 one_shot = true
 
-[node name="Hitbox" type="Area2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="." unique_id=1032928850]
 collision_layer = 32
 collision_mask = 8
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=2120808002]
 position = Vector2(0, -7)
 shape = SubResource("CircleShape2D_e4542")
 

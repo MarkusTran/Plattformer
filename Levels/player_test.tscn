@@ -1,6 +1,6 @@
-[gd_scene load_steps=8 format=4 uid="uid://dh8fsbbbg0nff"]
+[gd_scene format=4 uid="uid://dh8fsbbbg0nff"]
 
-[ext_resource type="PackedScene" uid="uid://bolwst7ixtwd3" path="res://Markus/Character/Player.tscn" id="1_2hdpm"]
+[ext_resource type="PackedScene" uid="uid://bolwst7ixtwd3" path="res://Markus/Character/Viking.tscn" id="1_2hdpm"]
 [ext_resource type="PackedScene" uid="uid://hxiccpuvwdu4" path="res://Markus/Prefabs/interaction_area.tscn" id="5_d5viw"]
 [ext_resource type="Texture2D" uid="uid://d10sgdxdlmns7" path="res://asset/platformer_metroidvania asset pack v1.01/tiles and background_foreground (new)/tileset.png" id="6_2uosa"]
 [ext_resource type="Texture2D" uid="uid://bxg4mfdlml0g4" path="res://asset/platformer_metroidvania asset pack v1.01/miscellaneous sprites/stone.png" id="7_2meo2"]
