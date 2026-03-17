@@ -35,7 +35,8 @@ var direction := Vector2.ZERO
 
 @onready var state_machine: CharacterStateMachine = $CharacterStateMachine
 @onready var sprite2d: AnimatedSprite2D = $AnimatedSprite2D
-@onready var coinLabel: Label = $"Camera2D/UI/Control/Coin"
+@onready var coinLabel: Label = $"Camera2D/UI/Control/VBoxContainer/HBoxContainer2/Coin"
+@onready var HealthLabel: Label = $"Camera2D/UI/Control/VBoxContainer/HBoxContainer/HP"
 @onready var interactLabel: Label = $"Interaction Comp/Label"
 @onready var all_interactions: Array = []
 
@@ -64,6 +65,7 @@ func _ready() -> void:
 
 func _update_Hud() -> void:
 	coinLabel.text = "Coin: %s" % coins
+	HealthLabel.text = "%s / %s" % [current_health, max_health]
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -139,10 +141,6 @@ func add_coins(amount: int) -> void:
 func add_gems(amount: int) -> void:
 	gems += amount
 	_update_Hud()
-
-# --- Combat (vorbereitet) ---
-func damage_taken() -> void:
-	print("Player took damage")
 	
 # Diese Funktionen 1:1 von Kerim übernehmen:
 func _on_hurtbox_area_entered(area: Area2D) -> void:
@@ -178,7 +176,8 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 		return
 	invincible = true
 	current_health -= amount
-	print("Player nimmt ", amount, " Schaden! Health: ", current_health)
+	#print("Player nimmt ", amount, " Schaden! Health: ", current_health)
+	_update_Hud()
 	if knockback_dir != Vector2.ZERO:
 		apply_knockback_dir(knockback_dir)
 	if current_health <= 0:
@@ -208,19 +207,15 @@ func enable_attack_hitbox() -> void:
 	attack_hitbox.monitoring = true
 	attack_hitbox.monitorable = true
 	attack_shape.disabled = false
-	print("HITBOX AN - monitoring: ", attack_hitbox.monitoring)
-
 func end_attack() -> void:
 	attack_hitbox.monitoring = false
 	attack_hitbox.monitorable = false
 	attack_shape.disabled = true
 
 func _on_attack_hitbox_body_entered(body: Node) -> void:
-	print("BODY ENTERED: ", body.name)  # ← wird das überhaupt aufgerufen?
 	if body == self:
 		return
 	if not body.has_method("take_damage"):
-		print("hat keine take_damage methode")
 		return
 	var id := body.get_instance_id()
 	if already_hit.has(id):
