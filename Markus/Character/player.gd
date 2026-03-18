@@ -38,6 +38,7 @@ var direction := Vector2.ZERO
 @onready var HealthLabel: Label = $"Camera2D/UI/Control/VBoxContainer/HBoxContainer/HP"
 @onready var interactLabel: Label = $"Interaction Comp/Label"
 @onready var all_interactions: Array = []
+@onready var LoosingPanel: Panel = $"Camera2D/UI/Control/VBoxContainer/Loosing"
 
 #Attack
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -54,6 +55,7 @@ func _ready() -> void:
 	max_health = Global.max_health
 	coins = Global.coins
 	attack_damage = Global.attack_damage
+	LoosingPanel.hide()
 	_update_Hud()
 	
 	if hurtbox != null:
@@ -207,6 +209,8 @@ func die() -> void:
 	if is_dead:
 		return
 	is_dead = true
+	
+	LoosingPanel.show()
 	state_machine.switch_states(dead_state)  # ← statt reload_current_scene
 	
 # Attack
