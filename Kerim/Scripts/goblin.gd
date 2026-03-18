@@ -207,7 +207,6 @@ func take_damage(dmg: int) -> void:
 	if health <= 0:
 		dead = true
 		taking_damage = true
-
 		anim_sprite.play("death")
 		await anim_sprite.animation_finished
 		queue_free()
