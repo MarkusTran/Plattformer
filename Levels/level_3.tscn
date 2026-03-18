@@ -10,6 +10,12 @@
 [ext_resource type="PackedScene" uid="uid://0urdtviua2jj" path="res://Markus/Prefabs/portal.tscn" id="8_fa81k"]
 [ext_resource type="PackedScene" uid="uid://bvnynrj5pm3ok" path="res://Markus/Prefabs/Deathzone.tscn" id="9_trpa2"]
 [ext_resource type="PackedScene" uid="uid://bwg8igm8c4icg" path="res://Markus/Prefabs/checkpoint.tscn" id="10_4t7ew"]
+[ext_resource type="PackedScene" uid="uid://7bia2518okp2" path="res://Kerim/Prefabs/goblin.tscn" id="11_4t7ew"]
+[ext_resource type="PackedScene" uid="uid://cnbrebdm25yew" path="res://Markus/Prefabs/chest.tscn" id="12_7cdb2"]
+[ext_resource type="PackedScene" uid="uid://bkagoqcoc6oue" path="res://Kerim/Prefabs/skelett.tscn" id="13_2urlj"]
+[ext_resource type="PackedScene" uid="uid://do1id5wextsgo" path="res://Kerim/Prefabs/spike_spitter.tscn" id="14_2urlj"]
+[ext_resource type="PackedScene" uid="uid://dqt3ftvjw8dmx" path="res://Kerim/Prefabs/spike_trap.tscn" id="15_88iqf"]
+[ext_resource type="PackedScene" uid="uid://cxplj6dvqcrsg" path="res://Kerim/Scenes/enemy_slime.tscn" id="16_5wr1k"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_l2xcl"]
 tile_data = PackedInt32Array(0, 131073, 0, 65536, 131073, 1, 131072, 131073, 2, 196608, 131073, 3, 1, 65537, 0, 65537, 65537, 1, 131073, 65537, 2, 196609, 65537, 3)
@@ -1835,7 +1841,7 @@ position = Vector2(8580, -790)
 connected_scene = "ShopMenu"
 
 [node name="MarkusPlayer" parent="." unique_id=765685625 instance=ExtResource("8_ck3gp")]
-position = Vector2(2008, 137)
+position = Vector2(-784, 10)
 
 [node name="Area2D" parent="." unique_id=1986265459 instance=ExtResource("9_trpa2")]
 position = Vector2(2764, 253)
@@ -1844,3 +1850,32 @@ scale = Vector2(49.178013, 0.91783696)
 [node name="Node2D" parent="." unique_id=1468318660 instance=ExtResource("10_4t7ew")]
 position = Vector2(2142, 180)
 scale = Vector2(2.4175522, 1)
+
+[node name="Goblin" parent="." unique_id=1241335017 node_paths=PackedStringArray("player") instance=ExtResource("11_4t7ew")]
+position = Vector2(913, 165)
+player = NodePath("../MarkusPlayer")
+
+[node name="Goblin2" parent="." unique_id=1361454260 node_paths=PackedStringArray("player") instance=ExtResource("11_4t7ew")]
+position = Vector2(1865, 163)
+player = NodePath("../MarkusPlayer")
+
+[node name="chest" parent="." unique_id=2036005073 instance=ExtResource("12_7cdb2")]
+position = Vector2(4478, -49)
+
+[node name="Skelett" parent="." unique_id=931493614 instance=ExtResource("13_2urlj")]
+position = Vector2(4348, -33)
+
+[node name="SpikeSpitter" parent="." unique_id=1657087615 instance=ExtResource("14_2urlj")]
+position = Vector2(4445, -746)
+
+[node name="SpikeTrap" parent="." unique_id=628759233 instance=ExtResource("15_88iqf")]
+position = Vector2(6076, -778)
+
+[node name="CharacterBody2D" parent="." unique_id=111251520 instance=ExtResource("16_5wr1k")]
+position = Vector2(3996, -725)
+
+[node name="Goblin3" parent="." unique_id=1023726390 instance=ExtResource("11_4t7ew")]
+position = Vector2(6148, -797)
+
+[node name="SpikeSpitter2" parent="." unique_id=1537465211 instance=ExtResource("14_2urlj")]
+position = Vector2(8020, -762)

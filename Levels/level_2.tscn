@@ -10,6 +10,9 @@
 [ext_resource type="PackedScene" uid="uid://cdk3xek1f4r34" path="res://Markus/Character/MainWarrior.tscn" id="9_rp5ft"]
 [ext_resource type="PackedScene" uid="uid://0urdtviua2jj" path="res://Markus/Prefabs/portal.tscn" id="9_vltsr"]
 [ext_resource type="PackedScene" uid="uid://7bia2518okp2" path="res://Kerim/Prefabs/goblin.tscn" id="10_rp5ft"]
+[ext_resource type="PackedScene" uid="uid://dqt3ftvjw8dmx" path="res://Kerim/Prefabs/spike_trap.tscn" id="11_qeqk5"]
+[ext_resource type="PackedScene" uid="uid://cxplj6dvqcrsg" path="res://Kerim/Scenes/enemy_slime.tscn" id="12_1soli"]
+[ext_resource type="PackedScene" uid="uid://do1id5wextsgo" path="res://Kerim/Prefabs/spike_spitter.tscn" id="13_4pbjs"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_l2xcl"]
 tile_data = PackedInt32Array(0, 131073, 0, 65536, 131073, 1, 131072, 131073, 2, 196608, 131073, 3, 1, 65537, 0, 65537, 65537, 1, 131073, 65537, 2, 196609, 65537, 3)
@@ -1795,6 +1798,7 @@ tile_set = SubResource("TileSet_saji6")
 
 [node name="chest2" parent="." unique_id=1261904696 instance=ExtResource("8_5yfph")]
 position = Vector2(2022, -609)
+coins = 30
 
 [node name="chest" parent="." unique_id=1672687550 instance=ExtResource("8_5yfph")]
 position = Vector2(670, 35)
@@ -1810,5 +1814,35 @@ position = Vector2(3338, -537)
 position = Vector2(-948, -103)
 
 [node name="Goblin" parent="." unique_id=1241335017 node_paths=PackedStringArray("player") instance=ExtResource("10_rp5ft")]
-position = Vector2(2739, -244)
+position = Vector2(2982, -240)
 player = NodePath("../MarkusPlayer")
+
+[node name="SpikeTrap" parent="." unique_id=628759233 instance=ExtResource("11_qeqk5")]
+position = Vector2(448, -59)
+
+[node name="CharacterBody2D" parent="." unique_id=111251520 instance=ExtResource("12_1soli")]
+position = Vector2(-71, 44)
+
+[node name="SpikeSpitter" parent="." unique_id=1420537144 instance=ExtResource("13_4pbjs")]
+position = Vector2(968, -234)
+
+[node name="Goblin2" parent="." unique_id=963963775 node_paths=PackedStringArray("player") instance=ExtResource("10_rp5ft")]
+position = Vector2(334, -460)
+player = NodePath("../MarkusPlayer")
+
+[node name="CharacterBody2D2" parent="." unique_id=1356622989 instance=ExtResource("12_1soli")]
+position = Vector2(1608, -740)
+
+[node name="Goblin3" parent="." unique_id=2124849238 node_paths=PackedStringArray("player") instance=ExtResource("10_rp5ft")]
+position = Vector2(2057, -766)
+player = NodePath("../MarkusPlayer")
+
+[node name="SpikeTrap2" parent="." unique_id=1172500182 instance=ExtResource("11_qeqk5")]
+position = Vector2(1422, -477)
+
+[node name="CharacterBody2D3" parent="." unique_id=1504395785 instance=ExtResource("12_1soli")]
+position = Vector2(2017, -339)
+
+[node name="chest4" parent="." unique_id=1326736297 instance=ExtResource("8_5yfph")]
+position = Vector2(4140, -223)
+coins = 20
