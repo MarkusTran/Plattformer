@@ -236,3 +236,16 @@ func _on_attack_hitbox_body_entered(body: Node) -> void:
 		return
 	already_hit[id] = true
 	body.take_damage(attack_damage)
+	
+func _on_restart_pressed() -> void:
+	# Global resetten
+	Global.coins = 0
+	Global.current_health = 100
+	Global.max_health = 100
+	Global.attack_damage = 30
+	
+	# Level 1 laden
+	get_tree().change_scene_to_file("res://Levels/level_1.tscn")
+
+func _on_exit_pressed() -> void:
+	get_tree().quit()

@@ -737,7 +737,6 @@ offset_bottom = 3.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.24, 0.24)
-text = "test"
 label_settings = SubResource("LabelSettings_dl7hw")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -775,6 +774,7 @@ ground_state = NodePath("../Ground")
 script = ExtResource("8_j4c7d")
 
 [node name="StateDebugLabel" type="Label" parent="." unique_id=863239496 node_paths=PackedStringArray("state_machine")]
+visible = false
 offset_left = -50.0
 offset_top = -87.0
 offset_right = 52.0
@@ -808,6 +808,8 @@ scale = Vector2(2.3809898, 0.536149)
 shape = SubResource("CircleShape2D_l01dh")
 disabled = true
 
+[connection signal="pressed" from="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/RESTART" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/QUIT" to="." method="_on_exit_pressed"]
 [connection signal="area_entered" from="Interaction Components/interactionArea" to="." method="_on_interaction_area_area_entered"]
 [connection signal="area_exited" from="Interaction Components/interactionArea" to="." method="_on_interaction_area_area_exited"]
 [connection signal="body_entered" from="AttackHitbox" to="." method="_on_attack_hitbox_body_entered"]

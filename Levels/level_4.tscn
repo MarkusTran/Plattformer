@@ -8,6 +8,10 @@
 [ext_resource type="PackedScene" uid="uid://2yh0pm4e2i5q" path="res://UI/pause_menu.tscn" id="6_w4xgh"]
 [ext_resource type="PackedScene" uid="uid://cdk3xek1f4r34" path="res://Markus/Character/MainWarrior.tscn" id="8_fqog2"]
 [ext_resource type="PackedScene" uid="uid://cnbrebdm25yew" path="res://Markus/Prefabs/chest.tscn" id="8_jj4ty"]
+[ext_resource type="PackedScene" uid="uid://dehwptmqasqao" path="res://Kerim/Prefabs/minotaur_boss.tscn" id="9_ben3k"]
+[ext_resource type="PackedScene" uid="uid://7bia2518okp2" path="res://Kerim/Prefabs/goblin.tscn" id="10_77xid"]
+[ext_resource type="PackedScene" uid="uid://bkagoqcoc6oue" path="res://Kerim/Prefabs/skelett.tscn" id="11_m0m22"]
+[ext_resource type="PackedScene" uid="uid://do1id5wextsgo" path="res://Kerim/Prefabs/spike_spitter.tscn" id="12_utic7"]
 
 [sub_resource type="TileMapPattern" id="TileMapPattern_l2xcl"]
 tile_data = PackedInt32Array(0, 131073, 0, 65536, 131073, 1, 131072, 131073, 2, 196608, 131073, 3, 1, 65537, 0, 65537, 65537, 1, 131073, 65537, 2, 196609, 65537, 3)
@@ -1799,3 +1803,25 @@ position = Vector2(1949, -959)
 
 [node name="MarkusPlayer" parent="." unique_id=765685625 instance=ExtResource("8_fqog2")]
 position = Vector2(-868, -791)
+
+[node name="MinotaurBoss" parent="." unique_id=20386266 instance=ExtResource("9_ben3k")]
+position = Vector2(3004, 39)
+max_health = 1600
+
+[node name="Goblin" parent="." unique_id=1241335017 instance=ExtResource("10_77xid")]
+position = Vector2(1297, -979)
+
+[node name="Skelett" parent="." unique_id=931493614 instance=ExtResource("11_m0m22")]
+position = Vector2(-198, 26)
+
+[node name="Goblin2" parent="." unique_id=1685755585 instance=ExtResource("10_77xid")]
+position = Vector2(54, -400)
+
+[node name="Skelett2" parent="." unique_id=96982506 instance=ExtResource("11_m0m22")]
+position = Vector2(513, -116)
+
+[node name="SpikeSpitter" parent="." unique_id=1395093873 instance=ExtResource("12_utic7")]
+position = Vector2(525, -217)
+
+[node name="chest2" parent="." unique_id=2036005073 instance=ExtResource("8_jj4ty")]
+position = Vector2(678, 27)
