@@ -1,0 +1,106 @@
+[gd_scene format=3 uid="uid://dile6wrax05pw"]
+
+[ext_resource type="Texture2D" uid="uid://nfa2pvosrf1p" path="res://asset/48x48/fruit_01a.png" id="1_ftxjh"]
+[ext_resource type="Script" uid="uid://b025kfvsjhlpp" path="res://UI/shop_item.gd" id="1_j3n3j"]
+[ext_resource type="StyleBox" uid="uid://c5523beayfq0i" path="res://UI/GoldenBox.tres" id="1_upbfp"]
+
+[sub_resource type="Theme" id="Theme_upbfp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_upbfp"]
+bg_color = Color(0.20821029, 0.049549773, 0.058568507, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m73ea"]
+bg_color = Color(0.07528932, 0.12936357, 0.0456205, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.78431374, 0.6627451, 0.43137255, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="Theme" id="Theme_m73ea"]
+
+[sub_resource type="Theme" id="Theme_iusw4"]
+
+[node name="ShopItem" type="Button" unique_id=1152481126]
+custom_minimum_size = Vector2(460, 200)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 77.0
+offset_top = 21.5
+offset_right = -1318.6957
+offset_bottom = -858.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_upbfp")
+theme_override_colors/font_pressed_color = Color(1, 1, 1, 1)
+theme_override_colors/font_hover_color = Color(0.21153653, 0.84467584, 1.1551381e-06, 1)
+theme_override_colors/font_hover_pressed_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = ExtResource("1_upbfp")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_upbfp")
+theme_override_styles/hover = SubResource("StyleBoxFlat_m73ea")
+script = ExtResource("1_j3n3j")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1190907676]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 522.3043
+offset_bottom = 198.5
+theme = SubResource("Theme_m73ea")
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=1025687035]
+layout_mode = 2
+theme = SubResource("Theme_iusw4")
+theme_override_constants/separation = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/HBoxContainer" unique_id=200421751]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=950429868]
+custom_minimum_size = Vector2(30, 30)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_ftxjh")
+expand_mode = 3
+stretch_mode = 3
+
+[node name="VALUE" type="Label" parent="MarginContainer/HBoxContainer/VBoxContainer" unique_id=1880458991]
+layout_mode = 2
+size_flags_vertical = 6
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="title" type="Label" parent="MarginContainer/HBoxContainer" unique_id=215386969]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "HP UP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="price" type="Label" parent="MarginContainer/HBoxContainer" unique_id=769224320]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+text = "Price"
+horizontal_alignment = 1
+vertical_alignment = 1

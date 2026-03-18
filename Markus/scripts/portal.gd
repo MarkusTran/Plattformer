@@ -4,8 +4,6 @@ extends Node2D
 
 var scene_folder = "res://Levels/"
 
-@onready var simultaneous_scene
-
 func _add_a_scene_manually():
 	# This is like autoloading the scene, only
 	# it happens after already loading the main scene.

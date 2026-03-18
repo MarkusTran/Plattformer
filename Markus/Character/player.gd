@@ -50,9 +50,11 @@ var already_hit := {}
 
 func _ready() -> void:
 	Global.playerBody = self
-	coins = Global.coins
+	current_health = Global.current_health
 	max_health = Global.max_health
-	current_health = Global.current_health if Global.current_health > 0 else max_health
+	coins = Global.coins
+	attack_damage = Global.attack_damage
+	_update_Hud()
 	
 	if hurtbox != null:
 		hurtbox.area_entered.connect(_on_hurtbox_area_entered)
@@ -141,6 +143,7 @@ func execute_interaction() -> void:
 				
 				Global.current_health = current_health
 				Global.coins = coins
+				Global.finished_level = Global.finished_level + 1
 				
 				portal.interact(self)
 

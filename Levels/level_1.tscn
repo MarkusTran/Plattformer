@@ -882,7 +882,7 @@ player = NodePath("../MarkusPlayer")
 position = Vector2(186, 147)
 
 [node name="MarkusPlayer" parent="." unique_id=765685625 instance=ExtResource("10_f4pg2")]
-position = Vector2(5652, 28)
+position = Vector2(-379, 127)
 coins = 100
 
 [node name="chest3" parent="." unique_id=1166264538 instance=ExtResource("11_62b6n")]
@@ -893,6 +893,10 @@ position = Vector2(1719, -48)
 
 [node name="portal" parent="." unique_id=169531480 instance=ExtResource("10_62b6n")]
 position = Vector2(5828, 14)
+connected_scene = "ShopMenu"
 
 [node name="chest" parent="." unique_id=2036005073 instance=ExtResource("11_62b6n")]
 position = Vector2(5724, 43)
+
+[node name="chest2" parent="." unique_id=1783515567 instance=ExtResource("11_62b6n")]
+position = Vector2(5603, 47)

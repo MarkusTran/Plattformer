@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://bwg8igm8c4icg"]
+
+[ext_resource type="Script" uid="uid://uq8mrbri7m1x" path="res://Markus/scripts/checkpoint.gd" id="1_wyjbb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wyjbb"]
+
+[node name="Node2D" type="Node2D" unique_id=1468318660]
+script = ExtResource("1_wyjbb")
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=263201439]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=418737206]
+
+[node name="Area2D" type="Area2D" parent="." unique_id=914097141]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=828946038]
+shape = SubResource("RectangleShape2D_wyjbb")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

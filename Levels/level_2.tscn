@@ -1801,13 +1801,13 @@ position = Vector2(670, 35)
 
 [node name="portal" parent="." unique_id=169531480 instance=ExtResource("9_vltsr")]
 position = Vector2(3608, -561)
-connected_scene = "level_3"
+connected_scene = "ShopMenu"
 
 [node name="chest3" parent="." unique_id=2036005073 instance=ExtResource("8_5yfph")]
 position = Vector2(3338, -537)
 
 [node name="MarkusPlayer" parent="." unique_id=765685625 instance=ExtResource("9_rp5ft")]
-position = Vector2(3447, -544)
+position = Vector2(-948, -103)
 
 [node name="Goblin" parent="." unique_id=1241335017 node_paths=PackedStringArray("player") instance=ExtResource("10_rp5ft")]
 position = Vector2(2739, -244)
