@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cxplj6dvqcrsg" path="res://Kerim/Scenes/enemy_slime.tscn" id="4_nxv2u"]
 [ext_resource type="PackedScene" uid="uid://do1id5wextsgo" path="res://Kerim/Prefabs/spike_spitter.tscn" id="5_bq520"]
 [ext_resource type="Texture2D" uid="uid://dsv03y5qbtpk7" path="res://asset/Pia/Assets/Tiles.png" id="6_j87m1"]
+[ext_resource type="PackedScene" uid="uid://2yh0pm4e2i5q" path="res://UI/pause_menu.tscn" id="9_xoyoh"]
 [ext_resource type="PackedScene" uid="uid://0urdtviua2jj" path="res://Markus/Prefabs/portal.tscn" id="10_62b6n"]
 [ext_resource type="PackedScene" uid="uid://cdk3xek1f4r34" path="res://Markus/Character/MainWarrior.tscn" id="10_f4pg2"]
 [ext_resource type="PackedScene" uid="uid://cnbrebdm25yew" path="res://Markus/Prefabs/chest.tscn" id="11_62b6n"]
@@ -833,6 +834,10 @@ physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_bqrvq")
 
 [node name="LevelRoot" type="Node2D" unique_id=317799245]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=13854834]
+
+[node name="PauseMenu" parent="CanvasLayer" unique_id=1339495711 instance=ExtResource("9_xoyoh")]
 
 [node name="Layerholder" parent="." unique_id=413743139 instance=ExtResource("1_bq520")]
 position = Vector2(-588, -1278)
