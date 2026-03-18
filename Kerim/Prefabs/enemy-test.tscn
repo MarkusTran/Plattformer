@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dsv03y5qbtpk7" path="res://asset/Pia/Assets/Tiles.png" id="1_ghoot"]
 [ext_resource type="PackedScene" uid="uid://cdk3xek1f4r34" path="res://Markus/Character/MainWarrior.tscn" id="2_5rgnh"]
 [ext_resource type="PackedScene" uid="uid://bkagoqcoc6oue" path="res://Kerim/Prefabs/skelett.tscn" id="3_5rgnh"]
+[ext_resource type="PackedScene" uid="uid://dehwptmqasqao" path="res://Kerim/Prefabs/minotaur_boss.tscn" id="4_20nv5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_20nv5"]
 texture = ExtResource("1_ghoot")
@@ -510,5 +511,10 @@ tile_set = SubResource("TileSet_ui65c")
 position = Vector2(-270, 105)
 
 [node name="Skelett" parent="." unique_id=931493614 instance=ExtResource("3_5rgnh")]
-position = Vector2(600, 135)
+position = Vector2(1480, -49)
 fire_frame = 9
+
+[node name="MinotaurBoss" parent="." unique_id=130217744 instance=ExtResource("4_20nv5")]
+position = Vector2(559, 135)
+attack_cooldown = 1.7
+max_health = 700
