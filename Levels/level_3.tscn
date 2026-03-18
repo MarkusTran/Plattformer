@@ -1835,7 +1835,7 @@ position = Vector2(8580, -790)
 connected_scene = "ShopMenu"
 
 [node name="MarkusPlayer" parent="." unique_id=765685625 instance=ExtResource("8_ck3gp")]
-position = Vector2(-1076, -22)
+position = Vector2(2008, 137)
 
 [node name="Area2D" parent="." unique_id=1986265459 instance=ExtResource("9_trpa2")]
 position = Vector2(2764, 253)
