@@ -748,6 +748,7 @@ character = NodePath("..")
 
 [node name="Ground" type="Node" parent="CharacterStateMachine" unique_id=1969361347 node_paths=PackedStringArray("air_state", "attack_state", "hurt_state")]
 script = ExtResource("3_mvgme")
+jump_velocity = -560.0
 air_state = NodePath("../Air")
 attack_state = NodePath("../Attack")
 hurt_state = NodePath("../Hurt")
@@ -755,6 +756,7 @@ hurt_state = NodePath("../Hurt")
 [node name="Air" type="Node" parent="CharacterStateMachine" unique_id=1022030727 node_paths=PackedStringArray("landing_state", "attack_state")]
 script = ExtResource("4_gek2i")
 landing_state = NodePath("../Landing")
+double_jump_velocity = -440.0
 attack_state = NodePath("../Attack")
 
 [node name="Landing" type="Node" parent="CharacterStateMachine" unique_id=635761389 node_paths=PackedStringArray("ground_state", "air_state")]

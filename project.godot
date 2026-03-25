@@ -81,10 +81,6 @@ jump={
 
 2d_physics/layer_2="interactions"
 
-[physics]
-
-2d/default_gravity=700.0
-
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
