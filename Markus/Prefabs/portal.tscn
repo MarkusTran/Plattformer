@@ -116,5 +116,5 @@ frame_progress = 0.27325276
 [node name="interactable_Area" parent="." unique_id=1486016986 instance=ExtResource("3_cfkym")]
 position = Vector2(0, 8.000001)
 scale = Vector2(5.780157, 5.780157)
-interact_label = "Next Stage"
+interact_label = "F for next Stage"
 interact_type = "portal"

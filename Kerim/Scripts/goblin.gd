@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends BaseEnemy
 class_name GoblinEnemy
 
 const SPEED := 30.0
@@ -7,9 +7,9 @@ const GRAVITY := 900.0
 @export var damage_to_deal: int = 20
 @export var attack_cooldown: float = 1.0
 @export var attack_distance: float = 45.0
+@export var knockback_force: float = 200.0
+@export var hurt_invuln_time: float = 0.35
 
-var health := 80
-var dead := false
 var taking_damage := false
 
 var dir: Vector2 = Vector2.LEFT
@@ -19,7 +19,6 @@ var can_attack := true
 
 var hit_lock := false
 
-@export var player: CharacterBody2D
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
@@ -29,30 +28,42 @@ var hit_lock := false
 @onready var hit_shape2: CollisionShape2D = $AttackHitbox/CollisionShape2D2
 @onready var attack_range: Area2D = $AttackRange
 
-@export var hurt_invuln_time: float = 0.35
+
 var invulnerable := false
 
 var already_hit := {}
 
 func _ready() -> void:
+	super._ready()  # ← BaseEnemy._ready() aufrufen!
 	# Hitbox standardmäßig AUS
 	attack_hitbox.monitoring = false
 	attack_hitbox.monitorable = false
 	hit_shape1.disabled = true
 	hit_shape2.disabled = true
 
+func on_hit() -> void:
+	# Hurt Animation
+	anim_sprite.play("hurt")
 
+func on_death() -> void:
+	taking_damage = true  # ← verhindert weitere Inputs während Death Anim
+	is_attacking = false
+	anim_player.stop()
+	disable_attack_hitbox()
+	anim_sprite.play("death")
+	await anim_sprite.animation_finished
+	queue_free()
 
 func _physics_process(delta: float) -> void:
 	
 	if player == null:
 		var players = get_tree().get_nodes_in_group("player")
-		if player.size()>0:
+		if players.size()>0:
 			player = players[0] as CharacterBody2D
 		move_and_slide()
 		return
 	
-	if dead:
+	if is_dead:
 		velocity.x = 0
 		apply_gravity(delta)
 		move_and_slide()
@@ -110,7 +121,7 @@ func update_facing() -> void:
 		attack_hitbox.scale.x = abs(attack_hitbox.scale.x)
 
 func start_attack() -> void:
-	if dead or taking_damage or is_attacking:
+	if is_dead or taking_damage or is_attacking:
 		return
 
 	#print("START_ATTACK CALLED")
@@ -142,7 +153,7 @@ func start_attack() -> void:
 	)
 
 func enable_attack_hitbox() -> void:
-	if dead or taking_damage or not is_attacking:
+	if is_dead or taking_damage or not is_attacking:
 		return
 	call_deferred("_set_attack_hitbox_enabled", true)
 
@@ -158,7 +169,7 @@ func _set_attack_hitbox_enabled(enabled: bool) -> void:
 
 func _on_attack_hitbox_area_entered(area: Area2D) -> void:
 	print("HITBOX ENTER:", area.name)
-	if dead or not is_attacking:
+	if is_dead or not is_attacking:
 		return
 	if player == null:
 		return
@@ -190,33 +201,46 @@ func _on_attack_range_body_exited(body: Node) -> void:
 	if body == player:
 		player_in_range = false
 
+
+
 func take_damage(dmg: int) -> void:
-	if dead or hit_lock:
+	if is_dead or hit_lock:
 		return
-
+	
 	hit_lock = true
-	health -= dmg
+	current_health -= dmg
 
-	# Attack sofort komplett abbrechen
+	# Attack abbrechen
 	is_attacking = false
 	can_attack = false
 	player_in_range = false
 	anim_player.stop()
 	disable_attack_hitbox()
 
-	if health <= 0:
-		dead = true
-		taking_damage = true
-		anim_sprite.play("death")
-		await anim_sprite.animation_finished
-		queue_free()
+	if current_health <= 0:
+		super.die()
 		return
 
+	# Knockback vom Player weg
+	if player != null:
+		var dir = sign(global_position.x - player.global_position.x)
+		if dir == 0:
+			dir = 1
+		velocity.x = dir * knockback_force
+		velocity.y = -80.0
+
+	# Hit Flash + Hurt Animation
 	taking_damage = true
+	modulate = Color(1.0, 0.3, 0.3)
 	anim_sprite.play("hurt")
 	await anim_sprite.animation_finished
+	if not is_inside_tree() or is_dead:
+		return
+	modulate = Color.WHITE
 	taking_damage = false
 
 	await get_tree().create_timer(hurt_invuln_time).timeout
+	if not is_inside_tree() or is_dead:
+		return
 	hit_lock = false
 	can_attack = true

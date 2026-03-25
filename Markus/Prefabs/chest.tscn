@@ -39,6 +39,6 @@ sprite_frames = SubResource("SpriteFrames_2jbn4")
 
 [node name="interactable_Area" parent="." unique_id=1671576449 node_paths=PackedStringArray("animatiedSprite2d") instance=ExtResource("2_vuy64")]
 scale = Vector2(1.63003, 1.63003)
-interact_label = "chest"
+interact_label = "F to open Chest"
 interact_type = "chest"
 animatiedSprite2d = NodePath("../AnimatedSprite2D")

@@ -1,4 +1,4 @@
-extends CharacterBody2D
+extends BaseEnemy
 class_name SkeletonEnemy
 
 @export var patrol_speed: float = 40.0
@@ -14,8 +14,9 @@ class_name SkeletonEnemy
 @export var arrow_speed: float = 260.0
 @export var arrow_fly_time: float = 1.3
 @export var ranged_attack_cooldown: float = 1.6
-@export var max_health: int = 50
-@export var player_group: String = "player"
+
+# ↓ ENTFERNT: max_health, player_group, gravity, current_health, is_dead
+# kommen alle von BaseEnemy!
 
 @onready var sprite: AnimatedSprite2D = $FlipRoot/AnimatedSprite2D
 @onready var detection_shape: CollisionShape2D = $DetectionArea/CollisionShape2D
@@ -27,34 +28,45 @@ class_name SkeletonEnemy
 @onready var arrow_sprite: Sprite2D = $Arrow/Sprite2D
 @onready var arrow_spawn: Marker2D = $FlipRoot/ArrowSpawn
 
-var gravity: float = float(ProjectSettings.get_setting("physics/2d/default_gravity"))
 var spawn_position := Vector2.ZERO
-var current_health := 0
 var facing_dir := -1
 var patrol_dir := -1
-var player: CharacterBody2D
 var can_ranged_attack := true
 var is_shooting := false
-var is_dead := false
 var arrow_flying := false
 var arrow_direction := Vector2.LEFT
 var waiting_for_fire_frame := false
 var turn_cooldown := 0.0
 
 func _ready() -> void:
+	super._ready()  # ← BaseEnemy._ready() aufrufen
 	spawn_position = global_position
-	current_health = max_health
-
-	add_to_group("enemy")
 	touch_hitbox.remove_from_group("enemy_hitbox")
 	touch_hitbox.monitoring = false
 	touch_hitbox.monitorable = false
-
 	_update_sensor_setup()
 	_reset_arrow()
-	_find_player()
 	sprite.frame_changed.connect(_on_sprite_frame_changed)
 	sprite.play("idle")
+
+# ↓ on_death statt die() — BaseEnemy.die() ruft das auf
+func on_death() -> void:
+	is_shooting = false
+	waiting_for_fire_frame = false
+	velocity = Vector2.ZERO
+	_reset_arrow()
+	modulate = Color.WHITE
+	sprite.play("death")
+	await sprite.animation_finished
+	queue_free()
+
+# ↓ take_damage vereinfacht — BaseEnemy übernimmt health/death Logik
+func take_damage(amount: int) -> void:
+	if is_dead:
+		return
+	modulate = Color(1.0, 0.65, 0.65)
+	super.take_damage(amount)  # ← BaseEnemy zieht HP ab und ruft die() auf
+	_flash_back_to_default()
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -86,75 +98,35 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	_update_animation()
 
-func take_damage(amount: int) -> void:
-	if is_dead:
-		return
-
-	current_health -= amount
-	modulate = Color(1.0, 0.65, 0.65)
-
-	if current_health <= 0:
-		die()
-		return
-
-	_flash_back_to_default()
-
-func die() -> void:
-	if is_dead:
-		return
-
-	is_dead = true
-	is_shooting = false
-	waiting_for_fire_frame = false
-	velocity = Vector2.ZERO
-	_reset_arrow()
-	modulate = Color.WHITE
-	sprite.play("death")
-	await sprite.animation_finished
-	queue_free()
-
 func _patrol() -> void:
 	if _should_turn_around() and turn_cooldown <= 0.0:
 		_turn_around()
 	elif abs(global_position.x - spawn_position.x) > patrol_radius and turn_cooldown <= 0.0:
 		_turn_around()
-
 	velocity.x = patrol_dir * patrol_speed
 	_set_facing(patrol_dir)
-
-func _should_shoot_player() -> bool:
-	if not can_ranged_attack or not _is_player_valid():
-		return false
-
-	var distance_to_player := global_position.distance_to(player.global_position)
-	return distance_to_player <= ranged_attack_range and distance_to_player > ranged_min_range
 
 func _has_target() -> bool:
 	if not _is_player_valid():
 		return false
-
-	var distance_to_player := global_position.distance_to(player.global_position)
-	return distance_to_player <= target_lock_range
+	return global_position.distance_to(player.global_position) <= target_lock_range
 
 func _handle_target_movement() -> void:
 	var horizontal_distance := player.global_position.x - global_position.x
 	var player_dir := signf(horizontal_distance)
 	if player_dir == 0.0:
 		player_dir = facing_dir
-
 	_set_facing(int(player_dir))
 
 	var distance_to_player := global_position.distance_to(player.global_position)
 	if distance_to_player <= ranged_min_range:
 		_retreat_from_player(player_dir)
 		return
-
 	if distance_to_player <= ranged_attack_range:
 		velocity.x = 0.0
 		if can_ranged_attack:
 			_start_ranged_attack()
 		return
-
 	_move_towards_shooting_range(player_dir)
 
 func _retreat_from_player(player_dir: float) -> void:
@@ -162,14 +134,12 @@ func _retreat_from_player(player_dir: float) -> void:
 	if _blocked_in_direction(move_dir):
 		velocity.x = 0.0
 		return
-
 	velocity.x = move_dir * retreat_speed
 
 func _move_towards_shooting_range(player_dir: float) -> void:
 	if _blocked_in_direction(player_dir):
 		velocity.x = 0.0
 		return
-
 	velocity.x = player_dir * chase_speed
 
 func _should_turn_around() -> bool:
@@ -183,7 +153,6 @@ func _turn_around() -> void:
 func _set_facing(direction: int) -> void:
 	if direction == 0:
 		return
-
 	facing_dir = direction
 	$FlipRoot.scale.x = -1 if facing_dir > 0 else 1
 	ground_ray.position.x = 10.0 * facing_dir
@@ -195,7 +164,6 @@ func _hold_position() -> void:
 func _blocked_in_direction(direction: float) -> bool:
 	if direction == 0.0:
 		return false
-
 	var direction_sign := 1 if direction > 0.0 else -1
 	var wall_blocked := wall_ray.is_colliding() and signf(wall_ray.target_position.x) == direction_sign
 	var missing_ground := not ground_ray.is_colliding() and signf(ground_ray.position.x) == direction_sign
@@ -204,26 +172,21 @@ func _blocked_in_direction(direction: float) -> bool:
 func _start_ranged_attack() -> void:
 	if is_shooting or is_dead or not _is_player_valid():
 		return
-
 	is_shooting = true
 	can_ranged_attack = false
 	waiting_for_fire_frame = true
 	velocity.x = 0.0
 	_set_facing(int(signf(player.global_position.x - global_position.x)))
 	sprite.play("attack")
-
 	await sprite.animation_finished
 	if not is_inside_tree() or is_dead:
 		return
-
 	is_shooting = false
 	waiting_for_fire_frame = false
 	sprite.play("idle")
-
 	await get_tree().create_timer(ranged_attack_cooldown).timeout
 	if not is_inside_tree() or is_dead:
 		return
-
 	can_ranged_attack = true
 
 func _spawn_arrow() -> void:
@@ -236,47 +199,29 @@ func _spawn_arrow() -> void:
 	arrow_collision.disabled = false
 	arrow.visible = true
 	arrow_flying = true
-
-	var timer := get_tree().create_timer(arrow_fly_time)
-	timer.timeout.connect(_on_arrow_fly_timeout)
+	get_tree().create_timer(arrow_fly_time).timeout.connect(_on_arrow_fly_timeout)
 
 func _on_sprite_frame_changed() -> void:
-	if not waiting_for_fire_frame:
+	if not waiting_for_fire_frame or sprite.animation != "attack" or sprite.frame != fire_frame:
 		return
-
-	if sprite.animation != "attack":
-		return
-
-	if sprite.frame != fire_frame:
-		return
-
 	waiting_for_fire_frame = false
 	_spawn_arrow()
 
 func _on_arrow_area_entered(area: Area2D) -> void:
 	if not arrow_flying:
 		return
-
 	if area.is_in_group("player_hurtbox"):
 		var target := area.get_parent()
 		if target != null and target.has_method("take_damage"):
-			var knockback := Vector2(arrow_direction.x, -0.2).normalized()
-			target.take_damage(arrow_damage, knockback)
+			target.take_damage(arrow_damage, Vector2(arrow_direction.x, -0.2).normalized())
 		_request_arrow_reset()
 		return
-
-	if area.is_in_group("enemy_hitbox"):
-		return
-
-	_request_arrow_reset()
+	if not area.is_in_group("enemy_hitbox"):
+		_request_arrow_reset()
 
 func _on_arrow_body_entered(body: Node) -> void:
-	if not arrow_flying:
+	if not arrow_flying or body.is_in_group(player_group):
 		return
-
-	if body.is_in_group(player_group):
-		return
-
 	_request_arrow_reset()
 
 func _on_arrow_fly_timeout() -> void:
@@ -286,7 +231,6 @@ func _on_arrow_fly_timeout() -> void:
 func _request_arrow_reset() -> void:
 	if not arrow_flying:
 		return
-
 	arrow_flying = false
 	arrow.visible = false
 	arrow.global_position = Vector2(-999999, -999999)
@@ -308,23 +252,12 @@ func _on_detection_area_body_exited(body: Node) -> void:
 	if body == player:
 		player = null
 
-func _find_player() -> void:
-	var players := get_tree().get_nodes_in_group(player_group)
-	if players.size() > 0 and players[0] is CharacterBody2D:
-		player = players[0] as CharacterBody2D
-
 func _is_player_valid() -> bool:
 	return is_instance_valid(player)
 
 func _update_animation() -> void:
-	if is_dead:
+	if is_dead or is_shooting:
 		return
-
-	if is_shooting:
-		if sprite.animation != "attack":
-			sprite.play("attack")
-		return
-
 	if absf(velocity.x) > 5.0:
 		if sprite.animation != "walk":
 			sprite.play("walk")
@@ -336,7 +269,6 @@ func _update_sensor_setup() -> void:
 	var range_shape := detection_shape.shape as CircleShape2D
 	if range_shape != null:
 		range_shape.radius = max(aggro_range, ranged_attack_range)
-
 	_set_facing(facing_dir)
 
 func _flash_back_to_default() -> void:

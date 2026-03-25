@@ -36,7 +36,7 @@ var direction := Vector2.ZERO
 @onready var sprite2d: AnimatedSprite2D = $AnimatedSprite2D
 @onready var coinLabel: Label = $"Camera2D/UI/Control/VBoxContainer/HBoxContainer2/Coin"
 @onready var HealthLabel: Label = $"Camera2D/UI/Control/VBoxContainer/HBoxContainer/HP"
-@onready var interactLabel: Label = $"Interaction Comp/Label"
+@onready var interactLabel: Label = $"Interaction Components/Label"
 @onready var all_interactions: Array = []
 @onready var LoosingPanel: Panel = $"Camera2D/UI/Control/VBoxContainer/Loosing"
 
@@ -125,8 +125,10 @@ func update_interaction() -> void:
 		return
 	if all_interactions:
 		interactLabel.text = all_interactions[0].interact_label
+		interactLabel.show()
 	else:
 		interactLabel.text = ""
+		interactLabel.hide()
 
 func execute_interaction() -> void:
 	if all_interactions.is_empty():
@@ -158,18 +160,25 @@ func add_coins(amount: int) -> void:
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if is_dead or not area.is_in_group("enemy_hitbox"):
 		return
-	var enemy := area.get_parent() as CharacterBody2D
-	if enemy == null:
+	var enemy := area.get_parent()
+	
+	# ← Enemy bereits tot? Ignorieren!
+	if enemy.has_method("is_dead") or "is_dead" in enemy:
+		if enemy.is_dead:
+			return
+	
+	var char_enemy := enemy as CharacterBody2D
+	if char_enemy == null:
 		return
 	var dangerous: bool = (
-		not enemy.is_on_floor()
-		or abs(enemy.velocity.x) >= 30
-		or enemy.velocity.y > 40
+		not char_enemy.is_on_floor()
+		or abs(char_enemy.velocity.x) >= 30
+		or char_enemy.velocity.y > 40
 	)
 	if not dangerous:
 		return
 	take_damage(touch_damage, _get_knockback_dir_from_position(area.global_position))
-
+	
 func _get_knockback_dir_from_position(from_pos: Vector2) -> Vector2:
 	var dir_x: float = sign(global_position.x - from_pos.x)
 	if dir_x == 0:
