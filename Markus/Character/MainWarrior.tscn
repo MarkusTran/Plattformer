@@ -763,6 +763,7 @@ attack_state = NodePath("../Attack")
 script = ExtResource("5_xcxxa")
 ground_state = NodePath("../Ground")
 air_state = NodePath("../Air")
+jump_velocity = -560.0
 
 [node name="Attack" type="Node" parent="CharacterStateMachine" unique_id=325527703 node_paths=PackedStringArray("ground_state")]
 script = ExtResource("6_va52k")

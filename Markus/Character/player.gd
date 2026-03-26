@@ -77,27 +77,27 @@ func _update_Hud() -> void:
 	HealthLabel.text = "%s / %s" % [current_health, max_health]
 
 func _physics_process(delta: float) -> void:
-	
-	
 	if is_dead:
 		return
 	if kb_time > 0.0:
-		kb_time -=delta
+		kb_time -= delta
 		if not is_on_floor():
 			velocity += get_gravity() * delta
 		move_and_slide()
 		return
-	
+
 	if Input.is_action_just_pressed(INTERACT):
 		execute_interaction()
 
 	if not is_on_floor():
 		velocity += get_gravity() * delta * down_acceleration
 
+	# ← Nur X-Achse für Bewegung, Y separat für Facing
+	var move_x := Input.get_axis("move_left", "move_right")
 	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
-	if direction.x != 0 and state_machine.check_if_can_move():
-		velocity.x = direction.x * speed
+	if move_x != 0 and state_machine.check_if_can_move():
+		velocity.x = move_x * speed  # ← immer volle speed, kein diagonal penalty
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 
