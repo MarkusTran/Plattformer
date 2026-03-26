@@ -56,6 +56,7 @@ func _ready() -> void:
 	coins = Global.coins
 	attack_damage = Global.attack_damage
 	LoosingPanel.hide()
+	LoosingPanel.process_mode = Node.PROCESS_MODE_DISABLED
 	_update_Hud()
 	
 	if hurtbox != null:
@@ -220,6 +221,7 @@ func die() -> void:
 	is_dead = true
 	
 	LoosingPanel.show()
+	LoosingPanel.process_mode = Node.PROCESS_MODE_INHERIT
 	state_machine.switch_states(dead_state)  # ← statt reload_current_scene
 	
 # Attack
