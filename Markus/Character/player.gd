@@ -8,6 +8,10 @@ const MOVE_LEFT_ACTION  := "move_left"
 const JUMP_ACTION       := "ui_accept"
 const SHOOT_ACTION      := "shoot"
 const INTERACT          := "interact"
+const COIN_POPUP_DURATION := 0.65
+const COIN_POPUP_RISE := 24.0
+const COIN_POPUP_OFFSET := Vector2(0, -42)
+const COIN_POPUP_ICON_TEXTURE := preload("res://asset/Pia/Assets/onlyCoin.png")
 
 @export var speed: float = 240.0
 @export var coins: int = 0
@@ -154,8 +158,42 @@ func execute_interaction() -> void:
 
 # --- Economy ---
 func add_coins(amount: int) -> void:
+	if amount <= 0:
+		return
 	coins += amount
+	Global.coins = coins
 	_update_Hud()
+	_show_coin_popup(amount)
+
+func _show_coin_popup(amount: int) -> void:
+	var popup := Node2D.new()
+	popup.top_level = true
+	popup.global_position = global_position + COIN_POPUP_OFFSET
+	add_child(popup)
+
+	var icon := Sprite2D.new()
+	icon.texture = COIN_POPUP_ICON_TEXTURE
+	icon.centered = true
+	icon.position = Vector2(-18, 0)
+	icon.scale = Vector2(0.6, 0.6)
+	popup.add_child(icon)
+
+	var label := Label.new()
+	label.text = "+%s" % amount
+	label.position = Vector2(-2, -14)
+	label.modulate = Color(1, 0.95, 0.55, 1)
+	label.add_theme_font_size_override("font_size", 20)
+	label.add_theme_color_override("font_color_shadow", Color(0, 0, 0, 0.8))
+	label.add_theme_constant_override("shadow_offset_x", 1)
+	label.add_theme_constant_override("shadow_offset_y", 1)
+	popup.add_child(label)
+
+	var tween := create_tween()
+	tween.set_parallel(true)
+	tween.tween_property(popup, "global_position:y", popup.global_position.y - COIN_POPUP_RISE, COIN_POPUP_DURATION)
+	tween.tween_property(icon, "modulate:a", 0.0, COIN_POPUP_DURATION)
+	tween.tween_property(label, "modulate:a", 0.0, COIN_POPUP_DURATION)
+	tween.finished.connect(popup.queue_free)
 	
 # Diese Funktionen 1:1 von Kerim übernehmen:
 func _on_hurtbox_area_entered(area: Area2D) -> void:

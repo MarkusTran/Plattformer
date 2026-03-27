@@ -5,6 +5,7 @@ using System.Reflection.Metadata;
 public partial class Coin : Node2D
 {
 	// Called when the node enters the scene tree for the first time.
+	private const int CoinValue = 1;
 
 	private AnimatedSprite2D? _mainSprite;
 	private AnimatedSprite2D? _pickupSprite;
@@ -25,8 +26,16 @@ public partial class Coin : Node2D
 
 	public void OnCollision(CharacterBody2D other)
 	{
+		if (_isPickedUp)
+		{
+			return;
+		}
+		_isPickedUp = true;
 		GD.Print("Coin collided with player");
-		// QueueFree();
+		if (other != null && other.HasMethod("add_coins"))
+		{
+			other.Call("add_coins", CoinValue);
+		}
 		_mainSprite?.Hide();
 		_pickupSprite?.Show();
 		_pickupSprite?.Play();
