@@ -498,7 +498,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 1,
-"values": [Vector2(2.3809898, 0.536149), Vector2(3.4, 3.215), Vector2(1.962, 1.855)]
+"values": [Vector2(2.3809898, 0.536149), Vector2(5.22, 4.936), Vector2(3.497, 3.306)]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -568,7 +568,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [Vector2(2, 1.89), Vector2(4.221, 3.992), Vector2(2.506, 2.37), Vector2(0.346, 1.6037297)]
+"values": [Vector2(2, 1.89), Vector2(7.571, 7.16), Vector2(7.556, 7.146), Vector2(0.346, 1.6037297)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -608,7 +608,7 @@ _data = {
 }
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l01dh"]
-radius = 9.803484
+radius = 7.3460274
 
 [node name="MarkusPlayer" type="CharacterBody2D" unique_id=765685625 node_paths=PackedStringArray("dead_state") groups=["player", "player_hurtbox"]]
 collision_layer = 2
@@ -621,20 +621,25 @@ zoom = Vector2(2.5, 2.5)
 [node name="UI" type="CanvasLayer" parent="Camera2D" unique_id=923568497]
 
 [node name="Control" type="MarginContainer" parent="Camera2D/UI" unique_id=2016871943]
+light_mask = 2
+visibility_layer = 2
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 theme = SubResource("Theme_l01dh")
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Camera2D/UI/Control" unique_id=128933647]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Camera2D/UI/Control/VBoxContainer" unique_id=1157333080]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="HP" type="Label" parent="Camera2D/UI/Control/VBoxContainer/HBoxContainer" unique_id=1169551419]
 layout_mode = 2
@@ -649,6 +654,7 @@ expand_mode = 2
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Camera2D/UI/Control/VBoxContainer" unique_id=953461451]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="Coin" type="Label" parent="Camera2D/UI/Control/VBoxContainer/HBoxContainer2" unique_id=985196724]
 layout_mode = 2

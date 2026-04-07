@@ -1,6 +1,5 @@
 extends Control
 
-@export var game_manager : GameManager
 
 var game_paused : bool = false
 # Called when the node enters the scene tree for the first time.
@@ -30,6 +29,7 @@ func _on_toggle_game_paused(is_paused : bool):
 
 func _on_resume_pressed() -> void:
 	get_tree().paused = false
+	hide()
 
 
 func _on_exit_pressed() -> void:
