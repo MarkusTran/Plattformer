@@ -2,6 +2,18 @@
 
 [ext_resource type="Script" uid="uid://dpgikyfrbrv4v" path="res://Markus/scripts/pause_menu.gd" id="1_ltd3m"]
 [ext_resource type="Theme" uid="uid://chci4oxjrg8qq" path="res://UI/UI_Theme.tres" id="2_jfm1e"]
+[ext_resource type="Theme" uid="uid://xpl3ywx6y1hh" path="res://UI/DefaultButtons.tres" id="3_03fe5"]
+[ext_resource type="StyleBox" uid="uid://bab00rtiw8dfl" path="res://UI/normalButtonBG.tres" id="4_0b5ob"]
+
+[sub_resource type="Theme" id="Theme_pqlge"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0b5ob"]
+bg_color = Color(0.6249584, 0.38492623, 0.20361698, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pqlge"]
+bg_color = Color(0.6249584, 0.38492623, 0.20361698, 1)
+
+[sub_resource type="Theme" id="Theme_nben2"]
 
 [node name="PauseMenu" type="Control" unique_id=1339495711]
 process_mode = 3
@@ -28,6 +40,7 @@ offset_bottom = 205.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
+theme = SubResource("Theme_pqlge")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=634018929]
 layout_mode = 1
@@ -36,22 +49,53 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 3
 
 [node name="Label" type="Label" parent="Panel/VBoxContainer" unique_id=1533219235]
 layout_mode = 2
 theme = ExtResource("2_jfm1e")
+theme_override_colors/font_color = Color(0.8342039, 0.8739072, 0.26803625, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 50
 text = "PAUSED"
 horizontal_alignment = 1
 
-[node name="Resume" type="Button" parent="Panel/VBoxContainer" unique_id=298293753]
+[node name="MarginContainer" type="MarginContainer" parent="Panel/VBoxContainer" unique_id=1907975150]
 layout_mode = 2
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 40
+
+[node name="Resume" type="Button" parent="Panel/VBoxContainer/MarginContainer" unique_id=298293753]
+layout_mode = 2
+size_flags_vertical = 4
+theme = ExtResource("3_03fe5")
+theme_override_colors/font_color = Color(0.87242186, 0.68716794, 0.17626342, 1)
+theme_override_colors/font_hover_color = Color(0.63529414, 0.96862745, 0.88235295, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.6338988, 0.9680353, 0.8820028, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = ExtResource("4_0b5ob")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_0b5ob")
+theme_override_styles/hover = SubResource("StyleBoxFlat_pqlge")
 text = "Return
 "
 
-[node name="Exit" type="Button" parent="Panel/VBoxContainer" unique_id=262566956]
+[node name="MarginContainer2" type="MarginContainer" parent="Panel/VBoxContainer" unique_id=107867105]
+layout_mode = 2
+theme = SubResource("Theme_nben2")
+theme_override_constants/margin_left = 40
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="Exit" type="Button" parent="Panel/VBoxContainer/MarginContainer2" unique_id=262566956]
 layout_mode = 2
 text = "Exit
 "
 
-[connection signal="pressed" from="Panel/VBoxContainer/Resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/MarginContainer/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/MarginContainer2/Exit" to="." method="_on_exit_pressed"]
