@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://86noiws5wjvb"]
+
+[ext_resource type="Texture2D" uid="uid://cbgyqgw5u3hnb" path="res://UI/12 Border 01.png" id="1_eljnk"]
+
+[node name="CanvasLayer" type="CanvasLayer" unique_id=1359844098]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1208051690]
+offset_right = 52.0
+offset_bottom = 50.0
+texture = ExtResource("1_eljnk")
+region_rect = Rect2(193, 193, 63, 63)
+patch_margin_left = 8
+patch_margin_top = 8
+patch_margin_right = 8
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
