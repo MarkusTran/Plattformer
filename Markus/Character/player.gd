@@ -152,9 +152,19 @@ func execute_interaction() -> void:
 				
 				Global.current_health = current_health
 				Global.coins = coins
-				Global.finished_level = Global.finished_level + 1
+				Global.finished_level = _get_next_level_index()
 				
 				portal.interact(self)
+
+func _get_next_level_index() -> int:
+	var current_scene := get_tree().current_scene
+	if current_scene != null:
+		var scene_name := current_scene.scene_file_path.get_file().get_basename()
+		if scene_name.begins_with("level_"):
+			var current_level := int(scene_name.trim_prefix("level_"))
+			if current_level > 0:
+				return current_level + 1
+	return Global.finished_level + 1
 
 # --- Economy ---
 func add_coins(amount: int) -> void:
