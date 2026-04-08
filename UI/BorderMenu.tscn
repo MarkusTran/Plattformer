@@ -5,7 +5,7 @@
 [node name="CanvasLayer" type="CanvasLayer" unique_id=1359844098]
 
 [node name="NinePatchRect" type="NinePatchRect" parent="." unique_id=1208051690]
-offset_right = 52.0
+offset_right = 100.0
 offset_bottom = 50.0
 texture = ExtResource("1_eljnk")
 region_rect = Rect2(193, 193, 63, 63)
