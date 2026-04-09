@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dpgikyfrbrv4v" path="res://Markus/scripts/pause_menu.gd" id="1_ltd3m"]
 [ext_resource type="Theme" uid="uid://cpauseui01xx" path="res://UI/pause_ui.tres" id="2_pause"]
+[ext_resource type="StyleBox" uid="uid://gt878pkqqhaf" path="res://UI/PanelBackground.tres" id="3_03fe5"]
 
 [node name="PauseMenu" type="Control" unique_id=1339495711]
 process_mode = 3
@@ -37,7 +38,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 4
+theme_override_constants/separation = 2
 
 [node name="Title" type="Label" parent="Panel/VBoxContainer" unique_id=1533219235]
 layout_mode = 2
@@ -48,36 +49,44 @@ theme_override_font_sizes/font_size = 48
 text = "PAUSED"
 horizontal_alignment = 1
 
-[node name="ResumeMargin" type="MarginContainer" parent="Panel/VBoxContainer" unique_id=1907975150]
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer" unique_id=1066650779]
 layout_mode = 2
-theme_override_constants/margin_left = 90
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 90
-theme_override_constants/margin_bottom = 6
+size_flags_vertical = 3
+theme_override_constants/separation = 3
 
-[node name="Resume" type="Button" parent="Panel/VBoxContainer/ResumeMargin" unique_id=298293753]
+[node name="ResumeMargin" type="MarginContainer" parent="Panel/VBoxContainer/VBoxContainer" unique_id=1907975150]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 90
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 90
+theme_override_constants/margin_bottom = 40
+
+[node name="Resume" type="Button" parent="Panel/VBoxContainer/VBoxContainer/ResumeMargin" unique_id=298293753]
 layout_mode = 2
 text = "RESUME"
 
-[node name="SettingsMargin" type="MarginContainer" parent="Panel/VBoxContainer" unique_id=2088888105]
+[node name="SettingsMargin" type="MarginContainer" parent="Panel/VBoxContainer/VBoxContainer" unique_id=2088888105]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/margin_left = 90
-theme_override_constants/margin_top = 6
+theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 90
-theme_override_constants/margin_bottom = 6
+theme_override_constants/margin_bottom = 40
 
-[node name="Settings" type="Button" parent="Panel/VBoxContainer/SettingsMargin" unique_id=1628770239]
+[node name="Settings" type="Button" parent="Panel/VBoxContainer/VBoxContainer/SettingsMargin" unique_id=1628770239]
 layout_mode = 2
 text = "SETTINGS"
 
-[node name="ExitMargin" type="MarginContainer" parent="Panel/VBoxContainer" unique_id=107867105]
+[node name="ExitMargin" type="MarginContainer" parent="Panel/VBoxContainer/VBoxContainer" unique_id=107867105]
 layout_mode = 2
+size_flags_vertical = 3
 theme_override_constants/margin_left = 90
-theme_override_constants/margin_top = 6
+theme_override_constants/margin_top = 40
 theme_override_constants/margin_right = 90
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_bottom = 40
 
-[node name="Exit" type="Button" parent="Panel/VBoxContainer/ExitMargin" unique_id=262566956]
+[node name="Exit" type="Button" parent="Panel/VBoxContainer/VBoxContainer/ExitMargin" unique_id=262566956]
 layout_mode = 2
 text = "EXIT"
 
@@ -179,7 +188,6 @@ layout_mode = 2
 text = "ESC  "
 
 [node name="SettingsPanel" type="Panel" parent="." unique_id=210279746]
-visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -192,17 +200,25 @@ offset_right = 260.0
 offset_bottom = 260.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = ExtResource("3_03fe5")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel" unique_id=476166308]
+[node name="MarginContainer" type="MarginContainer" parent="SettingsPanel" unique_id=2054212702]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/MarginContainer" unique_id=476166308]
+layout_mode = 2
 theme_override_constants/separation = 16
 
-[node name="Title" type="Label" parent="SettingsPanel/VBoxContainer" unique_id=386164792]
+[node name="Title" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=386164792]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.92, 0.35, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
@@ -211,16 +227,16 @@ theme_override_font_sizes/font_size = 40
 text = "SETTINGS"
 horizontal_alignment = 1
 
-[node name="MasterRow" type="HBoxContainer" parent="SettingsPanel/VBoxContainer" unique_id=1501584640]
+[node name="MasterRow" type="HBoxContainer" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=1501584640]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Label" type="Label" parent="SettingsPanel/VBoxContainer/MasterRow" unique_id=299837800]
+[node name="Label" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/MasterRow" unique_id=299837800]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "  Master Volume"
 
-[node name="MasterSlider" type="HSlider" parent="SettingsPanel/VBoxContainer/MasterRow" unique_id=182303406]
+[node name="MasterSlider" type="HSlider" parent="SettingsPanel/MarginContainer/VBoxContainer/MasterRow" unique_id=182303406]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -228,16 +244,16 @@ max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="MusicRow" type="HBoxContainer" parent="SettingsPanel/VBoxContainer" unique_id=296724856]
+[node name="MusicRow" type="HBoxContainer" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=296724856]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Label" type="Label" parent="SettingsPanel/VBoxContainer/MusicRow" unique_id=1922129893]
+[node name="Label" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/MusicRow" unique_id=1922129893]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "  Music Volume"
 
-[node name="MusicSlider" type="HSlider" parent="SettingsPanel/VBoxContainer/MusicRow" unique_id=1426469795]
+[node name="MusicSlider" type="HSlider" parent="SettingsPanel/MarginContainer/VBoxContainer/MusicRow" unique_id=1426469795]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -245,16 +261,16 @@ max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="SFXRow" type="HBoxContainer" parent="SettingsPanel/VBoxContainer" unique_id=327769522]
+[node name="SFXRow" type="HBoxContainer" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=327769522]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="Label" type="Label" parent="SettingsPanel/VBoxContainer/SFXRow" unique_id=1669667360]
+[node name="Label" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/SFXRow" unique_id=1669667360]
 layout_mode = 2
 size_flags_horizontal = 3
 text = "  SFX Volume"
 
-[node name="SFXSlider" type="HSlider" parent="SettingsPanel/VBoxContainer/SFXRow" unique_id=589533411]
+[node name="SFXSlider" type="HSlider" parent="SettingsPanel/MarginContainer/VBoxContainer/SFXRow" unique_id=589533411]
 custom_minimum_size = Vector2(220, 0)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -262,22 +278,22 @@ max_value = 1.0
 step = 0.01
 value = 1.0
 
-[node name="FullscreenCheck" type="CheckBox" parent="SettingsPanel/VBoxContainer" unique_id=1252377854]
+[node name="FullscreenCheck" type="CheckBox" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=1252377854]
 layout_mode = 2
 text = "  Fullscreen"
 
-[node name="BackMargin" type="MarginContainer" parent="SettingsPanel/VBoxContainer" unique_id=229314464]
+[node name="BackMargin" type="MarginContainer" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=229314464]
 layout_mode = 2
 theme_override_constants/margin_left = 104
 theme_override_constants/margin_top = 16
 theme_override_constants/margin_right = 104
 theme_override_constants/margin_bottom = 16
 
-[node name="BackButton" type="Button" parent="SettingsPanel/VBoxContainer/BackMargin" unique_id=959049553]
+[node name="BackButton" type="Button" parent="SettingsPanel/MarginContainer/VBoxContainer/BackMargin" unique_id=959049553]
 layout_mode = 2
 text = "BACK"
 
-[connection signal="pressed" from="Panel/VBoxContainer/ResumeMargin/Resume" to="." method="_on_resume_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/SettingsMargin/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="Panel/VBoxContainer/ExitMargin/Exit" to="." method="_on_exit_pressed"]
-[connection signal="pressed" from="SettingsPanel/VBoxContainer/BackMargin/BackButton" to="." method="_on_back_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/VBoxContainer/ResumeMargin/Resume" to="." method="_on_resume_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/VBoxContainer/SettingsMargin/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Panel/VBoxContainer/VBoxContainer/ExitMargin/Exit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="SettingsPanel/MarginContainer/VBoxContainer/BackMargin/BackButton" to="." method="_on_back_pressed"]
