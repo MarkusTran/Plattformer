@@ -16,19 +16,12 @@
 [ext_resource type="Texture2D" uid="uid://dj1pjqyleo8pl" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Jumlp-All/Jump-All-Sheet.png" id="17_2r2ps"]
 [ext_resource type="Texture2D" uid="uid://cx6u44mukpx8e" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Run/Run-Sheet.png" id="18_8ntij"]
 [ext_resource type="Texture2D" uid="uid://dhhtg51hpigtv" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Attack-01/Attack-01-Sheet.png" id="19_ic26w"]
+[ext_resource type="Theme" uid="uid://cpauseui01xx" path="res://UI/pause_ui.tres" id="20_pauseui"]
 
 [sub_resource type="Theme" id="Theme_l01dh"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_l0e6x"]
 font_size = 27
-
-[sub_resource type="Theme" id="Theme_axc6g"]
-
-[sub_resource type="Theme" id="Theme_nbkty"]
-
-[sub_resource type="Theme" id="Theme_se6tr"]
-
-[sub_resource type="Theme" id="Theme_63s61"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_w8cch"]
 radius = 8.0
@@ -669,10 +662,11 @@ texture = ExtResource("2_kjtvu")
 expand_mode = 2
 
 [node name="Loosing" type="Panel" parent="Camera2D/UI/Control/VBoxContainer" unique_id=692649000]
-custom_minimum_size = Vector2(500, 200)
+custom_minimum_size = Vector2(500, 260)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 6
+theme = ExtResource("20_pauseui")
 
 [node name="MarginContainer" type="MarginContainer" parent="Camera2D/UI/Control/VBoxContainer/Loosing" unique_id=740772933]
 layout_mode = 1
@@ -681,7 +675,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme = SubResource("Theme_axc6g")
 theme_override_constants/margin_left = 20
 theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
@@ -689,31 +682,46 @@ theme_override_constants/margin_bottom = 20
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer" unique_id=1219884685]
 layout_mode = 2
+theme_override_constants/separation = 10
 
 [node name="TITLE" type="Label" parent="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer" unique_id=702323162]
 layout_mode = 2
 size_flags_horizontal = 4
-theme = SubResource("Theme_nbkty")
-theme_override_font_sizes/font_size = 32
+theme_override_colors/font_color = Color(1, 0.92, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_font_sizes/font_size = 44
 text = "YOU LOST"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="MarginContainer" type="MarginContainer" parent="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer" unique_id=1744268358]
 layout_mode = 2
-theme = SubResource("Theme_se6tr")
-theme_override_constants/margin_top = 24
+theme_override_constants/margin_top = 16
 
 [node name="VBoxContainer" type="VBoxContainer" parent="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer" unique_id=1348877431]
 layout_mode = 2
-theme = SubResource("Theme_63s61")
-theme_override_constants/separation = 20
+theme_override_constants/separation = 10
 
-[node name="RESTART" type="Button" parent="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1737234338]
+[node name="RestartMargin" type="MarginContainer" parent="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=1278273056]
 layout_mode = 2
-text = "Restart"
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 4
 
-[node name="QUIT" type="Button" parent="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=348123104]
+[node name="RESTART" type="Button" parent="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/RestartMargin" unique_id=1737234338]
+layout_mode = 2
+text = "RESTART"
+
+[node name="QuitMargin" type="MarginContainer" parent="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer" unique_id=320663317]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 4
+
+[node name="QUIT" type="Button" parent="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/QuitMargin" unique_id=348123104]
 layout_mode = 2
 text = "QUIT"
 
@@ -818,8 +826,8 @@ scale = Vector2(2.3809898, 0.536149)
 shape = SubResource("CircleShape2D_l01dh")
 disabled = true
 
-[connection signal="pressed" from="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/RESTART" to="." method="_on_restart_pressed"]
-[connection signal="pressed" from="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/QUIT" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/RestartMargin/RESTART" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/QuitMargin/QUIT" to="." method="_on_exit_pressed"]
 [connection signal="area_entered" from="Interaction Components/interactionArea" to="." method="_on_interaction_area_area_entered"]
 [connection signal="area_exited" from="Interaction Components/interactionArea" to="." method="_on_interaction_area_area_exited"]
 [connection signal="body_entered" from="AttackHitbox" to="." method="_on_attack_hitbox_body_entered"]

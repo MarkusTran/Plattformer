@@ -1,0 +1,134 @@
+[gd_resource type="Theme" format=3 uid="uid://cpauseui01xx"]
+
+[sub_resource type="StyleBoxFlat" id="SBF_ButtonNormal"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.42, 0.25, 0.12, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 4
+border_color = Color(0.18, 0.09, 0.03, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.45)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="SBF_ButtonFocus"]
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.88, 0.4, 0.9)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="SBF_ButtonHover"]
+content_margin_left = 16.0
+content_margin_top = 8.0
+content_margin_right = 16.0
+content_margin_bottom = 8.0
+bg_color = Color(0.52, 0.32, 0.16, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 4
+border_color = Color(0.22, 0.12, 0.04, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 5
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="SBF_ButtonPressed"]
+content_margin_left = 16.0
+content_margin_top = 10.0
+content_margin_right = 16.0
+content_margin_bottom = 6.0
+bg_color = Color(0.25, 0.14, 0.05, 1)
+border_width_left = 3
+border_width_top = 4
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.12, 0.06, 0.02, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 2
+shadow_offset = Vector2(0, 1)
+
+[sub_resource type="StyleBoxFlat" id="SBF_SliderTrack"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.22, 0.23, 0.27, 0.85)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.82, 0.68, 0.28, 1)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="SBF_Panel"]
+content_margin_left = 16.0
+content_margin_top = 16.0
+content_margin_right = 16.0
+content_margin_bottom = 16.0
+bg_color = Color(0.5803922, 0.6, 0.54901963, 0.6156863)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.86, 0.72, 0.32, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(0, 0, 0, 0.5)
+shadow_size = 6
+shadow_offset = Vector2(0, 3)
+
+[resource]
+Button/colors/font_color = Color(0.86, 0.87, 0.91, 1)
+Button/colors/font_focus_color = Color(1, 0.92, 0.35, 1)
+Button/colors/font_hover_color = Color(1, 0.92, 0.35, 1)
+Button/colors/font_hover_pressed_color = Color(1, 0.88, 0.3, 1)
+Button/colors/font_outline_color = Color(0, 0, 0, 1)
+Button/colors/font_pressed_color = Color(0.72, 0.6, 0.22, 1)
+Button/constants/outline_size = 3
+Button/font_sizes/font_size = 24
+Button/styles/disabled = SubResource("SBF_ButtonNormal")
+Button/styles/focus = SubResource("SBF_ButtonFocus")
+Button/styles/hover = SubResource("SBF_ButtonHover")
+Button/styles/normal = SubResource("SBF_ButtonNormal")
+Button/styles/pressed = SubResource("SBF_ButtonPressed")
+CheckBox/colors/font_color = Color(0.86, 0.87, 0.91, 1)
+CheckBox/colors/font_hover_color = Color(1, 0.92, 0.35, 1)
+CheckBox/colors/font_outline_color = Color(0, 0, 0, 1)
+CheckBox/colors/font_pressed_color = Color(1, 0.88, 0.3, 1)
+CheckBox/constants/outline_size = 3
+CheckBox/font_sizes/font_size = 20
+HSlider/styles/grabber_area = SubResource("SBF_ButtonHover")
+HSlider/styles/grabber_area_highlight = SubResource("SBF_ButtonPressed")
+HSlider/styles/slider = SubResource("SBF_SliderTrack")
+Label/colors/font_color = Color(0.9, 0.91, 0.95, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/constants/outline_size = 3
+Label/font_sizes/font_size = 20
+Panel/styles/panel = SubResource("SBF_Panel")
