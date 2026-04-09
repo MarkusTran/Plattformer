@@ -16,6 +16,8 @@
 [ext_resource type="PackedScene" uid="uid://7bia2518okp2" path="res://Kerim/Prefabs/goblin.tscn" id="10_77xid"]
 [ext_resource type="PackedScene" uid="uid://bkagoqcoc6oue" path="res://Kerim/Prefabs/skelett.tscn" id="11_m0m22"]
 [ext_resource type="PackedScene" uid="uid://do1id5wextsgo" path="res://Kerim/Prefabs/spike_spitter.tscn" id="12_utic7"]
+[ext_resource type="PackedScene" uid="uid://bwg8igm8c4icg" path="res://Markus/Prefabs/checkpoint.tscn" id="17_lk1ng"]
+[ext_resource type="PackedScene" uid="uid://bvnynrj5pm3ok" path="res://Markus/Prefabs/Deathzone.tscn" id="18_jovq6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lvag0"]
 texture = ExtResource("2_3227t")
@@ -13414,3 +13416,11 @@ position = Vector2(525, -217)
 
 [node name="chest2" parent="." unique_id=2036005073 instance=ExtResource("8_jj4ty")]
 position = Vector2(678, 27)
+
+[node name="Checkpoint" parent="." unique_id=1468318660 instance=ExtResource("17_lk1ng")]
+position = Vector2(1606.0001, -21)
+scale = Vector2(30.369194, 6.350434)
+
+[node name="Area2D" parent="." unique_id=1986265459 instance=ExtResource("18_jovq6")]
+position = Vector2(1738, 225)
+scale = Vector2(8.559999, 1)

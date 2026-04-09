@@ -611,6 +611,7 @@ _data = {
 radius = 7.3460274
 
 [node name="MarkusPlayer" type="CharacterBody2D" unique_id=765685625 node_paths=PackedStringArray("dead_state") groups=["player", "player_hurtbox"]]
+z_index = 2
 collision_layer = 2
 script = ExtResource("1_se6tr")
 dead_state = NodePath("CharacterStateMachine/Dead")
