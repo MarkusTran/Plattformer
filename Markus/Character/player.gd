@@ -8,10 +8,6 @@ const MOVE_LEFT_ACTION  := "move_left"
 const JUMP_ACTION       := "ui_accept"
 const SHOOT_ACTION      := "shoot"
 const INTERACT          := "interact"
-const COIN_POPUP_DURATION := 0.65
-const COIN_POPUP_RISE := 24.0
-const COIN_POPUP_OFFSET := Vector2(0, -42)
-const COIN_POPUP_ICON_TEXTURE := preload("res://asset/Pia/Assets/onlyCoin.png")
 
 @export var speed: float = 240.0
 @export var coins: int = 0
@@ -43,6 +39,7 @@ var direction := Vector2.ZERO
 @onready var interactLabel: Label = $"Interaction Components/Label"
 @onready var all_interactions: Array = []
 @onready var LoosingPanel: Panel = $"Camera2D/UI/Control/VBoxContainer/Loosing"
+
 
 #Attack
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -152,63 +149,21 @@ func execute_interaction() -> void:
 				
 				Global.current_health = current_health
 				Global.coins = coins
-				Global.finished_level = _get_next_level_index()
+				Global.finished_level = Global.finished_level + 1
 				
 				portal.interact(self)
 
-func _get_next_level_index() -> int:
-	var current_scene := get_tree().current_scene
-	if current_scene != null:
-		var scene_name := current_scene.scene_file_path.get_file().get_basename()
-		if scene_name.begins_with("level_"):
-			var current_level := int(scene_name.trim_prefix("level_"))
-			if current_level > 0:
-				return current_level + 1
-	return Global.finished_level + 1
-
 # --- Economy ---
 func add_coins(amount: int) -> void:
-	if amount <= 0:
-		return
 	coins += amount
-	Global.coins = coins
+	$Sounds/Coins.play()
 	_update_Hud()
-	_show_coin_popup(amount)
-
-func _show_coin_popup(amount: int) -> void:
-	var popup := Node2D.new()
-	popup.top_level = true
-	popup.global_position = global_position + COIN_POPUP_OFFSET
-	add_child(popup)
-
-	var icon := Sprite2D.new()
-	icon.texture = COIN_POPUP_ICON_TEXTURE
-	icon.centered = true
-	icon.position = Vector2(-18, 0)
-	icon.scale = Vector2(0.6, 0.6)
-	popup.add_child(icon)
-
-	var label := Label.new()
-	label.text = "+%s" % amount
-	label.position = Vector2(-2, -14)
-	label.modulate = Color(1, 0.95, 0.55, 1)
-	label.add_theme_font_size_override("font_size", 20)
-	label.add_theme_color_override("font_color_shadow", Color(0, 0, 0, 0.8))
-	label.add_theme_constant_override("shadow_offset_x", 1)
-	label.add_theme_constant_override("shadow_offset_y", 1)
-	popup.add_child(label)
-
-	var tween := create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(popup, "global_position:y", popup.global_position.y - COIN_POPUP_RISE, COIN_POPUP_DURATION)
-	tween.tween_property(icon, "modulate:a", 0.0, COIN_POPUP_DURATION)
-	tween.tween_property(label, "modulate:a", 0.0, COIN_POPUP_DURATION)
-	tween.finished.connect(popup.queue_free)
 	
 # Diese Funktionen 1:1 von Kerim übernehmen:
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if is_dead or not area.is_in_group("enemy_hitbox"):
 		return
+
 	var enemy := area.get_parent()
 	
 	# ← Enemy bereits tot? Ignorieren!
@@ -261,17 +216,20 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 	await get_tree().create_timer(invincible_time).timeout
 	if not is_inside_tree() or is_dead:
 		return
+	$Sounds/CharakterDamage.stop()
+	$Sounds/CharakterDamage.play()
+
 	invincible = false
 
 func die() -> void:
 	if is_dead:
 		return
 	is_dead = true
-	
+	$Sounds/CharakterDeath.play()
 	LoosingPanel.show()
 	LoosingPanel.process_mode = Node.PROCESS_MODE_INHERIT
 	state_machine.switch_states(dead_state)  # ← statt reload_current_scene
-	
+
 # Attack
 
 
@@ -294,6 +252,10 @@ func _on_attack_hitbox_body_entered(body: Node) -> void:
 	if already_hit.has(id):
 		return
 	already_hit[id] = true
+
+	$Sounds/CharakterPunch.stop()
+	$Sounds/CharakterPunch.play()
+	print($Sounds/CharakterPunch.playing)
 	body.take_damage(attack_damage)
 	
 func _on_restart_pressed() -> void:
@@ -307,4 +269,5 @@ func _on_restart_pressed() -> void:
 	get_tree().change_scene_to_file("res://Levels/level_1.tscn")
 
 func _on_exit_pressed() -> void:
+	
 	get_tree().quit()
