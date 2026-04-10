@@ -1,0 +1,82 @@
+[gd_scene format=3 uid="uid://dwuod8gpflt7e"]
+
+[ext_resource type="Theme" uid="uid://c23jmk5qev3eh" path="res://UI/CustomTheme.tres" id="1_ig5kc"]
+[ext_resource type="Texture2D" uid="uid://bfhjj3jegc7q8" path="res://asset/Pia/Background/Gemini_Generated_Image_n8rtxqn8rtxqn8rt.png" id="2_05l2w"]
+[ext_resource type="Script" uid="uid://cw34i7w4x2kjf" path="res://UI/title_screen.gd" id="2_g5eml"]
+[ext_resource type="FontFile" uid="uid://dqjiqpglrru7" path="res://asset/Fonts/Jacquard12-Regular.ttf" id="4_g5eml"]
+
+[node name="TitleScreen" type="Control" unique_id=1141202577]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_ig5kc")
+script = ExtResource("2_g5eml")
+
+[node name="background" type="TextureRect" parent="." unique_id=1636210535]
+modulate = Color(0.36228272, 0.36389995, 0.36066547, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_05l2w")
+
+[node name="Main" type="VBoxContainer" parent="." unique_id=1752989137]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.13700001
+anchor_top = 0.171
+anchor_right = 0.86300004
+anchor_bottom = 0.781
+offset_left = 0.11999512
+offset_top = -0.12000275
+offset_right = -0.11999512
+offset_bottom = -0.32000732
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 100
+alignment = 1
+
+[node name="Label" type="Label" parent="Main" unique_id=1518774183]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9585753, 0.8520132, 1.1551381e-06, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 7
+theme_override_fonts/font = ExtResource("4_g5eml")
+theme_override_font_sizes/font_size = 120
+text = "Echoes of the Underworld"
+horizontal_alignment = 1
+
+[node name="Menuoptions" type="VBoxContainer" parent="Main" unique_id=1139003096]
+custom_minimum_size = Vector2(0.735, 0)
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+theme_override_constants/separation = 15
+
+[node name="Start" type="Button" parent="Main/Menuoptions" unique_id=2003804643]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_stretch_ratio = 0.0
+text = "Start"
+
+[node name="Options" type="Button" parent="Main/Menuoptions" unique_id=2025269433]
+visible = false
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Options"
+
+[node name="shop" type="Button" parent="Main/Menuoptions" unique_id=1612954596]
+visible = false
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Shop"
+
+[connection signal="pressed" from="Main/Menuoptions/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Main/Menuoptions/shop" to="." method="_on_shop_pressed"]
