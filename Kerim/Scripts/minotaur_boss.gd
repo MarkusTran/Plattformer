@@ -159,7 +159,10 @@ func _die() -> void:
 	sprite.play("death")
 	await sprite.animation_finished
 	await get_tree().create_timer(death_linger_time).timeout
-	queue_free()
+	if not is_inside_tree():
+		return
+	Global.finished_level = 1
+	get_tree().change_scene_to_file("res://UI/win_screen.tscn")
 
 func _handle_combat_movement() -> void:
 	var dx := player.global_position.x - global_position.x

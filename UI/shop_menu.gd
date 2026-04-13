@@ -31,4 +31,7 @@ func _add_a_scene_manually():
 	
 	var full_path = scene_folder +"level_%s.tscn" %Global.finished_level
 	var scene_tree = get_tree()
-	scene_tree.change_scene_to_file(full_path)
+	if ResourceLoader.exists(full_path):
+		scene_tree.change_scene_to_file(full_path)
+	else:
+		scene_tree.change_scene_to_file("res://UI/win_screen.tscn")
