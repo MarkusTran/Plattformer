@@ -43,6 +43,11 @@ var direction := Vector2.ZERO
 @onready var interactLabel: Label = $"Interaction Components/Label"
 @onready var all_interactions: Array = []
 @onready var LoosingPanel: Panel = $"Camera2D/UI/Control/VBoxContainer/Loosing"
+@onready var coin_sound: AudioStreamPlayer = get_node_or_null("Sounds/Coins")
+@onready var damage_sound: AudioStreamPlayer = get_node_or_null("Sounds/CharakterDamage")
+@onready var death_sound: AudioStreamPlayer = get_node_or_null("Sounds/CharakterDeath")
+@onready var punch_sound: AudioStreamPlayer = get_node_or_null("Sounds/CharakterPunch")
+@onready var music_sound: AudioStreamPlayer = get_node_or_null("Sounds/Music")
 
 #Attack
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
@@ -74,6 +79,13 @@ func _ready() -> void:
 	attack_hitbox.monitoring = false
 	attack_hitbox.monitorable = false
 	attack_shape.disabled = true
+	if Global.audio_settings_changed.is_connected(_apply_audio_settings) == false:
+		Global.audio_settings_changed.connect(_apply_audio_settings)
+	if music_sound != null and music_sound.finished.is_connected(_on_music_finished) == false:
+		music_sound.finished.connect(_on_music_finished)
+	_apply_audio_settings()
+	if music_sound != null and not music_sound.playing:
+		music_sound.play()
 	update_interaction()
 	_update_Hud()
 
@@ -178,6 +190,7 @@ func add_coins(amount: int) -> void:
 		return
 	coins += amount
 	Global.coins = coins
+	_play_sound(coin_sound)
 	_update_Hud()
 	_show_coin_popup(amount)
 
@@ -256,6 +269,7 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 		return
 	invincible = true
 	current_health -= amount
+	_play_sound(damage_sound)
 	_update_Hud()
 	if knockback_dir != Vector2.ZERO:
 		apply_knockback_dir(knockback_dir)
@@ -277,6 +291,7 @@ func die() -> void:
 	if is_dead:
 		return
 	is_dead = true
+	_play_sound(death_sound)
 	LoosingPanel.show()
 	LoosingPanel.process_mode = Node.PROCESS_MODE_INHERIT
 	state_machine.switch_states(dead_state)
@@ -305,7 +320,35 @@ func _on_attack_hitbox_body_entered(body: Node) -> void:
 	if already_hit.has(id):
 		return
 	already_hit[id] = true
+	_play_sound(punch_sound)
 	body.take_damage(attack_damage)
+
+
+func _play_sound(player: AudioStreamPlayer) -> void:
+	if player == null:
+		return
+	player.stop()
+	player.play()
+
+
+func _apply_audio_settings() -> void:
+	var sfx_db := Global.get_sfx_volume_db()
+	var music_db := Global.get_music_volume_db()
+	if coin_sound != null:
+		coin_sound.volume_db = sfx_db
+	if damage_sound != null:
+		damage_sound.volume_db = sfx_db
+	if death_sound != null:
+		death_sound.volume_db = sfx_db
+	if punch_sound != null:
+		punch_sound.volume_db = sfx_db
+	if music_sound != null:
+		music_sound.volume_db = music_db
+
+
+func _on_music_finished() -> void:
+	if music_sound != null:
+		music_sound.play()
 
 
 func _on_restart_pressed() -> void:

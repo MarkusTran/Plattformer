@@ -15,7 +15,12 @@
 [ext_resource type="Texture2D" uid="uid://c4wv467t3oall" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Idle/Idle-Sheet.png" id="12_kjtvu"]
 [ext_resource type="Texture2D" uid="uid://dj1pjqyleo8pl" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Jumlp-All/Jump-All-Sheet.png" id="17_2r2ps"]
 [ext_resource type="Texture2D" uid="uid://cx6u44mukpx8e" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Run/Run-Sheet.png" id="18_8ntij"]
+[ext_resource type="AudioStream" uid="uid://cr15blrxwh568" path="res://asset/Sounds/charakter_punch.mp3" id="18_nbkty"]
+[ext_resource type="AudioStream" uid="uid://bagu80ybmfm88" path="res://asset/Sounds/coins.mp3" id="18_se6tr"]
+[ext_resource type="AudioStream" uid="uid://b7uafi6a2a3n0" path="res://asset/Sounds/music.wav" id="19_63s61"]
 [ext_resource type="Texture2D" uid="uid://dhhtg51hpigtv" path="res://asset/Legacy-Fantasy - High Forest 2.0/Legacy-Fantasy - High Forest 2.3/Character/Attack-01/Attack-01-Sheet.png" id="19_ic26w"]
+[ext_resource type="AudioStream" uid="uid://buirh46pcb0iv" path="res://asset/Sounds/charakter_damage.mp3" id="20_mvgme"]
+[ext_resource type="AudioStream" uid="uid://bscte540g4hr2" path="res://asset/Sounds/death.mp3" id="21_mvgme"]
 
 [sub_resource type="Theme" id="Theme_l01dh"]
 
@@ -816,6 +821,26 @@ rotation = 1.2290238
 scale = Vector2(2.3809898, 0.536149)
 shape = SubResource("CircleShape2D_l01dh")
 disabled = true
+
+[node name="Sounds" type="Node" parent="." unique_id=1164400712]
+
+[node name="CharakterPunch" type="AudioStreamPlayer" parent="Sounds" unique_id=1096529090]
+stream = ExtResource("18_nbkty")
+
+[node name="Coins" type="AudioStreamPlayer" parent="Sounds" unique_id=2069656204]
+stream = ExtResource("18_se6tr")
+
+[node name="Music" type="AudioStreamPlayer" parent="Sounds" unique_id=879518711]
+process_mode = 3
+autoplay = true
+stream = ExtResource("19_63s61")
+volume_db = -16.0
+
+[node name="CharakterDamage" type="AudioStreamPlayer" parent="Sounds" unique_id=507792375]
+stream = ExtResource("20_mvgme")
+
+[node name="CharakterDeath" type="AudioStreamPlayer" parent="Sounds" unique_id=1062080835]
+stream = ExtResource("21_mvgme")
 
 [connection signal="pressed" from="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/RESTART" to="." method="_on_restart_pressed"]
 [connection signal="pressed" from="Camera2D/UI/Control/VBoxContainer/Loosing/MarginContainer/VBoxContainer/MarginContainer/VBoxContainer/QUIT" to="." method="_on_exit_pressed"]
