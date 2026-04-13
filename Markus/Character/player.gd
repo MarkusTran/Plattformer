@@ -24,7 +24,7 @@ const COIN_POPUP_ICON_TEXTURE := preload("res://asset/Pia/Assets/onlyCoin.png")
 @export var knockback_y: float = 180.0
 @export var knockback_lock: float = 0.18
 @export var touch_damage: int = 10
-@export var dead_state: State 
+@export var dead_state: State
 
 var current_health: int
 var invincible := false
@@ -62,24 +62,26 @@ func _ready() -> void:
 	LoosingPanel.hide()
 	LoosingPanel.process_mode = Node.PROCESS_MODE_DISABLED
 	_update_Hud()
-	
+
 	if hurtbox != null:
 		hurtbox.area_entered.connect(_on_hurtbox_area_entered)
 	else:
 		push_error("Hurtbox Node nicht gefunden!")
-	
+
 	# body_entered statt area_entered!
 	attack_hitbox.body_entered.connect(_on_attack_hitbox_body_entered)
-	
+
 	attack_hitbox.monitoring = false
 	attack_hitbox.monitorable = false
 	attack_shape.disabled = true
 	update_interaction()
 	_update_Hud()
 
+
 func _update_Hud() -> void:
 	coinLabel.text = "Coin: %s" % coins
 	HealthLabel.text = "%s / %s" % [current_health, max_health]
+
 
 func _physics_process(delta: float) -> void:
 	if is_dead:
@@ -97,12 +99,12 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta * down_acceleration
 
-	# ← Nur X-Achse für Bewegung, Y separat für Facing
+	# Nur X-Achse für Bewegung, Y separat für Facing
 	var move_x := Input.get_axis("move_left", "move_right")
 	direction = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
 	if move_x != 0 and state_machine.check_if_can_move():
-		velocity.x = move_x * speed  # ← immer volle speed, kein diagonal penalty
+		velocity.x = move_x * speed
 	else:
 		velocity.x = move_toward(velocity.x, 0, speed)
 
@@ -116,14 +118,17 @@ func update_facing_direction() -> void:
 	elif direction.x < 0:
 		sprite2d.flip_h = true
 
+
 # --- Interactions ---
 func _on_interaction_area_area_entered(area: Area2D) -> void:
 	all_interactions.insert(0, area)
 	update_interaction()
 
+
 func _on_interaction_area_area_exited(area: Area2D) -> void:
 	all_interactions.erase(area)
 	update_interaction()
+
 
 func update_interaction() -> void:
 	if interactLabel == null:
@@ -134,6 +139,7 @@ func update_interaction() -> void:
 	else:
 		interactLabel.text = ""
 		interactLabel.hide()
+
 
 func execute_interaction() -> void:
 	if all_interactions.is_empty():
@@ -149,12 +155,11 @@ func execute_interaction() -> void:
 		"portal":
 			var portal = cur_interaction.get_parent()
 			if portal.has_method("interact"):
-				
 				Global.current_health = current_health
 				Global.coins = coins
 				Global.finished_level = _get_next_level_index()
-				
 				portal.interact(self)
+
 
 func _get_next_level_index() -> int:
 	var current_scene := get_tree().current_scene
@@ -166,6 +171,7 @@ func _get_next_level_index() -> int:
 				return current_level + 1
 	return Global.finished_level + 1
 
+
 # --- Economy ---
 func add_coins(amount: int) -> void:
 	if amount <= 0:
@@ -174,6 +180,7 @@ func add_coins(amount: int) -> void:
 	Global.coins = coins
 	_update_Hud()
 	_show_coin_popup(amount)
+
 
 func _show_coin_popup(amount: int) -> void:
 	var popup := Node2D.new()
@@ -204,18 +211,18 @@ func _show_coin_popup(amount: int) -> void:
 	tween.tween_property(icon, "modulate:a", 0.0, COIN_POPUP_DURATION)
 	tween.tween_property(label, "modulate:a", 0.0, COIN_POPUP_DURATION)
 	tween.finished.connect(popup.queue_free)
-	
+
+
 # Diese Funktionen 1:1 von Kerim übernehmen:
 func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if is_dead or not area.is_in_group("enemy_hitbox"):
 		return
 	var enemy := area.get_parent()
-	
-	# ← Enemy bereits tot? Ignorieren!
+
 	if enemy.has_method("is_dead") or "is_dead" in enemy:
 		if enemy.is_dead:
 			return
-	
+
 	var char_enemy := enemy as CharacterBody2D
 	if char_enemy == null:
 		return
@@ -227,12 +234,14 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if not dangerous:
 		return
 	take_damage(touch_damage, _get_knockback_dir_from_position(area.global_position))
-	
+
+
 func _get_knockback_dir_from_position(from_pos: Vector2) -> Vector2:
 	var dir_x: float = sign(global_position.x - from_pos.x)
 	if dir_x == 0:
 		dir_x = 1.0
 	return Vector2(dir_x, -0.7).normalized()
+
 
 func apply_knockback_dir(dir: Vector2) -> void:
 	kb_time = knockback_lock
@@ -241,12 +250,12 @@ func apply_knockback_dir(dir: Vector2) -> void:
 	velocity.x = final_dir.x * knockback_x
 	velocity.y = -abs(knockback_y)
 
+
 func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 	if invincible or is_dead:
 		return
 	invincible = true
 	current_health -= amount
-	#print("Player nimmt ", amount, " Schaden! Health: ", current_health)
 	_update_Hud()
 	if knockback_dir != Vector2.ZERO:
 		apply_knockback_dir(knockback_dir)
@@ -263,27 +272,29 @@ func take_damage(amount: int, knockback_dir: Vector2 = Vector2.ZERO) -> void:
 		return
 	invincible = false
 
+
 func die() -> void:
 	if is_dead:
 		return
 	is_dead = true
-	
 	LoosingPanel.show()
 	LoosingPanel.process_mode = Node.PROCESS_MODE_INHERIT
-	state_machine.switch_states(dead_state)  # ← statt reload_current_scene
-	
+	state_machine.switch_states(dead_state)
+
+
 # Attack
-
-
 func enable_attack_hitbox() -> void:
 	already_hit.clear()
 	attack_hitbox.monitoring = true
 	attack_hitbox.monitorable = true
 	attack_shape.disabled = false
+
+
 func end_attack() -> void:
 	attack_hitbox.monitoring = false
 	attack_hitbox.monitorable = false
 	attack_shape.disabled = true
+
 
 func _on_attack_hitbox_body_entered(body: Node) -> void:
 	if body == self:
@@ -295,16 +306,15 @@ func _on_attack_hitbox_body_entered(body: Node) -> void:
 		return
 	already_hit[id] = true
 	body.take_damage(attack_damage)
-	
+
+
 func _on_restart_pressed() -> void:
-	# Global resetten
 	Global.coins = 0
 	Global.current_health = 100
 	Global.max_health = 100
 	Global.attack_damage = 30
-	
-	# Level 1 laden
 	get_tree().change_scene_to_file("res://Levels/level_1.tscn")
+
 
 func _on_exit_pressed() -> void:
 	get_tree().quit()
