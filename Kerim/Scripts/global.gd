@@ -2,6 +2,7 @@ extends Node
 
 signal audio_settings_changed
 signal display_settings_changed
+signal boss_music_changed(is_boss: bool)
 
 const SETTINGS_FILE := "user://settings.cfg"
 

@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://byf4xnvqr4k8k"]
 
 [ext_resource type="Script" uid="uid://bsg8kfvimb13m" path="res://UI/shop_menu.gd" id="1_oy48o"]
+[ext_resource type="FontFile" uid="uid://b5r36f8qc3esb" path="res://asset/Fonts/Silkscreen-Regular.ttf" id="2_2jvin"]
 [ext_resource type="Texture2D" uid="uid://du4jru74jlu62" path="res://asset/Pia/Assets/onlyCoin.png" id="2_fxvbu"]
 [ext_resource type="PackedScene" uid="uid://dile6wrax05pw" path="res://UI/shop_item.tscn" id="3_2jvin"]
 [ext_resource type="Texture2D" uid="uid://baaj6cwlp2b6r" path="res://asset/48x48/potion_01a.png" id="4_n3hly"]
@@ -98,6 +99,7 @@ size_flags_vertical = 1
 theme = SubResource("Theme_h0s2b")
 theme_override_colors/font_color = Color(0.84147334, 0.6688122, 1.1551381e-06, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("2_2jvin")
 theme_override_font_sizes/font_size = 53
 text = "SHOP"
 horizontal_alignment = 1
@@ -121,6 +123,7 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
 theme = SubResource("Theme_bjf8s")
+theme_override_fonts/font = ExtResource("2_2jvin")
 theme_override_font_sizes/font_size = 37
 text = "COINS"
 horizontal_alignment = 1
@@ -283,5 +286,6 @@ layout_mode = 2
 theme = SubResource("Theme_dbve2")
 theme_override_colors/font_color = Color(0.87479216, 0.87914306, 0.84414816, 1)
 theme_override_colors/font_hover_color = Color(0.9163825, 0, 0.13202867, 1)
+theme_override_fonts/font = ExtResource("2_2jvin")
 theme_override_font_sizes/font_size = 40
 text = "Go Next"

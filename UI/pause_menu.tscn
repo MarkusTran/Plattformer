@@ -3,6 +3,9 @@
 [ext_resource type="Script" uid="uid://dpgikyfrbrv4v" path="res://Markus/scripts/pause_menu.gd" id="1_ltd3m"]
 [ext_resource type="Theme" uid="uid://cpauseui01xx" path="res://UI/pause_ui.tres" id="2_pause"]
 [ext_resource type="StyleBox" uid="uid://gt878pkqqhaf" path="res://UI/PanelBackground.tres" id="3_03fe5"]
+[ext_resource type="FontFile" uid="uid://b5r36f8qc3esb" path="res://asset/Fonts/Silkscreen-Regular.ttf" id="4_0b5ob"]
+
+[sub_resource type="Theme" id="Theme_0b5ob"]
 
 [node name="PauseMenu" type="Control" unique_id=1339495711]
 process_mode = 3
@@ -97,9 +100,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = 260.0
+offset_left = 412.0
 offset_top = -240.0
-offset_right = 560.0
+offset_right = 712.0
 offset_bottom = 240.0
 grow_horizontal = 2
 grow_vertical = 2
@@ -119,6 +122,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.92, 0.35, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("4_0b5ob")
 theme_override_font_sizes/font_size = 34
 text = "CONTROLS"
 horizontal_alignment = 1
@@ -130,10 +134,12 @@ theme_override_constants/separation = 20
 [node name="MoveLabel" type="Label" parent="ControlsPanel/VBoxContainer/MoveRow" unique_id=139943449]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "  Bewegen"
 
 [node name="MoveKey" type="Label" parent="ControlsPanel/VBoxContainer/MoveRow" unique_id=361940153]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "A / D  "
 
 [node name="JumpRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=736985670]
@@ -143,10 +149,12 @@ theme_override_constants/separation = 20
 [node name="JumpLabel" type="Label" parent="ControlsPanel/VBoxContainer/JumpRow" unique_id=1337599974]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "  Springen"
 
 [node name="JumpKey" type="Label" parent="ControlsPanel/VBoxContainer/JumpRow" unique_id=1483743224]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "Leertaste  "
 
 [node name="AttackRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=589533838]
@@ -156,11 +164,13 @@ theme_override_constants/separation = 20
 [node name="AttackLabel" type="Label" parent="ControlsPanel/VBoxContainer/AttackRow" unique_id=620203018]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "  Angriff"
 
 [node name="AttackKey" type="Label" parent="ControlsPanel/VBoxContainer/AttackRow" unique_id=685716376]
 layout_mode = 2
-text = "Linke Maustaste  "
+theme_override_fonts/font = ExtResource("4_0b5ob")
+text = "LMB  "
 
 [node name="InteractRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=485919234]
 layout_mode = 2
@@ -169,10 +179,12 @@ theme_override_constants/separation = 20
 [node name="InteractLabel" type="Label" parent="ControlsPanel/VBoxContainer/InteractRow" unique_id=825413696]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "  Interagieren"
 
 [node name="InteractKey" type="Label" parent="ControlsPanel/VBoxContainer/InteractRow" unique_id=1378464016]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "E  "
 
 [node name="PauseRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=892681888]
@@ -182,10 +194,12 @@ theme_override_constants/separation = 20
 [node name="PauseLabel" type="Label" parent="ControlsPanel/VBoxContainer/PauseRow" unique_id=1653227941]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "  Pause"
 
 [node name="PauseKey" type="Label" parent="ControlsPanel/VBoxContainer/PauseRow" unique_id=1066136148]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "ESC  "
 
 [node name="SettingsPanel" type="Panel" parent="." unique_id=210279746]
@@ -224,6 +238,7 @@ layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.92, 0.35, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("4_0b5ob")
 theme_override_font_sizes/font_size = 40
 text = "SETTINGS"
 horizontal_alignment = 1
@@ -235,6 +250,7 @@ theme_override_constants/separation = 20
 [node name="Label" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/MasterRow" unique_id=299837800]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "  Master Volume"
 
 [node name="MasterSlider" type="HSlider" parent="SettingsPanel/MarginContainer/VBoxContainer/MasterRow" unique_id=182303406]
@@ -252,6 +268,7 @@ theme_override_constants/separation = 20
 [node name="Label" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/MusicRow" unique_id=1922129893]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "  Music Volume"
 
 [node name="MusicSlider" type="HSlider" parent="SettingsPanel/MarginContainer/VBoxContainer/MusicRow" unique_id=1426469795]
@@ -269,6 +286,7 @@ theme_override_constants/separation = 20
 [node name="Label" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/SFXRow" unique_id=1669667360]
 layout_mode = 2
 size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "  SFX Volume"
 
 [node name="SFXSlider" type="HSlider" parent="SettingsPanel/MarginContainer/VBoxContainer/SFXRow" unique_id=589533411]
@@ -281,6 +299,7 @@ value = 1.0
 
 [node name="FullscreenCheck" type="CheckBox" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=1252377854]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "  Fullscreen"
 
 [node name="BackMargin" type="MarginContainer" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=229314464]
@@ -292,6 +311,8 @@ theme_override_constants/margin_bottom = 16
 
 [node name="BackButton" type="Button" parent="SettingsPanel/MarginContainer/VBoxContainer/BackMargin" unique_id=959049553]
 layout_mode = 2
+theme = SubResource("Theme_0b5ob")
+theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "BACK"
 
 [connection signal="pressed" from="Panel/VBoxContainer/VBoxContainer/ResumeMargin/Resume" to="." method="_on_resume_pressed"]

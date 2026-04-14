@@ -3,7 +3,12 @@
 [ext_resource type="Theme" uid="uid://c23jmk5qev3eh" path="res://UI/CustomTheme.tres" id="1_ig5kc"]
 [ext_resource type="Texture2D" uid="uid://bfhjj3jegc7q8" path="res://asset/Pia/Background/Gemini_Generated_Image_n8rtxqn8rtxqn8rt.png" id="2_05l2w"]
 [ext_resource type="Script" uid="uid://cw34i7w4x2kjf" path="res://UI/title_screen.gd" id="2_g5eml"]
-[ext_resource type="FontFile" uid="uid://dqjiqpglrru7" path="res://asset/Fonts/Jacquard12-Regular.ttf" id="4_g5eml"]
+[ext_resource type="FontFile" uid="uid://b5r36f8qc3esb" path="res://asset/Fonts/Silkscreen-Regular.ttf" id="4_g5eml"]
+[ext_resource type="Theme" uid="uid://cpauseui01xx" path="res://UI/pause_ui.tres" id="5_udsnl"]
+[ext_resource type="StyleBox" uid="uid://gt878pkqqhaf" path="res://UI/PanelBackground.tres" id="6_tuktx"]
+[ext_resource type="AudioStream" uid="uid://bu7qxqilov23b" path="res://asset/Sounds/BackgroundMusic.mp3" id="7_nmnw7"]
+
+[sub_resource type="Theme" id="Theme_nmnw7"]
 
 [node name="TitleScreen" type="Control" unique_id=1141202577]
 layout_mode = 3
@@ -45,9 +50,10 @@ alignment = 1
 layout_mode = 2
 theme_override_colors/font_color = Color(0.9585753, 0.8520132, 1.1551381e-06, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/line_spacing = -1
 theme_override_constants/outline_size = 7
 theme_override_fonts/font = ExtResource("4_g5eml")
-theme_override_font_sizes/font_size = 120
+theme_override_font_sizes/font_size = 92
 text = "Echoes of the Underworld"
 horizontal_alignment = 1
 
@@ -55,6 +61,7 @@ horizontal_alignment = 1
 custom_minimum_size = Vector2(0.735, 0)
 layout_mode = 2
 size_flags_stretch_ratio = 0.0
+theme = ExtResource("5_udsnl")
 theme_override_constants/separation = 15
 
 [node name="Start" type="Button" parent="Main/Menuoptions" unique_id=2003804643]
@@ -65,18 +72,249 @@ size_flags_stretch_ratio = 0.0
 text = "Start"
 
 [node name="Options" type="Button" parent="Main/Menuoptions" unique_id=2025269433]
-visible = false
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Options"
 
-[node name="shop" type="Button" parent="Main/Menuoptions" unique_id=1612954596]
-visible = false
+[node name="quit" type="Button" parent="Main/Menuoptions" unique_id=1612954596]
 custom_minimum_size = Vector2(500, 0)
 layout_mode = 2
 size_flags_horizontal = 4
-text = "Shop"
+text = "Quit"
+
+[node name="ControlsPanel" type="Panel" parent="." unique_id=1992666319]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 412.0
+offset_top = -240.0
+offset_right = 712.0
+offset_bottom = 240.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("6_tuktx")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ControlsPanel" unique_id=1478357871]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 14
+
+[node name="Title" type="Label" parent="ControlsPanel/VBoxContainer" unique_id=1620264320]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("4_g5eml")
+theme_override_font_sizes/font_size = 34
+text = "CONTROLS"
+horizontal_alignment = 1
+
+[node name="MoveRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=1514743365]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="MoveLabel" type="Label" parent="ControlsPanel/VBoxContainer/MoveRow" unique_id=226626886]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "  Bewegen"
+
+[node name="MoveKey" type="Label" parent="ControlsPanel/VBoxContainer/MoveRow" unique_id=1071660714]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "A / D  "
+
+[node name="JumpRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=1043610787]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="JumpLabel" type="Label" parent="ControlsPanel/VBoxContainer/JumpRow" unique_id=1927521622]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "  Springen"
+
+[node name="JumpKey" type="Label" parent="ControlsPanel/VBoxContainer/JumpRow" unique_id=794109024]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "Leertaste  "
+
+[node name="AttackRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=255360995]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="AttackLabel" type="Label" parent="ControlsPanel/VBoxContainer/AttackRow" unique_id=1932857660]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "  Angriff"
+
+[node name="AttackKey" type="Label" parent="ControlsPanel/VBoxContainer/AttackRow" unique_id=1999379157]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "LMB  "
+
+[node name="InteractRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=1838868862]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="InteractLabel" type="Label" parent="ControlsPanel/VBoxContainer/InteractRow" unique_id=1131385994]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "  Interagieren"
+
+[node name="InteractKey" type="Label" parent="ControlsPanel/VBoxContainer/InteractRow" unique_id=911626638]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "E  "
+
+[node name="PauseRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=1866256812]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="PauseLabel" type="Label" parent="ControlsPanel/VBoxContainer/PauseRow" unique_id=1841476580]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "  Pause"
+
+[node name="PauseKey" type="Label" parent="ControlsPanel/VBoxContainer/PauseRow" unique_id=1464997845]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "ESC  "
+
+[node name="SettingsPanel" type="Panel" parent="." unique_id=1502475445]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -260.0
+offset_top = -260.0
+offset_right = 260.0
+offset_bottom = 260.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("5_udsnl")
+theme_override_styles/panel = ExtResource("6_tuktx")
+
+[node name="MarginContainer" type="MarginContainer" parent="SettingsPanel" unique_id=1273242628]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/MarginContainer" unique_id=1536784438]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="Title" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=2103542798]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("4_g5eml")
+theme_override_font_sizes/font_size = 40
+text = "SETTINGS"
+horizontal_alignment = 1
+
+[node name="MasterRow" type="HBoxContainer" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=1323429799]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/MasterRow" unique_id=1160924926]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "  Master Volume"
+
+[node name="MasterSlider" type="HSlider" parent="SettingsPanel/MarginContainer/VBoxContainer/MasterRow" unique_id=812988937]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="MusicRow" type="HBoxContainer" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=728735068]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/MusicRow" unique_id=273038329]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "  Music Volume"
+
+[node name="MusicSlider" type="HSlider" parent="SettingsPanel/MarginContainer/VBoxContainer/MusicRow" unique_id=374207313]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="SFXRow" type="HBoxContainer" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=573672739]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer/SFXRow" unique_id=1311346418]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "  SFX Volume"
+
+[node name="SFXSlider" type="HSlider" parent="SettingsPanel/MarginContainer/VBoxContainer/SFXRow" unique_id=1404321349]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="FullscreenCheck" type="CheckBox" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=455888790]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "  Fullscreen"
+
+[node name="BackMargin" type="MarginContainer" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=2145518913]
+layout_mode = 2
+theme_override_constants/margin_left = 104
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 104
+theme_override_constants/margin_bottom = 16
+
+[node name="BackButton" type="Button" parent="SettingsPanel/MarginContainer/VBoxContainer/BackMargin" unique_id=996122583]
+layout_mode = 2
+theme = SubResource("Theme_nmnw7")
+theme_override_fonts/font = ExtResource("4_g5eml")
+text = "BACK"
+
+[node name="Music" type="AudioStreamPlayer" parent="." unique_id=745373081]
+process_mode = 3
+stream = ExtResource("7_nmnw7")
+volume_db = -16.0
+autoplay = true
 
 [connection signal="pressed" from="Main/Menuoptions/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="Main/Menuoptions/shop" to="." method="_on_shop_pressed"]
+[connection signal="pressed" from="Main/Menuoptions/Options" to="." method="_on_options_pressed"]
+[connection signal="pressed" from="Main/Menuoptions/quit" to="." method="_on_exit_pressed"]
+[connection signal="pressed" from="SettingsPanel/MarginContainer/VBoxContainer/BackMargin/BackButton" to="." method="_on_back_pressed"]

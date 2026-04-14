@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://nfa2pvosrf1p" path="res://asset/48x48/fruit_01a.png" id="1_ftxjh"]
 [ext_resource type="Script" uid="uid://b025kfvsjhlpp" path="res://UI/shop_item.gd" id="1_j3n3j"]
 [ext_resource type="StyleBox" uid="uid://c5523beayfq0i" path="res://UI/GoldenBox.tres" id="1_upbfp"]
+[ext_resource type="FontFile" uid="uid://b5r36f8qc3esb" path="res://asset/Fonts/Silkscreen-Regular.ttf" id="4_m73ea"]
 
 [sub_resource type="Theme" id="Theme_upbfp"]
 
@@ -93,6 +94,8 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("4_m73ea")
+theme_override_font_sizes/font_size = 24
 text = "HP UP"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -101,6 +104,8 @@ vertical_alignment = 1
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 1
+theme_override_fonts/font = ExtResource("4_m73ea")
+theme_override_font_sizes/font_size = 24
 text = "Price"
 horizontal_alignment = 1
 vertical_alignment = 1

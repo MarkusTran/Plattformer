@@ -49,6 +49,7 @@ var is_phase_two := false
 var is_phase_three := false
 var touch_targets := {}
 var is_phase_shifting := false
+var boss_music_playing := false
 
 func _ready() -> void:
 	current_health = max_health
@@ -153,6 +154,9 @@ func _die() -> void:
 		return
 
 	is_dead = true
+	if boss_music_playing:
+		boss_music_playing = false
+		Global.boss_music_changed.emit(false)
 	_interrupt_attack()
 	velocity = Vector2.ZERO
 	body_shape.set_deferred("disabled", true)
@@ -286,6 +290,9 @@ func _start_touch_cooldown(instance_id: int) -> void:
 func _on_detection_area_body_entered(body: Node) -> void:
 	if body is CharacterBody2D and body.is_in_group(player_group):
 		player = body
+		if not boss_music_playing:
+			boss_music_playing = true
+			Global.boss_music_changed.emit(true)
 
 func _on_detection_area_body_exited(body: Node) -> void:
 	if body == player and not _has_target_in_aggro():

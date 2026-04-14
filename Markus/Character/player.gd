@@ -43,10 +43,13 @@ var direction := Vector2.ZERO
 @onready var interactLabel: Label = $"Interaction Components/Label"
 @onready var all_interactions: Array = []
 @onready var LoosingPanel: Panel = $"Camera2D/UI/Control/VBoxContainer/Loosing"
+const BOSS_MUSIC := preload("res://asset/Sounds/BossMusik.mp3")
+const BG_MUSIC   := preload("res://asset/Sounds/BackgroundMusic.mp3")
+
 @onready var coin_sound: AudioStreamPlayer = get_node_or_null("Sounds/Coins")
 @onready var damage_sound: AudioStreamPlayer = get_node_or_null("Sounds/CharakterDamage")
 @onready var death_sound: AudioStreamPlayer = get_node_or_null("Sounds/CharakterDeath")
-@onready var punch_sound: AudioStreamPlayer = get_node_or_null("Sounds/CharakterPunch")
+@onready var slash_sound: AudioStreamPlayer = get_node_or_null("Sounds/swordSwing")
 @onready var music_sound: AudioStreamPlayer = get_node_or_null("Sounds/Music")
 
 #Attack
@@ -81,6 +84,8 @@ func _ready() -> void:
 	attack_shape.disabled = true
 	if Global.audio_settings_changed.is_connected(_apply_audio_settings) == false:
 		Global.audio_settings_changed.connect(_apply_audio_settings)
+	if Global.boss_music_changed.is_connected(_on_boss_music_changed) == false:
+		Global.boss_music_changed.connect(_on_boss_music_changed)
 	if music_sound != null and music_sound.finished.is_connected(_on_music_finished) == false:
 		music_sound.finished.connect(_on_music_finished)
 	_apply_audio_settings()
@@ -299,6 +304,7 @@ func die() -> void:
 
 # Attack
 func enable_attack_hitbox() -> void:
+	_play_sound(slash_sound)
 	already_hit.clear()
 	attack_hitbox.monitoring = true
 	attack_hitbox.monitorable = true
@@ -320,7 +326,6 @@ func _on_attack_hitbox_body_entered(body: Node) -> void:
 	if already_hit.has(id):
 		return
 	already_hit[id] = true
-	_play_sound(punch_sound)
 	body.take_damage(attack_damage)
 
 
@@ -340,8 +345,8 @@ func _apply_audio_settings() -> void:
 		damage_sound.volume_db = sfx_db
 	if death_sound != null:
 		death_sound.volume_db = sfx_db
-	if punch_sound != null:
-		punch_sound.volume_db = sfx_db
+	if slash_sound != null:
+		slash_sound.volume_db = sfx_db
 	if music_sound != null:
 		music_sound.volume_db = music_db
 
@@ -349,6 +354,14 @@ func _apply_audio_settings() -> void:
 func _on_music_finished() -> void:
 	if music_sound != null:
 		music_sound.play()
+
+
+func _on_boss_music_changed(is_boss: bool) -> void:
+	if music_sound == null:
+		return
+	music_sound.stop()
+	music_sound.stream = BOSS_MUSIC if is_boss else BG_MUSIC
+	music_sound.play()
 
 
 func _on_restart_pressed() -> void:
