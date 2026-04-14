@@ -38,12 +38,14 @@ var direction := Vector2.ZERO
 
 @onready var state_machine: CharacterStateMachine = $CharacterStateMachine
 @onready var sprite2d: AnimatedSprite2D = $AnimatedSprite2D
-@onready var coinLabel: Label = $"Camera2D/UI/Control/VBoxContainer/HBoxContainer2/Coin"
-@onready var HealthLabel: Label = $"Camera2D/UI/Control/VBoxContainer/HBoxContainer/HP"
+@onready var coinLabel: Label = $Camera2D/UI/Control/VBoxContainer/StatsMargin/StatsVBox/HBoxContainer2/Coin
+@onready var HealthLabel: Label = $Camera2D/UI/Control/VBoxContainer/StatsMargin/StatsVBox/HBoxContainer/HP
+@onready var dmgLabel: Label = $Camera2D/UI/Control/VBoxContainer/StatsMargin/StatsVBox/DmgRow/DmgLabel
 @onready var interactLabel: Label = $"Interaction Components/Label"
 @onready var all_interactions: Array = []
-@onready var LoosingPanel: Panel = $"Camera2D/UI/Control/VBoxContainer/Loosing"
+@onready var LoosingPanel: Panel = $Camera2D/UI/Control/VBoxContainer/Loosing
 const BOSS_MUSIC := preload("res://asset/Sounds/BossMusik.mp3")
+const LOOSING_MUSIC := preload("res://asset/Sounds/loosing.mp3")
 const BG_MUSIC   := preload("res://asset/Sounds/BackgroundMusic.mp3")
 
 @onready var coin_sound: AudioStreamPlayer = get_node_or_null("Sounds/Coins")
@@ -98,6 +100,8 @@ func _ready() -> void:
 func _update_Hud() -> void:
 	coinLabel.text = "Coin: %s" % coins
 	HealthLabel.text = "%s / %s" % [current_health, max_health]
+	if dmgLabel:
+		dmgLabel.text = "DMG: %d" % attack_damage
 
 
 func _physics_process(delta: float) -> void:
@@ -296,7 +300,9 @@ func die() -> void:
 	if is_dead:
 		return
 	is_dead = true
-	_play_sound(death_sound)
+	music_sound.stop()
+	music_sound.stream = LOOSING_MUSIC
+	music_sound.play()
 	LoosingPanel.show()
 	LoosingPanel.process_mode = Node.PROCESS_MODE_INHERIT
 	state_machine.switch_states(dead_state)

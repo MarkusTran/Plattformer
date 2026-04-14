@@ -101,11 +101,12 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 412.0
-offset_top = -240.0
+offset_top = -160.0
 offset_right = 712.0
-offset_bottom = 240.0
+offset_bottom = 100.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1.1967142, 1.2161154)
 theme_override_styles/panel = ExtResource("3_03fe5")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="ControlsPanel" unique_id=924248903]
@@ -115,7 +116,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 14
+theme_override_constants/separation = 6
 
 [node name="Title" type="Label" parent="ControlsPanel/VBoxContainer" unique_id=594728661]
 layout_mode = 2
@@ -129,7 +130,7 @@ horizontal_alignment = 1
 
 [node name="MoveRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=1351755644]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 2
 
 [node name="MoveLabel" type="Label" parent="ControlsPanel/VBoxContainer/MoveRow" unique_id=139943449]
 layout_mode = 2
@@ -144,7 +145,7 @@ text = "A / D  "
 
 [node name="JumpRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=736985670]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 2
 
 [node name="JumpLabel" type="Label" parent="ControlsPanel/VBoxContainer/JumpRow" unique_id=1337599974]
 layout_mode = 2
@@ -185,7 +186,7 @@ text = "  Interagieren"
 [node name="InteractKey" type="Label" parent="ControlsPanel/VBoxContainer/InteractRow" unique_id=1378464016]
 layout_mode = 2
 theme_override_fonts/font = ExtResource("4_0b5ob")
-text = "E  "
+text = "F	  "
 
 [node name="PauseRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=892681888]
 layout_mode = 2
@@ -209,10 +210,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -260.0
-offset_top = -260.0
-offset_right = 260.0
-offset_bottom = 260.0
+offset_left = -220.0
+offset_top = -210.0
+offset_right = 220.0
+offset_bottom = 210.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = ExtResource("3_03fe5")
@@ -224,14 +225,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 40
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 40
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/MarginContainer" unique_id=476166308]
 layout_mode = 2
-theme_override_constants/separation = 16
+size_flags_vertical = 3
+theme_override_constants/separation = 14
+alignment = 1
 
 [node name="Title" type="Label" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=386164792]
 layout_mode = 2
@@ -254,7 +257,7 @@ theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "  Master Volume"
 
 [node name="MasterSlider" type="HSlider" parent="SettingsPanel/MarginContainer/VBoxContainer/MasterRow" unique_id=182303406]
-custom_minimum_size = Vector2(220, 0)
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 max_value = 1.0
@@ -272,7 +275,7 @@ theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "  Music Volume"
 
 [node name="MusicSlider" type="HSlider" parent="SettingsPanel/MarginContainer/VBoxContainer/MusicRow" unique_id=1426469795]
-custom_minimum_size = Vector2(220, 0)
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 max_value = 1.0
@@ -290,7 +293,7 @@ theme_override_fonts/font = ExtResource("4_0b5ob")
 text = "  SFX Volume"
 
 [node name="SFXSlider" type="HSlider" parent="SettingsPanel/MarginContainer/VBoxContainer/SFXRow" unique_id=589533411]
-custom_minimum_size = Vector2(220, 0)
+custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 max_value = 1.0
@@ -304,10 +307,10 @@ text = "  Fullscreen"
 
 [node name="BackMargin" type="MarginContainer" parent="SettingsPanel/MarginContainer/VBoxContainer" unique_id=229314464]
 layout_mode = 2
-theme_override_constants/margin_left = 104
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 104
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 60
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 60
+theme_override_constants/margin_bottom = 4
 
 [node name="BackButton" type="Button" parent="SettingsPanel/MarginContainer/VBoxContainer/BackMargin" unique_id=959049553]
 layout_mode = 2

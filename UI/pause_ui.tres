@@ -41,33 +41,33 @@ border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 4
-border_color = Color(0.22, 0.12, 0.04, 1)
+border_color = Color(0.86, 0.72, 0.32, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 shadow_color = Color(0, 0, 0, 0.5)
-shadow_size = 5
+shadow_size = 4
 shadow_offset = Vector2(0, 2)
 
 [sub_resource type="StyleBoxFlat" id="SBF_ButtonPressed"]
 content_margin_left = 16.0
-content_margin_top = 10.0
+content_margin_top = 8.0
 content_margin_right = 16.0
-content_margin_bottom = 6.0
+content_margin_bottom = 8.0
 bg_color = Color(0.25, 0.14, 0.05, 1)
 border_width_left = 3
-border_width_top = 4
+border_width_top = 3
 border_width_right = 3
-border_width_bottom = 3
-border_color = Color(0.12, 0.06, 0.02, 1)
+border_width_bottom = 4
+border_color = Color(0.6, 0.48, 0.18, 1)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 shadow_color = Color(0, 0, 0, 0.25)
-shadow_size = 2
-shadow_offset = Vector2(0, 1)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
 
 [sub_resource type="StyleBoxFlat" id="SBF_SliderTrack"]
 content_margin_left = 4.0

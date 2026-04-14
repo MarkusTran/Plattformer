@@ -45,6 +45,9 @@ var turn_cooldown_left := 0.0
 @onready var hit_shape2: CollisionShape2D = $AttackHitbox/CollisionShape2D2
 @onready var attack_range: Area2D = $AttackRange
 
+@onready var slash_sound: AudioStreamPlayer = get_node_or_null("Sound/slash")
+@onready var step_sound: AudioStreamPlayer = get_node_or_null("Sound/step")
+
 var invulnerable := false
 var already_hit := {}
 
@@ -85,6 +88,7 @@ func _physics_process(delta: float) -> void:
 
 	apply_gravity(delta)
 
+	
 	if taking_damage:
 		velocity.x = 0.0
 		move_and_slide()
@@ -127,6 +131,7 @@ func start_attack() -> void:
 	can_attack = false
 	already_hit.clear()
 	velocity.x = 0.0
+	_play_sound(slash_sound)
 	anim_sprite.play("attack")
 	anim_player.play("attack")
 
@@ -338,7 +343,14 @@ func _update_animation() -> void:
 		return
 	if absf(velocity.x) > 3.0:
 		if anim_sprite.animation != "walk":
+			_play_sound(step_sound)
 			anim_sprite.play("walk")
 	else:
 		if anim_sprite.animation != "idle":
 			anim_sprite.play("idle")
+			
+func _play_sound(player: AudioStreamPlayer) -> void:
+	if player == null:
+		return
+	player.stop()
+	player.play()

@@ -183,7 +183,7 @@ theme = SubResource("Theme_iqf05")
 theme_override_font_sizes/font_size = 16
 item_title = "Mid Heal"
 item_price = 25
-item_value = 40
+item_value = 55
 item_texture = ExtResource("5_dwnp6")
 
 [node name="ShopItem3" parent="VBoxContainer/Panel/MarginContainer/GridContainer" unique_id=522761991 instance=ExtResource("3_2jvin")]
@@ -193,7 +193,7 @@ theme = SubResource("Theme_iqf05")
 theme_override_font_sizes/font_size = 16
 item_title = "Big Heal"
 item_price = 40
-item_value = 80
+item_value = 120
 item_texture = ExtResource("6_opydl")
 
 [node name="ShopItem4" parent="VBoxContainer/Panel/MarginContainer/GridContainer" unique_id=1267032873 instance=ExtResource("3_2jvin")]
@@ -203,7 +203,7 @@ theme = SubResource("Theme_iqf05")
 theme_override_font_sizes/font_size = 16
 item_type = 1
 item_title = "Small DMG Up"
-item_value = 2
+item_value = 4
 item_texture = ExtResource("7_s6sl5")
 
 [node name="ShopItem5" parent="VBoxContainer/Panel/MarginContainer/GridContainer" unique_id=1588905078 instance=ExtResource("3_2jvin")]
@@ -214,7 +214,7 @@ theme_override_font_sizes/font_size = 16
 item_type = 1
 item_title = "Mid DMG Up"
 item_price = 25
-item_value = 5
+item_value = 12
 item_texture = ExtResource("8_7bcww")
 
 [node name="ShopItem6" parent="VBoxContainer/Panel/MarginContainer/GridContainer" unique_id=1700213606 instance=ExtResource("3_2jvin")]
@@ -225,7 +225,7 @@ theme_override_font_sizes/font_size = 16
 item_type = 1
 item_title = "Big DMG Up"
 item_price = 40
-item_value = 10
+item_value = 28
 item_texture = ExtResource("9_gdytm")
 
 [node name="ShopItem7" parent="VBoxContainer/Panel/MarginContainer/GridContainer" unique_id=1179596040 instance=ExtResource("3_2jvin")]
@@ -246,7 +246,7 @@ theme_override_font_sizes/font_size = 16
 item_type = 2
 item_title = "Mid HP Up"
 item_price = 25
-item_value = 25
+item_value = 35
 item_texture = ExtResource("11_cli13")
 
 [node name="ShopItem9" parent="VBoxContainer/Panel/MarginContainer/GridContainer" unique_id=349665237 instance=ExtResource("3_2jvin")]
@@ -257,7 +257,7 @@ theme_override_font_sizes/font_size = 16
 item_type = 2
 item_title = "BIG HP up"
 item_price = 40
-item_value = 50
+item_value = 75
 item_texture = ExtResource("12_kp106")
 
 [node name="MarginContainer2" type="MarginContainer" parent="VBoxContainer/Panel" unique_id=1810003272]

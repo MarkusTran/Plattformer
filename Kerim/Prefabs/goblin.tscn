@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cx1ubu54x3m1d" path="res://asset/AmberGoblin/Take Hit.png" id="4_gqxb4"]
 [ext_resource type="Texture2D" uid="uid://c3nq7046wudjt" path="res://asset/AmberGoblin/Idle.png" id="5_72wwi"]
 [ext_resource type="Texture2D" uid="uid://c5ir571bvfgci" path="res://asset/AmberGoblin/Run.png" id="6_eow7m"]
+[ext_resource type="AudioStream" uid="uid://b75v2ig32x22r" path="res://asset/Sounds/goblin.mp3" id="7_2rnhs"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4eko1"]
 atlas = ExtResource("2_2rnhs")
@@ -448,6 +449,11 @@ radius = 40.012497
 [node name="Goblin" type="CharacterBody2D" unique_id=1241335017]
 collision_layer = 6
 script = ExtResource("1_en0hv")
+walk_speed = 50.0
+chase_speed = 120.0
+aggro_range = 500.0
+max_health = 95
+coin_drop = 10
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1035401899]
 sprite_frames = SubResource("SpriteFrames_pfdpr")
@@ -484,6 +490,12 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackRange" unique_id=773157390]
 position = Vector2(0, 8)
 shape = SubResource("CircleShape2D_2rnhs")
+
+[node name="Sound" type="Node" parent="." unique_id=558077513]
+
+[node name="slash" type="AudioStreamPlayer" parent="Sound" unique_id=365542787]
+stream = ExtResource("7_2rnhs")
+volume_db = -32.0
 
 [connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]

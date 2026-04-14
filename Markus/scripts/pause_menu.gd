@@ -45,8 +45,8 @@ func _on_settings_pressed() -> void:
 		return
 	_init_settings()
 	main_panel.hide()
-	if controls_panel:
-		controls_panel.hide()
+	#if controls_panel:
+		#controls_panel.hide()
 	settings_panel.show()
 
 func _close_settings() -> void:
@@ -66,7 +66,7 @@ func _init_settings() -> void:
 	var master_slider := settings_panel.get_node_or_null("%s/MasterRow/MasterSlider" % SETTINGS_ROOT) as HSlider
 	var music_slider := settings_panel.get_node_or_null("%s/MusicRow/MusicSlider" % SETTINGS_ROOT) as HSlider
 	var sfx_slider := settings_panel.get_node_or_null("%s/SFXRow/SFXSlider" % SETTINGS_ROOT) as HSlider
-	var fullscreen_check := settings_panel.get_node_or_null("%s/FullscreenCheck" % SETTINGS_ROOT) as CheckBox
+	var fullscreen_check := settings_panel.get_node_or_null("%s/FullscreenCheck" % SETTINGS_ROOT) as Button
 
 	if master_slider:
 		master_slider.min_value = 0.0

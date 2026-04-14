@@ -32,7 +32,11 @@ class_name MinotaurBoss
 @onready var attack_hitbox_shape: CollisionShape2D = $AttackHitbox/CollisionShape2D
 @onready var touch_damage_area: Area2D = $TouchDamageArea
 @onready var boss_health_bar: ProgressBar = $CanvasLayer/BossHealthUI/ProgressBar
-@onready var phase_label: Label = $CanvasLayer/BossHealthUI/PhaseLabel
+@onready var phase_label: Label = $CanvasLayer/PhaseLabel
+@onready var hp_label: Label = $CanvasLayer/BossHealthUI/HPLabel
+
+@onready var slash_sound: AudioStreamPlayer = get_node_or_null("Sound/slash")
+@onready var step_sound: AudioStreamPlayer = get_node_or_null("Sound/step")
 
 var gravity: float = float(ProjectSettings.get_setting("physics/2d/default_gravity"))
 var current_health := 0
@@ -53,6 +57,7 @@ var boss_music_playing := false
 
 func _ready() -> void:
 	current_health = max_health
+	_update_hp_label()
 	add_to_group("enemy")
 
 	attack_hitbox.set_deferred("monitoring", false)
@@ -73,6 +78,14 @@ func _ready() -> void:
 	sprite.play("idle")
 
 func _physics_process(delta: float) -> void:
+	var was_walking := false
+	var is_walking = absf(velocity.x) > 5.0 and not is_attacking and not is_hurt
+	if is_walking and not was_walking:
+		_play_step_loop()
+	if not is_walking and was_walking:
+		_stop_step_loop()
+	was_walking = is_walking
+
 	if is_dead:
 		return
 
@@ -105,7 +118,7 @@ func _physics_process(delta: float) -> void:
 			sprite.play("idle")
 
 	move_and_slide()
-
+	
 	if not is_dead and not is_attacking and not is_hurt:
 		if absf(velocity.x) > 5.0:
 			if sprite.animation != "walk":
@@ -119,6 +132,7 @@ func take_damage(amount: int) -> void:
 
 	if is_attacking and super_armor_during_attack:
 		current_health -= amount
+		_update_hp_label()
 		_update_phase_state()
 		if current_health <= 0:
 			_die()
@@ -128,6 +142,7 @@ func take_damage(amount: int) -> void:
 		return
 
 	current_health -= amount
+	_update_hp_label()
 	_update_phase_state()
 
 	if current_health <= 0:
@@ -188,6 +203,7 @@ func _start_attack() -> void:
 	if is_attacking or not can_attack or is_dead:
 		return
 
+	_play_sound(slash_sound)
 	is_attacking = true
 	can_attack = false
 	hit_targets.clear()
@@ -230,6 +246,9 @@ func _disable_attack_hitbox() -> void:
 func _on_sprite_frame_changed() -> void:
 	if not is_attacking or sprite.animation != "attack":
 		return
+	if sprite.animation == "walk":
+		if sprite.frame == 1 or sprite.frame == 4:
+			_play_sound(step_sound)
 
 	if sprite.frame >= hit_active_from_frame and sprite.frame <= hit_active_to_frame:
 		_enable_attack_hitbox()
@@ -379,3 +398,21 @@ func _flash_phase_tint(target_tint: Color) -> void:
 		phase_label.visible = false
 
 	is_phase_shifting = false
+
+func _update_hp_label() -> void:
+	if hp_label != null:
+		hp_label.text = "%d / %d" % [max(current_health, 0), max_health]
+
+func _play_sound(player: AudioStreamPlayer) -> void:
+	if player == null:
+		return
+	player.stop()
+	player.play()
+
+func _play_step_loop():
+	if step_sound and not step_sound.playing:
+		step_sound.play()
+
+func _stop_step_loop():
+	if step_sound and step_sound.playing:
+		step_sound.stop()

@@ -33,6 +33,7 @@ animations = [{
 
 [node name="chest" type="Node2D" unique_id=2036005073]
 script = ExtResource("1_5hxsa")
+coins = 25
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1401086452]
 sprite_frames = SubResource("SpriteFrames_2jbn4")

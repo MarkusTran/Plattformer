@@ -4,7 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://b18e4r5bft0n8" path="res://asset/Pia/Background/Gemini_Generated_Image_oxzf83oxzf83oxzf.png" id="2_eniie"]
 [ext_resource type="Texture2D" uid="uid://evwdd5yhiwd7" path="res://asset/piaAssets/spites/win-Sheet.png" id="3_ug36h"]
 [ext_resource type="Theme" uid="uid://cpauseui01xx" path="res://UI/pause_ui.tres" id="4_oqmmh"]
+[ext_resource type="AudioStream" uid="uid://dg6oob8i6djxx" path="res://asset/Sounds/winning.mp3" id="6_mwi6r"]
 [ext_resource type="Script" uid="uid://dqn7ikdmmyiom" path="res://UI/win_screen.gd" id="6_winsc"]
+[ext_resource type="PackedScene" uid="uid://2yh0pm4e2i5q" path="res://UI/pause_menu.tscn" id="7_2nir1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rd01j"]
 atlas = ExtResource("3_ug36h")
@@ -205,5 +207,13 @@ scale = Vector2(3.307143, 2.896429)
 sprite_frames = SubResource("SpriteFrames_w6opa")
 animation = &"sparklin"
 script = SubResource("GDScript_pfcny")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1450258776]
+stream = ExtResource("6_mwi6r")
+volume_db = -12.0
+autoplay = true
+
+[node name="PauseMenu" parent="." unique_id=1339495711 instance=ExtResource("7_2nir1")]
+layout_mode = 1
 
 [connection signal="pressed" from="Button" to="." method="_on_back_to_start_pressed"]

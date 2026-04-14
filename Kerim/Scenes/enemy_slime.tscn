@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://cnx37vbd6rmi4" path="res://asset/Slime/slime_idle1.png" id="2_ji20b"]
 [ext_resource type="Texture2D" uid="uid://2ml830nm5t4v" path="res://asset/Slime/slime_die.png" id="2_suqqb"]
 [ext_resource type="Script" uid="uid://xjdyqxotvc7v" path="res://Kerim/Scripts/healthbar.gd" id="3_ji20b"]
+[ext_resource type="AudioStream" uid="uid://cdkq3ljh4h8r3" path="res://asset/Sounds/slimeJump.mp3" id="6_131yu"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_el2qc"]
 radius = 9.0
@@ -279,5 +280,11 @@ collision_mask = 8
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=2120808002]
 position = Vector2(0, -7)
 shape = SubResource("CircleShape2D_e4542")
+
+[node name="Sounds" type="Node" parent="." unique_id=296044602]
+
+[node name="jump" type="AudioStreamPlayer" parent="Sounds" unique_id=191386459]
+stream = ExtResource("6_131yu")
+volume_db = 2.0
 
 [connection signal="timeout" from="FlipRoot/AnimatedSprite2D/Timer" to="." method="_on_timer_timeout"]

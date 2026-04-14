@@ -28,6 +28,8 @@ class_name SkeletonEnemy
 @onready var arrow_sprite: Sprite2D = $Arrow/Sprite2D
 @onready var arrow_spawn: Marker2D = $FlipRoot/ArrowSpawn
 
+@onready var shoot: AudioStreamPlayer = get_node_or_null("Sound/shoot")
+
 var spawn_position := Vector2.ZERO
 var facing_dir := -1
 var patrol_dir := -1
@@ -177,6 +179,7 @@ func _start_ranged_attack() -> void:
 	waiting_for_fire_frame = true
 	velocity.x = 0.0
 	_set_facing(int(signf(player.global_position.x - global_position.x)))
+	_play_sound(shoot)
 	sprite.play("attack")
 	await sprite.animation_finished
 	if not is_inside_tree() or is_dead:
@@ -275,3 +278,9 @@ func _flash_back_to_default() -> void:
 	await get_tree().create_timer(0.1).timeout
 	if is_inside_tree() and not is_dead:
 		modulate = Color.WHITE
+		
+func _play_sound(player: AudioStreamPlayer) -> void:
+	if player == null:
+		return
+	player.stop()
+	player.play()

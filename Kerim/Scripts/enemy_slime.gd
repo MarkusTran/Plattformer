@@ -13,6 +13,7 @@ class_name SlimeEnemy
 @onready var hitbox: Area2D = $Hitbox
 @onready var flip_root: Node2D = $FlipRoot
 @onready var anim: AnimatedSprite2D = $FlipRoot/AnimatedSprite2D
+@onready var slimeJump_Sound: AudioStreamPlayer = get_node_or_null("Sounds/jump")
 
 var jump_timer := 0.0
 var is_hurt := false
@@ -86,8 +87,17 @@ func update_anim_and_flip() -> void:
 		flip_root.scale.x = -1
 	if not is_dead and (anim.animation != "default" or not anim.is_playing()):
 		anim.play("default")
+		
+
+func _play_sound(player: AudioStreamPlayer) -> void:
+	if player == null:
+		return
+	player.stop()
+	player.play()
 
 func do_hop_towards_player() -> void:
+	
+	_play_sound(slimeJump_Sound)
 	var dx = player.global_position.x - global_position.x
 	var dir_x = sign(dx)
 	if dir_x == 0:
@@ -101,3 +111,4 @@ func do_hop_towards_player() -> void:
 		needed_vx = 0.0
 	velocity.y = jump_velocity
 	velocity.x = needed_vx
+	

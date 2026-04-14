@@ -10,6 +10,8 @@
 [ext_resource type="PackedScene" uid="uid://bvnynrj5pm3ok" path="res://Markus/Prefabs/Deathzone.tscn" id="10_lk57d"]
 [ext_resource type="PackedScene" uid="uid://bwg8igm8c4icg" path="res://Markus/Prefabs/checkpoint.tscn" id="10_rs4xw"]
 [ext_resource type="PackedScene" uid="uid://cnbrebdm25yew" path="res://Markus/Prefabs/chest.tscn" id="11_62b6n"]
+[ext_resource type="StyleBox" uid="uid://gt878pkqqhaf" path="res://UI/PanelBackground.tres" id="11_rs4xw"]
+[ext_resource type="FontFile" uid="uid://b5r36f8qc3esb" path="res://asset/Fonts/Silkscreen-Regular.ttf" id="12_lk57d"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bqrvq"]
 texture = ExtResource("6_j87m1")
@@ -555,22 +557,6 @@ position = Vector2(1134, -49)
 position = Vector2(5828, 14)
 connected_scene = "ShopMenu"
 
-[node name="Panel" type="Panel" parent="." unique_id=1877504882]
-z_index = -1
-offset_left = 91.0
-offset_top = 11.999998
-offset_right = 131.0
-offset_bottom = 52.0
-scale = Vector2(7.7061186, 3.3490193)
-
-[node name="Label" type="Label" parent="Panel" unique_id=496752249]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="Checkpoint" parent="." unique_id=1468318660 instance=ExtResource("10_rs4xw")]
 position = Vector2(-270.00003, 135.00002)
 scale = Vector2(27.932396, 1.8792462)
@@ -586,3 +572,113 @@ scale = Vector2(46.28003, -2.4666862)
 [node name="Checkpoint2" parent="." unique_id=670247258 instance=ExtResource("10_rs4xw")]
 position = Vector2(5697.0005, 45.999996)
 scale = Vector2(3.838931, 1.1447407)
+
+[node name="ControlsPanel" type="Panel" parent="." unique_id=36661682]
+z_index = -1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -149.0
+offset_top = -8.0
+offset_right = 151.0
+offset_bottom = 252.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.587468, 0.5934224)
+theme_override_styles/panel = ExtResource("11_rs4xw")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ControlsPanel" unique_id=642842263]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 6
+
+[node name="Title" type="Label" parent="ControlsPanel/VBoxContainer" unique_id=704912451]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.92, 0.35, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 5
+theme_override_fonts/font = ExtResource("12_lk57d")
+theme_override_font_sizes/font_size = 34
+text = "CONTROLS"
+horizontal_alignment = 1
+
+[node name="MoveRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=1565585740]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="MoveLabel" type="Label" parent="ControlsPanel/VBoxContainer/MoveRow" unique_id=840511315]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("12_lk57d")
+text = "  Bewegen"
+
+[node name="MoveKey" type="Label" parent="ControlsPanel/VBoxContainer/MoveRow" unique_id=511231654]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_lk57d")
+text = "A / D  "
+
+[node name="JumpRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=1708287638]
+layout_mode = 2
+theme_override_constants/separation = 2
+
+[node name="JumpLabel" type="Label" parent="ControlsPanel/VBoxContainer/JumpRow" unique_id=1011055062]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("12_lk57d")
+text = "  Springen"
+
+[node name="JumpKey" type="Label" parent="ControlsPanel/VBoxContainer/JumpRow" unique_id=1217319352]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_lk57d")
+text = "Leertaste  "
+
+[node name="AttackRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=57509303]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="AttackLabel" type="Label" parent="ControlsPanel/VBoxContainer/AttackRow" unique_id=2057488726]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("12_lk57d")
+text = "  Angriff"
+
+[node name="AttackKey" type="Label" parent="ControlsPanel/VBoxContainer/AttackRow" unique_id=626385177]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_lk57d")
+text = "LMB  "
+
+[node name="InteractRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=865253599]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="InteractLabel" type="Label" parent="ControlsPanel/VBoxContainer/InteractRow" unique_id=1938719480]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("12_lk57d")
+text = "  Interagieren"
+
+[node name="InteractKey" type="Label" parent="ControlsPanel/VBoxContainer/InteractRow" unique_id=713132929]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_lk57d")
+text = "F  "
+
+[node name="PauseRow" type="HBoxContainer" parent="ControlsPanel/VBoxContainer" unique_id=259358088]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="PauseLabel" type="Label" parent="ControlsPanel/VBoxContainer/PauseRow" unique_id=1702185818]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("12_lk57d")
+text = "  Pause"
+
+[node name="PauseKey" type="Label" parent="ControlsPanel/VBoxContainer/PauseRow" unique_id=1385116850]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("12_lk57d")
+text = "ESC  "

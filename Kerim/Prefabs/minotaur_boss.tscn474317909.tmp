@@ -345,11 +345,24 @@ move_speed = 70.0
 phase_two_move_speed = 92.0
 phase_three_move_speed = 117.0
 aggro_range = 350.0
+attack_distance = null
+attack_damage = null
+touch_damage = null
+touch_damage_cooldown = null
 attack_cooldown = 0.8
 phase_two_attack_cooldown = 0.6
 phase_three_attack_cooldown = 0.4
 max_health = 1400
+hurt_invuln_time = null
 hurt_cooldown = 1.3
+super_armor_during_attack = null
+death_linger_time = null
+phase_shift_pause = null
+phase_three_health_threshold = null
+hit_active_from_frame = null
+hit_active_to_frame = null
+attack_hitbox_offset_x = null
+player_group = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=321162521]
 position = Vector2(0, -41)
@@ -477,11 +490,11 @@ horizontal_alignment = 1
 
 [node name="slash" type="AudioStreamPlayer" parent="Sound" unique_id=2105909262]
 stream = ExtResource("9_atrfg")
-volume_db = -25.0
+volume_db = -20.0
 
 [node name="step" type="AudioStreamPlayer" parent="Sound" unique_id=725176417]
 stream = ExtResource("10_8kt36")
-volume_db = -24.0
+volume_db = 5.0
 
 [connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]
 [connection signal="body_exited" from="DetectionArea" to="." method="_on_detection_area_body_exited"]
