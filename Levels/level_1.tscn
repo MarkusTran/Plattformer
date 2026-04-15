@@ -547,7 +547,7 @@ fire_frame = 10
 
 [node name="MarkusPlayer" parent="." unique_id=765685625 instance=ExtResource("10_f4pg2")]
 z_index = 1
-position = Vector2(-379, 127)
+position = Vector2(-378, 133)
 coins = 100
 
 [node name="chest6" parent="." unique_id=1861198152 instance=ExtResource("11_62b6n")]

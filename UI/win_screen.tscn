@@ -212,6 +212,7 @@ script = SubResource("GDScript_pfcny")
 stream = ExtResource("6_mwi6r")
 volume_db = -12.0
 autoplay = true
+parameters/looping = false
 
 [node name="PauseMenu" parent="." unique_id=1339495711 instance=ExtResource("7_2nir1")]
 layout_mode = 1
