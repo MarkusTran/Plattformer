@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://brrqbdmtorc37"]
+
+[ext_resource type="Script" uid="uid://dryxtb28x5b8v" path="res://Markus/scripts/spawn_manager.gd" id="1_17141"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3wxcx"]
+size = Vector2(164, 20)
+
+[node name="SpawnManager" type="Node2D" unique_id=994749846]
+script = ExtResource("1_17141")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=762025278]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=756938503]
+shape = SubResource("RectangleShape2D_3wxcx")
+
+[node name="Timer" type="Timer" parent="." unique_id=1705240040]
