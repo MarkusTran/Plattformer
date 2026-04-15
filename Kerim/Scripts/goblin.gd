@@ -2,6 +2,12 @@ extends BaseEnemy
 class_name GoblinEnemy
 
 const GRAVITY := 900.0
+const GOBLIN_GENERAL_SOUNDS: Array[AudioStream] = [
+	preload("res://asset/Sounds/goblin_attack_1.mp3"),
+	preload("res://asset/Sounds/goblin_voice_2.mp3"),
+]
+const GOBLIN_HURT_SOUND: AudioStream = preload("res://asset/Sounds/goblin_hurt_1.mp3")
+const GOBLIN_DEATH_SOUND: AudioStream = preload("res://asset/Sounds/goblin_death_1.mp3")
 
 @export var walk_speed: float = 38.0
 @export var chase_speed: float = 62.0
@@ -25,6 +31,7 @@ const GRAVITY := 900.0
 @export var jump_cooldown: float = 0.9
 @export var knockback_force: float = 200.0
 @export var hurt_invuln_time: float = 0.35
+@export var general_sound_cooldown: float = 4.0
 
 var taking_damage := false
 var dir: Vector2 = Vector2.LEFT
@@ -37,6 +44,7 @@ var spawn_position := Vector2.ZERO
 var jump_cooldown_left := 0.0
 var facing_dir := -1
 var turn_cooldown_left := 0.0
+var next_general_sound_index := 0
 
 @onready var anim_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var anim_player: AnimationPlayer = $AnimationPlayer
@@ -45,8 +53,11 @@ var turn_cooldown_left := 0.0
 @onready var hit_shape2: CollisionShape2D = $AttackHitbox/CollisionShape2D2
 @onready var attack_range: Area2D = $AttackRange
 
-@onready var slash_sound: AudioStreamPlayer = get_node_or_null("Sound/slash")
+@onready var general_sound: AudioStreamPlayer = get_node_or_null("Sound/slash")
+@onready var hurt_sound: AudioStreamPlayer = get_node_or_null("Sound/hurt")
+@onready var death_sound: AudioStreamPlayer = get_node_or_null("Sound/death")
 @onready var step_sound: AudioStreamPlayer = get_node_or_null("Sound/step")
+@onready var general_sound_timer: Timer = get_node_or_null("GeneralSoundTimer")
 
 var invulnerable := false
 var already_hit := {}
@@ -59,6 +70,9 @@ func _ready() -> void:
 	hit_shape1.disabled = true
 	hit_shape2.disabled = true
 	anim_sprite.play("idle")
+	if general_sound_timer != null:
+		general_sound_timer.wait_time = general_sound_cooldown
+		general_sound_timer.one_shot = true
 
 func on_hit() -> void:
 	anim_sprite.play("hurt")
@@ -70,6 +84,7 @@ func on_death() -> void:
 	anim_player.stop()
 	disable_attack_hitbox()
 	anim_sprite.play("death")
+	_play_death_sound()
 	await anim_sprite.animation_finished
 	queue_free()
 
@@ -131,7 +146,7 @@ func start_attack() -> void:
 	can_attack = false
 	already_hit.clear()
 	velocity.x = 0.0
-	_play_sound(slash_sound)
+	_try_play_general_sound()
 	anim_sprite.play("attack")
 	anim_player.play("attack")
 
@@ -214,6 +229,7 @@ func take_damage(dmg: int) -> void:
 	taking_damage = true
 	modulate = Color(1.0, 0.3, 0.3)
 	anim_sprite.play("hurt")
+	_play_hurt_sound()
 	await anim_sprite.animation_finished
 	if not is_inside_tree() or is_dead:
 		return
@@ -343,6 +359,7 @@ func _update_animation() -> void:
 		return
 	if absf(velocity.x) > 3.0:
 		if anim_sprite.animation != "walk":
+			_try_play_general_sound()
 			_play_sound(step_sound)
 			anim_sprite.play("walk")
 	else:
@@ -354,3 +371,30 @@ func _play_sound(player: AudioStreamPlayer) -> void:
 		return
 	player.stop()
 	player.play()
+
+func _try_play_general_sound() -> void:
+	if general_sound == null:
+		return
+	if general_sound_timer != null and not general_sound_timer.is_stopped():
+		return
+	if is_dead or taking_damage:
+		return
+
+	general_sound.stream = GOBLIN_GENERAL_SOUNDS[next_general_sound_index]
+	next_general_sound_index = (next_general_sound_index + 1) % GOBLIN_GENERAL_SOUNDS.size()
+	_play_sound(general_sound)
+
+	if general_sound_timer != null:
+		general_sound_timer.start(maxf(0.1, general_sound_cooldown))
+
+func _play_hurt_sound() -> void:
+	if hurt_sound == null:
+		return
+	hurt_sound.stream = GOBLIN_HURT_SOUND
+	_play_sound(hurt_sound)
+
+func _play_death_sound() -> void:
+	if death_sound == null:
+		return
+	death_sound.stream = GOBLIN_DEATH_SOUND
+	_play_sound(death_sound)

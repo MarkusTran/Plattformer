@@ -495,7 +495,16 @@ shape = SubResource("CircleShape2D_2rnhs")
 
 [node name="slash" type="AudioStreamPlayer" parent="Sound" unique_id=365542787]
 stream = ExtResource("7_2rnhs")
-volume_db = -32.0
+volume_db = -10.0
+
+[node name="hurt" type="AudioStreamPlayer" parent="Sound" unique_id=807542331]
+volume_db = -4.0
+
+[node name="death" type="AudioStreamPlayer" parent="Sound" unique_id=658832127]
+volume_db = -2.0
+
+[node name="GeneralSoundTimer" type="Timer" parent="." unique_id=774411257]
+one_shot = true
 
 [connection signal="timeout" from="DirectionTimer" to="." method="_on_direction_timer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]
