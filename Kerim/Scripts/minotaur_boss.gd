@@ -23,6 +23,7 @@ class_name MinotaurBoss
 @export var hit_active_to_frame: int = 4
 @export var attack_hitbox_offset_x: float = 34.0
 @export var player_group: String = "player"
+@export var fall_respawn_distance: float = 900.0
 
 @onready var sprite: AnimatedSprite2D = $FlipRoot/AnimatedSprite2D
 @onready var body_shape: CollisionShape2D = $CollisionShape2D
@@ -54,9 +55,11 @@ var is_phase_three := false
 var touch_targets := {}
 var is_phase_shifting := false
 var boss_music_playing := false
+var spawn_position := Vector2.ZERO
 
 func _ready() -> void:
 	current_health = max_health
+	spawn_position = global_position
 	_update_hp_label()
 	add_to_group("enemy")
 
@@ -87,6 +90,10 @@ func _physics_process(delta: float) -> void:
 	was_walking = is_walking
 
 	if is_dead:
+		return
+
+	if global_position.y > spawn_position.y + fall_respawn_distance:
+		_respawn_at_spawn_position()
 		return
 
 	if not is_on_floor():
@@ -125,6 +132,22 @@ func _physics_process(delta: float) -> void:
 				sprite.play("walk")
 		elif sprite.animation != "idle":
 			sprite.play("idle")
+
+func _respawn_at_spawn_position() -> void:
+	velocity = Vector2.ZERO
+	global_position = spawn_position
+	is_attacking = false
+	is_hurt = false
+	is_phase_shifting = false
+	can_be_hurt = true
+	hit_targets.clear()
+	touch_targets.clear()
+	_disable_attack_hitbox()
+	_stop_step_loop()
+	modulate = Color.WHITE
+	if phase_label != null:
+		phase_label.visible = false
+	sprite.play("idle")
 
 func take_damage(amount: int) -> void:
 	if is_dead:

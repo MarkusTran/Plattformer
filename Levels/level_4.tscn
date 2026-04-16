@@ -13390,8 +13390,9 @@ tile_map_data = PackedByteArray("AAAgAAAAAQACAAIAAAAhAP//AQABAAEAAAAiAP//AQACAAE
 tile_set = SubResource("TileSet_ouo0d")
 
 [node name="MarkusPlayer" parent="." unique_id=765685625 instance=ExtResource("8_fqog2")]
-position = Vector2(-874, -762)
-attack_damage = 40
+position = Vector2(2234, 7)
+health = 360.0
+attack_damage = 136
 
 [node name="MinotaurBoss" parent="." unique_id=20386266 instance=ExtResource("9_ben3k")]
 position = Vector2(3007, 39)
